@@ -3,7 +3,7 @@ import './styles/global.css'
 const App = () => {
   return (
     <>
-      <p>devinit</p>
+      <p className='text-red-500'>devinit</p>
     </>
   )
 }
