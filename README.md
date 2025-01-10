@@ -1,3 +1,1 @@
-## Hello world
-
-this is work for push from local
+# 3팀 프론트엔드 devinit
