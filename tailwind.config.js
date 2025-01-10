@@ -7,7 +7,20 @@ module.exports = {
     './components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'main-color': '#7353EA',
+        'sub-color': '#7353EA14',
+        'dark-gray': '#ABABAB',
+        'light-gray': '#D9D9D9',
+        'main-black': '#212529',
+      },
+      fontSize: {
+        'size-title': ['1.5rem', '2rem'],
+        'size-body': ['1rem', '1.5rem'],
+        'size-subbody': ['0.75rem', '1rem'],
+      },
+    },
   },
   plugins: [],
 }
