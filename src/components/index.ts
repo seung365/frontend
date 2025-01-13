@@ -1,3 +1,6 @@
+export { default as BoardCard } from './common/Card/BoardCard'
+export { default as ProfileCard } from './common/Card/ProfileCard'
+export { default as Grid } from './common/Grid'
 export { default as SearchBar } from './common/SearchBar'
 export { default as Footer } from './layouts/Footer'
 export { default as Header } from './layouts/Header'
