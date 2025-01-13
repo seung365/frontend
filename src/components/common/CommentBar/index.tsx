@@ -1,4 +1,4 @@
-import reactLogo from '../../../assets/icons/profile.svg'
+import profile from '../../../assets/icons/profile.svg'
 
 interface CommentBarProps {
   imageUrl?: string
@@ -18,7 +18,7 @@ const CommentBar = ({ imageUrl, userName, comment, date }: CommentBarProps) => {
   return (
     <div className='flex flex-col w-full max-w-4xl gap-3 p-1 px-4 border-b-2'>
       <div className='flex items-center gap-3 align-center'>
-        <img src={imageUrl || reactLogo} className='w-8 h-8' />
+        <img src={imageUrl || profile} className='w-8 h-8' />
         <span className='font-semibold'>{userName}</span>
         <span className='text-dark-gray'>{date}</span>
       </div>
