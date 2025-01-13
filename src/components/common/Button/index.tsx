@@ -1,7 +1,7 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode
+  children: string
   size?: 'small' | 'medium' | 'large'
   theme?: 'light' | 'dark'
   onClick?: () => void
@@ -35,7 +35,7 @@ const Button = ({
   return (
     <button
       onClick={onClick}
-      className={`font-medium inline-flex items-center justify-center  ${sizeClasses[size]} ${themeClasses[theme]} border-solid focus:outline-none`}
+      className={`font-medium inline-flex hover:opacity-70 items-center justify-center ${sizeClasses[size]} ${themeClasses[theme]}`}
       {...props}
     >
       {children}
