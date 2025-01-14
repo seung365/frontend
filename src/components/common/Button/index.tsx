@@ -1,18 +1,12 @@
 import { ButtonHTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: string
+interface ButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    React.PropsWithChildren {
   size?: 'small' | 'medium' | 'large'
   theme?: 'light' | 'dark'
-  onClick?: () => void
 }
-
-/*
-  Button
-  Description:
-    - 버튼 컴포넌트
-    - children, size, theme, onClick을 props로 받아서 사용
-*/
 
 const sizeClasses = {
   small: 'h-8 px-3 text-sm  text-sm rounded-md',
@@ -25,17 +19,30 @@ const themeClasses = {
   light: 'bg-sub-color text-black',
 }
 
+/**
+ * 버튼 컴포넌트
+ * @description
+ * 기본적인 버튼 컴포넌트로, 다음 props를 받아 사용합니다:
+ * - children: 버튼 내부 콘텐츠
+ * - size: 버튼 크기 (small, medium, large)
+ * - theme: 버튼 테마 (light, dark)
+ * - onClick: 클릭 이벤트 핸들러
+ * - 기타 button HTML 속성들 모두 사용 가능
+ */
+
 const Button = ({
-  children,
   size = 'medium',
   theme = 'dark',
-  onClick,
+  children,
   ...props
 }: ButtonProps) => {
   return (
     <button
-      onClick={onClick}
-      className={`font-medium inline-flex hover:opacity-70 items-center justify-center ${sizeClasses[size]} ${themeClasses[theme]}`}
+      className={twMerge(
+        'font-medium inline-flex hover:opacity-70 items-center justify-center',
+        sizeClasses[size],
+        themeClasses[theme],
+      )}
       {...props}
     >
       {children}
