@@ -7,12 +7,15 @@ interface CommentBarProps {
   date: string
 }
 
-/*
-  CommentBar
-  Description:
-    - 댓글을 보여주는 컴포넌트
-    - imageUrl, userName, comment, date를 props로 받아서 사용
-*/
+/**
+ * 댓글을 보여주는 컴포넌트
+ * @description
+ * 사용자 댓글을 표시하는 컴포넌트로, 다음 props를 받아 사용합니다:
+ * - imageUrl: 사용자 프로필 이미지 URL
+ * - userName: 사용자 이름
+ * - comment: 댓글 내용
+ * - date: 작성 날짜
+ */
 
 const CommentBar = ({ imageUrl, userName, comment, date }: CommentBarProps) => {
   return (
