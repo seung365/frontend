@@ -7,15 +7,16 @@ interface FloatingPostProps {
   onheartClick?: () => void
 }
 
-/*
-  FloatingPost
-  Description:
-    - 좋아요와 공유 버튼을 가지고 있는 컴포넌트
-    - count, onheartClick을 props로 받아서 사용
-    - onheartClick은 좋아요 버튼을 클릭했을 때 실행되는 함수
-    
-  - 위치의 경우 부모요소 기준으로 해야해서 수정해야한다.
-*/
+/**
+ * 플로팅 좋아요/공유 버튼 컴포넌트
+ * @description
+ * 게시글에 떠있는 좋아요와 공유 버튼을 포함한 컴포넌트로, 다음 props를 받아 사용합니다:
+ * - count: 좋아요 수
+ * - onHeartClick: 좋아요 버튼 클릭 핸들러 함수
+ *
+ * @note
+ * 위치 지정은 부모 요소를 기준으로 상대적으로 배치되어야 합니다.
+ */
 
 const FloatingPost = ({ count, onheartClick }: FloatingPostProps) => {
   return (
