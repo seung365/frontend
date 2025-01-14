@@ -2,9 +2,10 @@ import { useState } from 'react'
 import SearchCancel from '../../../assets/icons/search-cancel.svg?react'
 import SearchIcon from '../../../assets/icons/search.svg?react'
 
-/*
-SearBar 컴포넌트
-- 검색하고자 하는 내용을 입력하고 엔터를 누르면 검색시에 수행되는 함수 onSearch 실행.
+/** 
+ * @example
+ * SearBar 컴포넌트
+ * 검색하고자 하는 내용을 입력하고 엔터를 누르면 검색시에 수행되는 함수 onSearch 실행.
 
 -사용법
 export const ParentComponents = () => {
@@ -14,8 +15,7 @@ export const ParentComponents = () => {
 
     return <SearchBar placeholder=",,,"  onSearch={onSearch}/>;
 }
-
-*/
+ */
 
 interface SearchBarProps {
   placeholder?: string
