@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 /*
 Grid Container 컴포넌트
@@ -20,11 +21,8 @@ const gridClassName = {
 }
 
 const Grid = ({ children, type }: GridProps) => {
-  return (
-    <section className={`grid w-full ${gridClassName[type]} gap-8`}>
-      {children}
-    </section>
-  )
+  const gridStyle = twMerge('grid w-full gap-8', gridClassName[type])
+  return <section className={gridStyle}>{children}</section>
 }
 
 export default Grid
