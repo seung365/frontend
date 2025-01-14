@@ -12,7 +12,7 @@ export const Layout = () => {
   return (
     <div className='flex flex-col items-center min-h-screen'>
       <Header />
-      <main className='w-full max-w-[1060px] mx-auto'>
+      <main className='w-full mt-[60px] max-w-[1060px] mx-auto'>
         <Outlet />
       </main>
       <Footer />
