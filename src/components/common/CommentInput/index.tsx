@@ -1,19 +1,16 @@
 import { useRef } from 'react'
 
-interface CommentInputProps {
-  placeholder?: string
-}
-
-/*
-  CommentInput
-  Description:
-    - 댓글을 입력하는 textarea 컴포넌트
-    - placeholder를 props로 받아서 사용
-*/
+/**
+ * 댓글을 입력하는 textarea 컴포넌트
+ * @description
+ * 기본적인 댓글 입력 컴포넌트로, 다음 props를 받아 사용합니다:
+ * - placeholder: 입력 전 표시될 안내 텍스트
+ * - 기타 textarea HTML 속성들 모두 사용 가능
+ */
 
 const CommentInput = ({
   placeholder = '댓글을 입력해 주세요.',
-}: CommentInputProps) => {
+}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleAutoResize = () => {
