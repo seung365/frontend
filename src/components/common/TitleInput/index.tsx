@@ -1,37 +1,41 @@
-import { useRef } from 'react'
+import { UseFormRegister } from 'react-hook-form'
+import { FormValues } from '../../../pages/BoardWrite'
 
-interface TitleInputProps {
-  placeholder?: string
+interface TitleInputProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  register: UseFormRegister<FormValues>
 }
 
-/*
-  TitleInput
-  Description:
-    - 제목을 입력하는 input 컴포넌트
-    - placeholder를 props로 받아서 사용
-*/
+/**
+ * 제목 입력 컴포넌트
+ * @description
+ * 게시글 제목을 입력하는 컴포넌트로, 다음 props를 받아서 사용합니다:
+ * - placeholder: 입력 전 표시될 안내 텍스트
+ * - register: React Hook Form의 필드 등록 함수
+ *
+ * 자동 높이 조절 기능이 포함된 textarea 컴포넌트입니다.
+ */
 
 const TitleInput = ({
   placeholder = '제목을 입력해 주세요.',
+  register,
 }: TitleInputProps) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  const handleAutoResize = () => {
-    const textarea = textareaRef.current
-    if (textarea) {
-      if (textarea.scrollHeight > textarea.clientHeight) {
-        textarea.style.height = `${textarea.scrollHeight}px`
-      }
+  const handleAutoResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.scrollHeight > e.target.clientHeight) {
+      e.target.style.height = `${e.target.scrollHeight}px`
     }
   }
 
   return (
-    <div className='w-full max-w-4xl'>
+    <div className='w-full'>
       <textarea
-        ref={textareaRef}
-        className='w-full h-16 p-6 text-xl font-semibold rounded-md resize-none cursor-text focus:outline-none'
+        {...register('title')}
+        className='w-full p-2 pt-2 text-lg font-semibold border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
         placeholder={placeholder}
-        onChange={handleAutoResize}
+        onChange={(e) => {
+          register('title').onChange(e)
+          handleAutoResize(e)
+        }}
       />
     </div>
   )
