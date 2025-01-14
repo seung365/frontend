@@ -6,7 +6,7 @@ Header 컴포넌트
 
 const Header = () => {
   return (
-    <header className='w-full h-[60px] flex justify-center border-b'>
+    <header className='fixed top-0 left-0 z-50 bg-white w-full h-[60px] flex justify-center border-b'>
       <div className='w-full max-w-[1060px] flex justify-between items-center'>
         <h1 className='text-size-title'>DevInit</h1>
         <ul className='flex items-center gap-8'>
