@@ -33,7 +33,7 @@ const ContentInput = ({
   })
 
   return (
-    <div className='relative w-full h-screen'>
+    <div className='relative w-full h-screen' data-color-mode='light'>
       <MDEditor
         value={content}
         textareaProps={{
