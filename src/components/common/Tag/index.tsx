@@ -1,19 +1,22 @@
-interface TagProps {
+interface TagProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: string
 }
 
-/*
-  Tag
-  Description:
-    - 태그 컴포넌트
-    - children을 props로 받아서 사용
-*/
+/**
+ * 태그 컴포넌트
+ * @description
+ *  - 버튼 형태로 태그를 표시하는 컴포넌트
+ *  - children을 props로 받아서 사용
+ */
 
-const Tag = ({ children }: TagProps) => {
+const Tag = ({ children, ...props }: TagProps) => {
   return (
-    <div className='font-medium h-10 p-3 inline-flex rounded-2xl items-center justify-center text-[#886296] bg-sub-color'>
+    <button
+      className='font-medium h-7 p-3 inline-flex rounded-2xl items-center justify-center text-[#886296] bg-sub-color'
+      {...props}
+    >
       {children}
-    </div>
+    </button>
   )
 }
 
