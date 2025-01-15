@@ -1,3 +1,5 @@
+export { default as BoardBanner } from './board/BoardBanner'
+export { default as BoardCategoryTab } from './board/BoardCategoryTab'
 export { default as Button } from './common/Button'
 export { default as BoardCard } from './common/Card/BoardCard'
 export { default as ProfileCard } from './common/Card/ProfileCard'
