@@ -1,7 +1,7 @@
 import MDEditor from '@uiw/react-md-editor'
 import '@uiw/react-md-editor/markdown-editor.css'
 import { Control, UseFormSetValue, useWatch } from 'react-hook-form'
-import { FormValues } from '../../../pages/BoardWrite'
+import { FormValues } from '../../../../pages/BoardWrite'
 import './mdeditor-styles.css'
 
 interface ContentInputProps
