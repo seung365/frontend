@@ -1,5 +1,11 @@
 import { useRef } from 'react'
 
+interface CommentInputProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  onCommentChange: (comment: string) => void
+  comment: string
+}
+
 /**
  * 댓글을 입력하는 textarea 컴포넌트
  * @description
@@ -10,24 +16,28 @@ import { useRef } from 'react'
 
 const CommentInput = ({
   placeholder = '댓글을 입력해 주세요.',
-}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => {
+  comment,
+  onCommentChange,
+}: CommentInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const handleAutoResize = () => {
-    const textarea = textareaRef.current
-    if (textarea) {
-      textarea.style.height = 'auto'
-      textarea.style.height = `${textarea.scrollHeight}px`
+  const handleAutoResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.scrollHeight > e.target.clientHeight) {
+      e.target.style.height = `${e.target.scrollHeight}px`
     }
   }
 
   return (
-    <div className='w-full max-w-4xl px-4'>
+    <div className='w-full mt-8'>
       <textarea
         ref={textareaRef}
-        className='w-full p-6 text-xl font-semibold border-2 border-solid rounded-md resize-none h-30 cursor-text focus:outline-none border-sub-color'
+        value={comment}
+        className='w-full p-6 text-xl font-normal border-2 border-solid rounded-md resize-none h-30 cursor-text focus:outline-none border-sub-color'
         placeholder={placeholder}
-        onChange={handleAutoResize}
+        onChange={(e) => {
+          onCommentChange(e.target.value)
+          handleAutoResize(e)
+        }}
       />
     </div>
   )
