@@ -1,32 +1,88 @@
-import { BoardCard, Button, Grid, SearchBar } from '../../components'
+import { useForm } from 'react-hook-form'
+import { useLocation } from 'react-router-dom'
+import SearchCancel from '../../assets/icons/search-cancel.svg?react'
+import {
+  BoardBanner,
+  BoardCard,
+  BoardCategoryTab,
+  Button,
+  Grid,
+  SearchBar,
+} from '../../components'
+import { TAGS_NAME } from '../../constant'
 import { boardList } from '../../mocks/boardList'
 
+interface FormValues {
+  tags: string[]
+}
+
 const Board = () => {
+  const location = useLocation()
+  const { setValue, watch } = useForm<FormValues>()
+
+  const selectedTags = watch('tags', [])
+
+  const handleTagSelect = (tag: string) => {
+    const currentTags = selectedTags || []
+    const isTagSelected = currentTags.includes(tag)
+
+    if (isTagSelected) {
+      setValue(
+        'tags',
+        currentTags.filter((currentTag: string) => currentTag !== tag),
+      )
+    } else {
+      setValue('tags', [...currentTags, tag])
+    }
+  }
+  console.log(selectedTags)
+
   const onSearch = (search?: string) => {
     console.log(search)
   }
+
   return (
-    <section className='flex flex-col w-full h-full gap-12 py-10'>
+    <section className='flex flex-col w-full h-full gap-8 py-10'>
       {/* 각 카테고리 탭 마다 다른 내용 나오게 할 예정 */}
-      <section className='flex flex-col items-center justify-center gap-5 w-full p-4 h-36 bg-sub-color rounded-xl text-[#333333]'>
-        <h3 className='text-size-title'>커뮤니티</h3>
-        <span>
-          🚀 여기는 성장과 도전이 공유되는 공간입니다. 지금 바로 탐험을
-          시작하세요!
-        </span>
-      </section>
-      <ul className='flex items-center justify-between h-10 p-4 rounded-xl'>
-        <li>전체</li>
-        <li>자유게시판</li>
-        <li>코딩질문</li>
-        <li>스터디</li>
-        <li>프로젝트</li>
-        <li>경험공유</li>
-      </ul>
-      <section className='flex items-center justify-center w-full gap-4'>
+      <BoardBanner pathname={location.pathname} />
+      {/* 카테고리 탭 */}
+      <BoardCategoryTab pathname={location.pathname} />
+      {/* 검색 및 필터링 */}
+      <section className='flex items-center justify-center w-full'>
         <SearchBar onSearch={onSearch} />
-        <Button size='large'>태그</Button>
       </section>
+      {/* 태그들의 리스트를 보여주고 선택하고 없애기*/}
+      <section className='flex flex-col gap-4'>
+        <span className='text-main-black'>
+          💁🏻‍♂️ 태그를 통해 원하는 정보들을 찾아보세요!
+        </span>
+        <section className='flex flex-wrap w-full h-auto gap-2'>
+          {TAGS_NAME.map((name) => (
+            <Button
+              onClick={() => handleTagSelect(name)}
+              theme={selectedTags.includes(name) ? 'dark' : 'light'}
+              type='button'
+              size='small'
+            >
+              {selectedTags.includes(name) ? (
+                <span className='relative'>
+                  {name}
+                  <SearchCancel
+                    className='absolute top-[2px] transform translate-x-1/2 -translate-y-1/2 -right-1'
+                    width='12'
+                    height='12'
+                    fill='#FFFFFF'
+                  />
+                </span>
+              ) : (
+                name
+              )}
+            </Button>
+          ))}
+        </section>
+      </section>
+
+      {/* 카테고리/검색/태그로 필터링 되는 게시글 리스트*/}
       <section>
         <Grid type='board'>
           {boardList.map((item) => (
