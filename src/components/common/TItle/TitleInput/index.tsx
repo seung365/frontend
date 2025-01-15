@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form'
-import { FormValues } from '../../../pages/BoardWrite'
+import { FormValues } from '../../../../pages/BoardWrite'
 
 interface TitleInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
