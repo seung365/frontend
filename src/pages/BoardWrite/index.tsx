@@ -48,7 +48,6 @@ const BoardWrite = () => {
       className='flex flex-col py-10'
       onSubmit={handleSubmit(onClickSubmit)}
     >
-      <TitleInput register={register} />
       <div className='mt-1'>
         <div className='flex gap-4'>
           <Dropdown
@@ -85,10 +84,15 @@ const BoardWrite = () => {
         />
         <div className='flex gap-2 mt-2'>
           {selectedTags.map((tag) => (
-            <Tag children={tag} key={tag} />
+            <Tag
+              key={tag}
+              onClick={() => handleTagSelect(tag)}
+              type='button'
+            >{`${tag} ×`}</Tag>
           ))}
         </div>
       </div>
+      <TitleInput register={register} />
       <div className='mt-3'>
         <ContentInput control={control} setValue={setValue} />
       </div>
