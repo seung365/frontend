@@ -27,10 +27,10 @@ const TitleInput = ({
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full mt-8'>
       <textarea
         {...register('title')}
-        className='w-full p-2 pt-2 text-lg font-semibold border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
+        className='w-full p-2 text-lg font-semibold border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
         placeholder={placeholder}
         onChange={(e) => {
           register('title').onChange(e)
