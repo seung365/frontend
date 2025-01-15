@@ -43,7 +43,7 @@ const ContentInput = ({
           setValue('content', value || '')
         }}
         preview='edit'
-        className='w-full min-h-full text-lg font-semibold rounded-md custom-editor border-light-gray'
+        className='w-full min-h-full text-lg rounded-md custom-editor border-light-gray'
       />
     </div>
   )
