@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Layout } from '../components'
 import Board from '../pages/Board'
+import BoardDetail from '../pages/BoardDetail'
+import BoardEdit from '../pages/BoardEdit'
 import BoardWrite from '../pages/BoardWrite'
 import Home from '../pages/Home'
 import Hub from '../pages/Hub'
@@ -23,17 +25,10 @@ const router = createBrowserRouter([
         path: 'board',
         children: [
           { index: true, element: <Board /> },
-          {
-            path: ':categoryName',
-            element: <Board />,
-            children: [{ path: ':id', element: <Board /> }],
-          },
-
-          {
-            path: 'write',
-            element: <BoardWrite />,
-            children: [{ path: 'write/:id', element: <BoardWrite /> }],
-          },
+          { path: ':categoryName', element: <Board /> },
+          { path: ':categoryName/:id', element: <BoardDetail /> },
+          { path: 'write', element: <BoardWrite /> },
+          { path: 'write/:id', element: <BoardEdit /> },
         ],
       },
       {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import {
   Button,
   ContentInput,
@@ -17,13 +18,22 @@ export interface FormValues {
   tags: string[]
 }
 
-const BoardWrite = () => {
+/*
+  useEffect를 통해 데이터를 가져온후 setValue를 통해 데이터를 채워넣을 예정..
+  그 후 수정하는 부분들은 Write와 동일
+*/
+
+const BoardEdit = () => {
   const { control, register, handleSubmit, setValue, watch } =
     useForm<FormValues>()
+
+  const { id } = useParams()
 
   const [open, setOpen] = useState(false)
 
   const selectedTags = watch('tags', [])
+
+  console.log(id)
 
   const handleTagSelect = (tag: string) => {
     const currentTags = selectedTags || []
@@ -97,10 +107,10 @@ const BoardWrite = () => {
         <ContentInput control={control} setValue={setValue} />
       </div>
       <div className='flex justify-end mt-5'>
-        <Button type='submit' children='게시하기' />
+        <Button type='submit' children='수정하기' />
       </div>
     </form>
   )
 }
 
-export default BoardWrite
+export default BoardEdit
