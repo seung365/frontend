@@ -1,9 +1,10 @@
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { FormValues } from '../../../../pages/BoardWrite'
 
 interface TitleInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   register: UseFormRegister<FormValues>
+  setValue: UseFormSetValue<FormValues>
 }
 
 /**
@@ -19,23 +20,24 @@ interface TitleInputProps
 const TitleInput = ({
   placeholder = '제목을 입력해 주세요.',
   register,
+  setValue,
 }: TitleInputProps) => {
   const handleAutoResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.scrollHeight > e.target.clientHeight) {
-      e.target.style.height = `${e.target.scrollHeight}px`
-    }
+    const textarea = e.target
+    textarea.style.height = 'auto'
+    textarea.style.height = `${textarea.scrollHeight}px`
   }
-
   return (
     <div className='w-full mt-8'>
       <textarea
-        {...register('title')}
+        {...register('title', {
+          onChange: (e) => {
+            setValue('title', e.target.value)
+            handleAutoResize(e)
+          },
+        })}
         className='w-full p-2 text-lg font-semibold border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
         placeholder={placeholder}
-        onChange={(e) => {
-          register('title').onChange(e)
-          handleAutoResize(e)
-        }}
       />
     </div>
   )

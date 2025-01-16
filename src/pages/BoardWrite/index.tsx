@@ -92,7 +92,7 @@ const BoardWrite = () => {
           ))}
         </div>
       </div>
-      <TitleInput register={register} />
+      <TitleInput register={register} setValue={setValue} />
       <div className='mt-3'>
         <ContentInput control={control} setValue={setValue} />
       </div>
