@@ -36,6 +36,12 @@ const SearchBar = ({
     setSearch('')
   }
 
+  const handleSearchClick = () => {
+    if (onSearch) {
+      onSearch(search)
+    }
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (onSearch && e.key === 'Enter') {
       onSearch(search)
@@ -43,18 +49,21 @@ const SearchBar = ({
   }
   return (
     <div className='relative w-full h-12 max-w-md'>
-      <SearchIcon className='absolute transform -translate-y-1/2 left-3 top-1/2' />
       <input
         type='text'
         placeholder={placeholder}
         value={search}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        className='w-full h-full px-10 text-base border rounded-md outline-none cursor-pointer border-light-gray focus:border-main-color'
+        className='w-full h-full pl-10 pr-16 text-base border rounded-md outline-none cursor-pointer border-light-gray focus:border-main-color'
+      />
+      <SearchIcon
+        onClick={handleSearchClick}
+        className='absolute transform -translate-y-1/2 cursor-pointer right-3 top-1/2'
       />
       {search && (
         <SearchCancel
-          className='absolute transform -translate-y-1/2 cursor-pointer right-3 top-1/2'
+          className='absolute transform -translate-y-1/2 cursor-pointer right-10 top-1/2'
           onClick={handleCancelClick}
         />
       )}
