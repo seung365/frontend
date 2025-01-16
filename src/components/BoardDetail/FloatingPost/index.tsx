@@ -20,7 +20,7 @@ interface FloatingPostProps {
 
 const FloatingPost = ({ count, onheartClick }: FloatingPostProps) => {
   return (
-    <div className='absolute z-10 flex flex-col items-center justify-center gap-1 p-2 rounded-full bg-sub-color top-20 right-10'>
+    <div className='fixed z-10 flex flex-col items-center justify-center gap-1 p-2 rounded-full bg-sub-color top-32 right-10'>
       <div className='flex flex-col items-center justify-center gap-1'>
         <button
           onClick={onheartClick}

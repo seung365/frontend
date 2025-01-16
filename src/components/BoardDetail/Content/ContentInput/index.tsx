@@ -1,7 +1,7 @@
 import MDEditor from '@uiw/react-md-editor'
 import '@uiw/react-md-editor/markdown-editor.css'
 import { Control, UseFormSetValue, useWatch } from 'react-hook-form'
-import { FormValues } from '../../../pages/BoardWrite'
+import { FormValues } from '../../../../pages/BoardWrite'
 import './mdeditor-styles.css'
 
 interface ContentInputProps
@@ -43,7 +43,7 @@ const ContentInput = ({
           setValue('content', value || '')
         }}
         preview='edit'
-        className='w-full min-h-full text-lg font-semibold rounded-md custom-editor border-light-gray'
+        className='w-full min-h-full text-lg rounded-md custom-editor border-light-gray'
       />
     </div>
   )
