@@ -1,11 +1,11 @@
 // id 값은 임시
 export const BOARD_CATEGORY_TABS = [
-  { path: '/board', categoryName: '전체', id: '351231' },
-  { path: '/board/community', categoryName: '자유게시판', id: '23623523' },
-  { path: '/board/programming', categoryName: '코딩 질문', id: '352342' },
-  { path: '/board/study', categoryName: '스터디', id: '324235' },
-  { path: '/board/project', categoryName: '프로젝트', id: '53243252' },
-  { path: '/board/experience', categoryName: '경험 공유', id: '2432522' },
+  { path: '/board', categoryName: '전체', id: 351231 },
+  { path: '/board/community', categoryName: '자유게시판', id: 23623523 },
+  { path: '/board/programming', categoryName: '코딩 질문', id: 352342 },
+  { path: '/board/study', categoryName: '스터디', id: 324235 },
+  { path: '/board/project', categoryName: '프로젝트', id: 53243252 },
+  { path: '/board/experience', categoryName: '경험 공유', id: 2432522 },
 ] as const
 
 export const BOARD_BANNER_CONTENTS = [
