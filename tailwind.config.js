@@ -14,6 +14,8 @@ module.exports = {
         'dark-gray': '#ABABAB',
         'light-gray': '#D9D9D9',
         'main-black': '#212529',
+        'board-dark-gray': '#333333',
+        'board-light-gray': '#F3F4F6',
       },
       fontSize: {
         'size-title': ['1.5rem', '2rem'],
