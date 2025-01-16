@@ -1,4 +1,4 @@
-import profile from '../../../assets/icons/profile.svg'
+import profile from '../../../../assets/icons/profile.svg'
 
 interface CommentBarProps {
   imageUrl?: string
