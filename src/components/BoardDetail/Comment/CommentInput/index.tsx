@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface CommentInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -19,13 +19,21 @@ const CommentInput = ({
   comment,
   onCommentChange,
 }: CommentInputProps) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
-  const handleAutoResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.scrollHeight > e.target.clientHeight) {
-      e.target.style.height = `${e.target.scrollHeight}px`
-    }
+  const handleAutoResize = () => {
+    const textarea = textareaRef.current
+    if (!textarea) return
+
+    textarea.style.height = 'auto'
+    textarea.style.height = `${textarea.scrollHeight}px`
   }
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      handleAutoResize()
+    }
+  }, [comment])
 
   return (
     <div className='w-full mt-8'>
@@ -36,7 +44,7 @@ const CommentInput = ({
         placeholder={placeholder}
         onChange={(e) => {
           onCommentChange(e.target.value)
-          handleAutoResize(e)
+          handleAutoResize()
         }}
       />
     </div>
