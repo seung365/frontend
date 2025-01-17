@@ -5,7 +5,11 @@ interface ContentBarProps {
 }
 
 const ContentBar = ({ mkdStr }: ContentBarProps) => {
-  return <MDEditor.Markdown source={mkdStr} className='w-full h-auto mt-10' />
+  return (
+    <div data-color-mode='light'>
+      <MDEditor.Markdown source={mkdStr} className='w-full h-auto mt-10' />
+    </div>
+  )
 }
 
 export default ContentBar
