@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         'main-color': '#7353EA',
         'sub-color': '#7353EA14',
+        'sub-color-2': '#C7D2FE',
         'dark-gray': '#ABABAB',
         'light-gray': '#D9D9D9',
         'main-black': '#212529',
