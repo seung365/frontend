@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   Button,
@@ -8,22 +8,30 @@ import {
   Tag,
   TitleInput,
 } from '../../components'
+import { contentTemplates } from '../../constant'
 import { categories, tagName } from '../../mocks/data'
+
+export type CategoryType = (typeof categories)[number]
 
 export interface FormValues {
   title: string
   content: string
-  category: string
+  category: CategoryType
   tags: string[]
 }
 
 const BoardWrite = () => {
   const { control, register, handleSubmit, setValue, watch } =
     useForm<FormValues>()
-
   const [open, setOpen] = useState(false)
-
   const selectedTags = watch('tags', [])
+  const selectedCategory = watch('category')
+
+  useEffect(() => {
+    if (selectedCategory && contentTemplates[selectedCategory]) {
+      setValue('content', contentTemplates[selectedCategory])
+    }
+  }, [selectedCategory, setValue])
 
   const handleTagSelect = (tag: string) => {
     const currentTags = selectedTags || []

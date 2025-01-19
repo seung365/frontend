@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { CommentInput, ContentBar, TitleBar, WriterBar } from '../../components'
+import {
+  CommentBar,
+  CommentInput,
+  ContentBar,
+  TitleBar,
+  WriterBar,
+} from '../../components'
 import { Button, FloatingPost, Tag } from '../../components/index'
 import { BoardDetailData } from '../../mocks/data'
 
@@ -56,7 +62,7 @@ const BoardDetail = () => {
       <div className='flex justify-end text-dark-gray'>조회수 {view_cnt}</div>
       <ContentBar mkdStr={content} />
       <div className='my-24'>
-        <p className='text-2xl font-semibold border-b-2 border-main-color'>
+        <p className='mb-8 text-2xl font-semibold border-b-2 border-main-color'>
           {comment_cnt}개의 댓글
         </p>
         <div className='flex flex-col items-end justify-end gap-4 mb-2'>
@@ -64,13 +70,13 @@ const BoardDetail = () => {
           <Button children='댓글 작성' onClick={handleSubmit} />
         </div>
         {comments.map((comment) => (
-          <div key={comment.id} className='mb-1 text-lg border-b-2'>
-            <WriterBar
-              profile_id={comment.nickname}
+          <div key={comment.id} className='mb-10 text-lg '>
+            <CommentBar
+              userName={comment.nickname}
               date={comment.date}
-              profile_img={comment.profile_img}
+              imageUrl={comment.profile_img}
+              comment={comment.content}
             />
-            <p>{comment.content}</p>
           </div>
         ))}
       </div>

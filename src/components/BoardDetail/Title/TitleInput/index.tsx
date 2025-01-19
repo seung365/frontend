@@ -36,7 +36,7 @@ const TitleInput = ({
             handleAutoResize(e)
           },
         })}
-        className='w-full p-2 text-lg font-semibold border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
+        className='w-full px-2 py-4 text-2xl font-medium border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
         placeholder={placeholder}
       />
     </div>
