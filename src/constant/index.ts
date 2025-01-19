@@ -82,7 +82,8 @@ export const CAREER_TERM = [
 ] as const
 
 export const contentTemplates: Record<CategoryType, string> = {
-  자유게시판: '', // 자유게시판은 빈 템플릿
+  자유게시판: `<!--자유롭게 글을 작성해주세요-->`,
+
   '코딩 질문': `### 문제 상황
 <!-- 어떤 문제가 발생했는지 설명해주세요 -->
 
