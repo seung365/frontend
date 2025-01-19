@@ -1,5 +1,4 @@
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import clip from '../../../assets/icons/clip.svg'
 import heart from '../../../assets/icons/heart.svg'
 
 interface FloatingPostProps {
@@ -31,8 +30,8 @@ const FloatingPost = ({ count, onheartClick }: FloatingPostProps) => {
         <p>{count}</p>
       </div>
       <CopyToClipboard text={window.location.href}>
-        <button className='flex items-center justify-center p-1 bg-white border-2 rounded-full w-11 h-11 hover:opacity-100 opacity-70'>
-          <img src={clip} className='w-7 h-7' />
+        <button className='flex items-center justify-center p-1 text-lg bg-white border-2 rounded-full text-main-color w-11 h-11 hover:opacity-100 opacity-70'>
+          Link
         </button>
       </CopyToClipboard>
     </div>
