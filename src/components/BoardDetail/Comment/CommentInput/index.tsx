@@ -36,7 +36,7 @@ const CommentInput = ({
   }, [comment])
 
   return (
-    <div className='w-full mt-8'>
+    <div className='w-full'>
       <textarea
         ref={textareaRef}
         value={comment}
