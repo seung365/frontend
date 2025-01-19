@@ -42,13 +42,10 @@ interface ModalProps {
 
 const Modal = ({ isOpen, onClose, content }: ModalProps) => {
   useEffect(() => {
-    // ESC 키로 모달 닫기
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
     window.addEventListener('keydown', handleEsc)
-
-    // 모달 열릴 때 body 스크롤 방지
 
     return () => {
       window.removeEventListener('keydown', handleEsc)
