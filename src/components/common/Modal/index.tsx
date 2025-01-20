@@ -44,8 +44,11 @@ interface ModalProps {
 const Modal = ({ isOpen, onClose, content }: ModalProps) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+      }
     }
+
     window.addEventListener('keydown', handleEsc)
 
     if (isOpen) {
@@ -54,22 +57,27 @@ const Modal = ({ isOpen, onClose, content }: ModalProps) => {
 
     return () => {
       window.removeEventListener('keydown', handleEsc)
-      document.body.style.overflow = 'unset'
+      if (!isOpen) {
+        document.body.style.overflow = 'auto'
+      }
     }
-  }, [onClose, isOpen])
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
   const modalContent = (
     <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
+      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 '
       onClick={onClose}
       role='dialog'
       aria-modal='true'
     >
       <div
-        className='w-full max-w-md p-6 mx-4 bg-white rounded-lg'
-        onClick={(e) => e.stopPropagation()}
+        className='w-full max-w-md p-6 mx-4 overflow-y-auto bg-white rounded-lg'
+        onClick={(e) => {
+          e.stopPropagation()
+          e.preventDefault()
+        }}
       >
         {content}
       </div>
