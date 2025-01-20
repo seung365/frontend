@@ -61,6 +61,12 @@ export const TAGS_NAME = [
   '정규직',
 ] as const
 
+export const PROFILE_MENU_TABS = [
+  { tab: '프로필', query: '' },
+  { tab: '작성 게시물', query: '?tab=board' },
+  { tab: '이력서', query: '?tab=resume' },
+] as const
+
 export const SKILL_LIST = [
   'Python',
   'JavaScript',
