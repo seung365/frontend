@@ -152,3 +152,4 @@ export const contentTemplates: Record<CategoryType, string> = {
 <!-- 관련된 참고 자료가 있다면 공유해주세요 -->
 `,
 }
+
