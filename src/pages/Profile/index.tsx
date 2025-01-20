@@ -1,5 +1,12 @@
+import { ProfileContents, ProfileMenuTab } from '../../components'
+
 const Profile = () => {
-  return <>상대프로필</>
+  return (
+    <section className='flex w-full h-full py-10'>
+      <ProfileMenuTab />
+      <ProfileContents />
+    </section>
+  )
 }
 
 export default Profile
