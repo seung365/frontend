@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
 interface ModalProps {
   isOpen: boolean
@@ -47,15 +48,19 @@ const Modal = ({ isOpen, onClose, content }: ModalProps) => {
     }
     window.addEventListener('keydown', handleEsc)
 
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    }
+
     return () => {
       window.removeEventListener('keydown', handleEsc)
       document.body.style.overflow = 'unset'
     }
-  }, [onClose])
+  }, [onClose, isOpen])
 
   if (!isOpen) return null
 
-  return (
+  const modalContent = (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
       onClick={onClose}
@@ -70,6 +75,10 @@ const Modal = ({ isOpen, onClose, content }: ModalProps) => {
       </div>
     </div>
   )
-}
 
+  return ReactDOM.createPortal(
+    modalContent,
+    document.getElementById('modal-root') || document.body,
+  )
+}
 export default Modal

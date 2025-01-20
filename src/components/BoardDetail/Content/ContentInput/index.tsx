@@ -1,4 +1,9 @@
-import MDEditor from '@uiw/react-md-editor'
+import MDEditor, {
+  commands,
+  ICommand,
+  TextAreaTextApi,
+  TextState,
+} from '@uiw/react-md-editor'
 import '@uiw/react-md-editor/markdown-editor.css'
 import { Control, UseFormSetValue, useWatch } from 'react-hook-form'
 import { FormValues } from '../../../../pages/BoardWrite'
@@ -32,6 +37,36 @@ const ContentInput = ({
     defaultValue: '',
   })
 
+  const defaultCommands = commands
+    .getCommands()
+    .filter((cmd) => cmd.name !== 'image')
+
+  const customImageCommand: ICommand = {
+    name: 'image',
+    keyCommand: 'image',
+    buttonProps: { 'aria-label': 'Insert image' },
+    icon: <span>Image</span>,
+    execute: (state: TextState, api: TextAreaTextApi) => {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'image/*'
+
+      input.onchange = async (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (!file) return
+
+        // 파일 업로드 로직
+        const formData = new FormData()
+        formData.append('image', file)
+
+        console.log(state, api)
+      }
+
+      // 파일 선택 다이얼로그 오픈
+      input.click()
+    },
+  }
+
   return (
     <div className='relative w-full h-screen' data-color-mode='light'>
       <MDEditor
@@ -44,6 +79,7 @@ const ContentInput = ({
         }}
         preview='edit'
         className='w-full min-h-full text-lg custom-editor border-light-gray'
+        commands={[...defaultCommands, customImageCommand]}
       />
     </div>
   )
