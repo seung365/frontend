@@ -13,8 +13,11 @@ const usePostToken = () => {
 
       const response = await publicInstance.post<PostTokenResponse>('/reissue')
       console.log('성공 응답:', response)
-      if (response.data.access) {
-        localStorage.setItem('accessToken', response.data.access)
+      const accessToken = response.headers.access
+      console.log('발급된 토큰:', accessToken)
+
+      if (accessToken) {
+        localStorage.setItem('accessToken', accessToken)
       }
     } catch (error) {
       console.error('토큰 재발급 에러:', error)
