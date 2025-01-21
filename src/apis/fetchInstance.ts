@@ -7,6 +7,7 @@ const authInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
 authInstance.interceptors.request.use((config) => {
@@ -23,6 +24,7 @@ const publicInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
 export { authInstance, publicInstance }
