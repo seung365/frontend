@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   CommentBar,
@@ -18,13 +18,16 @@ const BoardDetail = () => {
     window.scrollTo(0, 0)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (comment.trim()) {
-      console.log(comment)
-      setComment('')
-    }
-  }
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault()
+      if (comment.trim()) {
+        console.log(comment)
+        setComment('')
+      }
+    },
+    [comment],
+  )
 
   const {
     title,
