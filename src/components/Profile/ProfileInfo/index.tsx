@@ -1,6 +1,13 @@
 import { useState } from 'react'
+
 import EditIcon from '../../../assets/icons/edit.svg?react'
-import { Button, Modal, StatItem } from '../../../components'
+import {
+  Button,
+  Modal,
+  ProfileEdit,
+  ProfileHeatMap,
+  StatItem,
+} from '../../../components'
 
 interface ProfileInfoProps {
   isMyProfile: boolean
@@ -36,7 +43,7 @@ const ProfileInfo = ({
     setIsEditOpen(false)
   }
   return (
-    <section>
+    <section className='flex flex-col'>
       <h1 className='mb-3 text-main-black text-size-title text-semibold'>
         👨🏻‍💻 프로필
       </h1>
@@ -75,15 +82,24 @@ const ProfileInfo = ({
           </p>
         </section>
       </section>
+      <section className='flex flex-col w-full gap-4 mt-5 '>
+        <h1 className='text-main-black'>
+          🔥 올해 <b>{nickName}</b> 님의 잔디는 이만큼 자랐어요!
+        </h1>
+        <ProfileHeatMap boardStatistics={boardStatistics} />
+      </section>
       {isEditOpen && (
         <Modal
           isOpen={isEditOpen}
           content={
-            <form>
-              <Button onClick={handleModalClose}>닫기</Button>
-            </form>
+            <ProfileEdit
+              nickName={nickName}
+              profileImg={profileImg}
+              about={about}
+              onCloseModal={handleModalClose}
+            />
           }
-          onClose={() => console.log(isEditOpen)}
+          onClose={handleModalClose}
         />
       )}
     </section>
