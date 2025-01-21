@@ -1,22 +1,32 @@
-import ReactCalendarHeatmap from 'react-calendar-heatmap'
+import ReactCalendarHeatmap, { TooltipDataAttrs } from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
+import { Tooltip } from 'react-tooltip'
 import '../../../styles/profileHeatMap.css'
 
+type HeatMapValue = {
+  date: string
+  board_count: number
+}
+
+type CustomTooltipDataAttrs = TooltipDataAttrs & {
+  'data-tooltip-content': string
+  'data-tooltip-id': string
+}
+
 interface ProfileHeatMapProps {
-  boardStatistics: { date: string; board_count: number }[]
+  boardStatistics: HeatMapValue[]
 }
 
 const ProfileHeatMap = ({ boardStatistics }: ProfileHeatMapProps) => {
-  // 오늘 날짜 가져오기
   const today = new Date()
 
-  // 이번 달의 첫 번째 날짜 계산
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
-  // 이번 달의 마지막 날짜 계산
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+  const firstDayOfYear = new Date(today.getFullYear(), 0, 1)
 
-  // Heatmap에 사용할 스타일 옵션
-  const getClassForValue = (value) => {
+  const lastDayOfYear = new Date(today.getFullYear(), 11, 31)
+
+  const getClassForValue = (
+    value: ReactCalendarHeatmap.ReactCalendarHeatmapValue<string> | undefined,
+  ) => {
     if (!value || value.board_count === 0) return 'color-empty'
     if (value.board_count <= 2) return 'color-scale-1'
     if (value.board_count <= 5) return 'color-scale-2'
@@ -25,17 +35,29 @@ const ProfileHeatMap = ({ boardStatistics }: ProfileHeatMapProps) => {
   }
 
   return (
-    <ReactCalendarHeatmap
-      startDate={firstDayOfMonth}
-      endDate={lastDayOfMonth}
-      values={boardStatistics}
-      classForValue={getClassForValue}
-      // tooltipDataAttrs={(value) => ({
-      //   'data-tip': value.date
-      //     ? `${value.date}: ${value.board_count} posts`
-      //     : 'No data',
-      // })}
-    />
+    <>
+      <ReactCalendarHeatmap
+        startDate={firstDayOfYear}
+        endDate={lastDayOfYear}
+        values={boardStatistics}
+        classForValue={getClassForValue}
+        tooltipDataAttrs={(
+          value:
+            | ReactCalendarHeatmap.ReactCalendarHeatmapValue<string>
+            | undefined,
+        ): CustomTooltipDataAttrs => {
+          const tooltip = value?.date
+            ? `${value.date}: ${value.board_count} posts`
+            : '작성한 포스트가 없습니다.'
+
+          return {
+            'data-tooltip-id': 'heatmap-tooltip',
+            'data-tooltip-content': tooltip,
+          }
+        }}
+      />
+      <Tooltip id='heatmap-tooltip' />
+    </>
   )
 }
 

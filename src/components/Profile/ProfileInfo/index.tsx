@@ -82,6 +82,12 @@ const ProfileInfo = ({
           </p>
         </section>
       </section>
+      <section className='flex flex-col w-full gap-4 mt-5 '>
+        <h1 className='text-main-black'>
+          🔥 올해 <b>{nickName}</b> 님의 잔디는 이만큼 자랐어요!
+        </h1>
+        <ProfileHeatMap boardStatistics={boardStatistics} />
+      </section>
       {isEditOpen && (
         <Modal
           isOpen={isEditOpen}
@@ -96,9 +102,6 @@ const ProfileInfo = ({
           onClose={handleModalClose}
         />
       )}
-      <section className='w-full'>
-        <ProfileHeatMap boardStatistics={boardStatistics} />
-      </section>
     </section>
   )
 }
