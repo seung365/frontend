@@ -1,8 +1,7 @@
-import { ButtonHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     React.PropsWithChildren {
   size?: 'small' | 'medium' | 'large'
   theme?: 'light' | 'dark'

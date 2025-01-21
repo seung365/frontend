@@ -1,83 +1,102 @@
 import { Link } from 'react-router-dom'
 import HeartFillIcon from '../../../../assets/icons/heart-fill.svg?react'
-
+import findCategoryPath from '../../../../utils/findCategoryPath'
+import formatDateString from '../../../../utils/formatDate'
+import StatItem from '../../StatItem'
 /*
 BardCard 컴포넌트
 -메인 페이지, Board 페이지, Profile 페이지에 들어갈 예정
 */
 
 interface BoardCardProps {
-  id: string
+  id: number
   title: string
-  contentImg: string
+  thumbnail?: string
   content: string
-  category: string
+  categoryId: number
+  categoryName: string
   date: string
-  likeCnt: number
+  upCnt: number
   commentCnt: number
   viewCnt: number
-  profileId: string
   profileImg: string
-  nickname: string
+  nickName: string
+  tags: string[]
 }
 
 const BoardCard = ({
   id,
   title,
   content,
-  contentImg,
-  category,
+  thumbnail,
+  categoryId,
+  categoryName,
   date,
-  likeCnt,
+  upCnt,
   commentCnt,
   viewCnt,
-  profileId,
   profileImg,
-  nickname,
+  nickName,
+  tags,
 }: BoardCardProps) => {
   return (
-    <Link to={`/board/${category}/${id}`}>
-      <section className='w-auto h-auto'>
-        <img
-          src={contentImg}
-          alt='게시글 이미지'
-          className='object-cover w-full cursor-pointer h-3/5 rounded-xl'
-        />
-        <div className='flex flex-col gap-2 p-2'>
-          <span className='px-1 py-1 rounded-lg w-fit text-size-subbody bg-sub-color text-main-color'>
-            {category}
-          </span>
-          <span className='text-main-black line-clamp-1'>{title}</span>
-          <p className='text-[14px] text-dark-gray line-clamp-3 min-h-16'>
-            {content}
-          </p>
+    <Link to={`${findCategoryPath(categoryId)}/${id}`}>
+      <section className='w-auto min-h-[450px] rounded-xl border-[1px] flex flex-col'>
+        <section className='flex-grow-[7] flex-shrink-0 h-4/5 flex flex-col'>
+          <div className='w-full h-2/5'>
+            {thumbnail && (
+              <img
+                src={thumbnail}
+                alt='게시글 이미지'
+                className='object-cover w-full h-full cursor-pointer rounded-xl'
+              />
+            )}
+          </div>
+          <div className='flex flex-col flex-grow gap-2 p-2'>
+            <span className='font-semibold text-size-subbody text-main-color'>
+              {categoryName}
+            </span>
+            <span className='text-main-black line-clamp-1'>{title}</span>
+            <p className='text-[14px] text-dark-gray line-clamp-3 min-h-16'>
+              {content}
+            </p>
+          </div>
+        </section>
+        <section className='flex-grow-[3] flex-shrink-0 p-2 flex flex-col justify-end gap-1'>
+          <div className='flex gap-2 overflow-hidden whitespace-nowrap line-clamp-1'>
+            {tags.map((tag) => (
+              <span
+                className='px-[4px] py-[2px] rounded-xl text-[10px] text-main-color bg-sub-color'
+                key={tag}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
           <div className='text-size-subbody text-[#898E96] flex justify-between items-center'>
-            <div className='flex items-center gap-1'>
-              <span>{date}</span>
-              <span>·</span>
-              <span>{commentCnt}개의 댓글</span>
-              <span>·</span>
-              <span>조회수 {viewCnt}</span>
+            <div className='flex items-center gap-3'>
+              <StatItem label={formatDateString(date)} />
+              <StatItem label='댓글' value={commentCnt} />
+              <StatItem label='조회수' value={viewCnt} />
             </div>
-            <div className='flex items-center gap-1'>
+
+            <div className='flex items-center gap-1 text-main-black'>
               <HeartFillIcon />
-              <span className='text-main-black'>{likeCnt}</span>
+              <StatItem value={upCnt} />
             </div>
           </div>
-          <Link to={`/profile/${profileId}`}>
-            <div className='flex items-center gap-2'>
-              <img
-                className='object-cover w-8 h-8 rounded-full'
-                src={profileImg}
-                alt='프로필 이미지'
-              />
 
-              <span className='text-size-subbody truncate text-[#898E96]'>
-                by <b className='text-main-black'>{nickname}</b>
-              </span>
-            </div>
-          </Link>
-        </div>
+          <div className='flex items-center gap-2'>
+            <img
+              className='object-cover w-6 h-6 rounded-full'
+              src={profileImg}
+              alt='프로필 이미지'
+            />
+            <span className='text-size-subbody truncate text-[#898E96]'>
+              by <b className='text-main-black'>{nickName}</b>
+            </span>
+          </div>
+        </section>
       </section>
     </Link>
   )

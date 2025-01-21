@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
 interface ModalProps {
   isOpen: boolean
@@ -42,37 +43,50 @@ interface ModalProps {
 
 const Modal = ({ isOpen, onClose, content }: ModalProps) => {
   useEffect(() => {
-    // ESC 키로 모달 닫기
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+      }
     }
+
     window.addEventListener('keydown', handleEsc)
 
-    // 모달 열릴 때 body 스크롤 방지
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    }
 
     return () => {
       window.removeEventListener('keydown', handleEsc)
-      document.body.style.overflow = 'unset'
+      if (!isOpen) {
+        document.body.style.overflow = 'auto'
+      }
     }
-  }, [onClose])
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
-  return (
+  const modalContent = (
     <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
+      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 '
       onClick={onClose}
       role='dialog'
       aria-modal='true'
     >
       <div
-        className='w-full max-w-md p-6 mx-4 bg-white rounded-lg'
-        onClick={(e) => e.stopPropagation()}
+        className='w-full max-w-md p-6 mx-4 overflow-y-auto bg-white rounded-lg'
+        onClick={(e) => {
+          e.stopPropagation()
+          e.preventDefault()
+        }}
       >
         {content}
       </div>
     </div>
   )
-}
 
+  return ReactDOM.createPortal(
+    modalContent,
+    document.getElementById('modal-root') || document.body,
+  )
+}
 export default Modal
