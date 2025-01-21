@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { Layout } from '../components'
 import Board from '../pages/Board'
 import BoardDetail from '../pages/BoardDetail'
@@ -10,6 +10,8 @@ import My from '../pages/My'
 import Profile from '../pages/Profile'
 import Resume from '../pages/Resume'
 import SignIn from '../pages/SignIn'
+import { RouterPath } from './path'
+import { ProtectedRoute } from './ProtectedRoute'
 
 export const Routes = () => {
   return <RouterProvider router={router} />
@@ -22,28 +24,36 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       {
-        path: 'board',
+        path: RouterPath.board,
         children: [
           { index: true, element: <Board /> },
-          { path: ':categoryName', element: <Board /> },
-          { path: ':categoryName/:id', element: <BoardDetail /> },
-          { path: 'write', element: <BoardWrite /> },
-          { path: 'write/:id', element: <BoardEdit /> },
+          { path: `:${RouterPath.categoryName}`, element: <Board /> },
+          {
+            path: `:${RouterPath.categoryName}/:${RouterPath.id}`,
+            element: <BoardDetail />,
+          },
+          { path: RouterPath.write, element: <BoardWrite /> },
+          {
+            path: `${RouterPath.write}/:${RouterPath.id}`,
+            element: <BoardEdit />,
+          },
         ],
       },
       {
-        path: 'my',
+        path: RouterPath.my,
+        element: <ProtectedRoute />,
         children: [
           { index: true, element: <My /> },
-          { path: 'resume', element: <Resume /> },
+          { path: RouterPath.resume, element: <Resume /> },
         ],
       },
-      { path: 'profile/:id', element: <Profile /> },
-      { path: 'hub', element: <Hub /> },
+      { path: RouterPath.profile, element: <Profile /> },
+      { path: RouterPath.hub, element: <Hub /> },
+      { path: RouterPath.notFound, element: <Navigate to={RouterPath.home} /> },
     ],
   },
   {
-    path: 'signin',
+    path: RouterPath.signin,
     element: <SignIn />,
   },
 ])
