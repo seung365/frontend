@@ -1,13 +1,13 @@
 .react-calendar-heatmap {
-  max-width: 600px; /* 최대 너비 */
-  max-height: 400px; /* 최대 높이 */
-  width: 100%; /* 비율 유지 */
+  max-width: 800px;
+  max-height: 500px;
+  width: 100%;
 }
 
 .react-calendar-heatmap rect {
-  width: 10px; /* 셀의 너비 */
-  height: 10px; /* 셀의 높이 */
-  margin: 2px; /* 셀 간격 */
+  width: 10px;
+  height: 10px;
+  margin: 2px;
 }
 
 .react-calendar-heatmap-all-weeks {
