@@ -14,8 +14,14 @@ import { categories, tagName } from '../../mocks/data'
 import { FormValues, tagType } from '../../types'
 
 const BoardWrite = () => {
-  const { control, register, handleSubmit, setValue, watch } =
-    useForm<FormValues>()
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>()
   const [open, setOpen] = useState(false)
   const selectedTags = watch('tags', [])
   const selectedCategory = watch('categoryId')
@@ -43,6 +49,7 @@ const BoardWrite = () => {
   }
 
   const onClickSubmit = (data: FormValues) => {
+    console.log('게시글 작성 데이터:', data)
     mutate(data)
   }
 
@@ -62,6 +69,7 @@ const BoardWrite = () => {
             options={categories}
             control={control}
             name='categoryId'
+            rules={{ required: '카테고리를 선택해주세요' }}
           />
           <Button
             children='태그 선택'
@@ -105,9 +113,18 @@ const BoardWrite = () => {
           ))}
         </div>
       </div>
-      <TitleInput register={register} setValue={setValue} />
+      <TitleInput
+        register={register}
+        setValue={setValue}
+        rules={{ required: '제목을 입력해주세요' }}
+        error={errors.title}
+      />
       <div className='mt-3'>
-        <ContentInput control={control} setValue={setValue} />
+        <ContentInput
+          control={control}
+          setValue={setValue}
+          rules={{ required: '본문을 입력해주세요' }}
+        />
       </div>
       <div className='flex justify-end mt-5'>
         <Button type='submit' children='게시하기' />
