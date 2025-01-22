@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { publicInstance } from '../fetchInstance'
 
 type PostTokenResponse = {
@@ -7,7 +6,7 @@ type PostTokenResponse = {
 }
 
 const usePostToken = () => {
-  const postToken = useCallback(async () => {
+  const postToken = async () => {
     try {
       console.log('현재 쿠키:', document.cookie)
 
@@ -23,7 +22,7 @@ const usePostToken = () => {
       console.error('토큰 재발급 에러:', error)
       console.error('상세 에러:', error)
     }
-  }, [])
+  }
 
   return postToken
 }
