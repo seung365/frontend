@@ -7,14 +7,15 @@ interface PostBoardRequest {
   title: string
   content: string
   categoryId: number
-  tags: string[] // API 요청시 string[] 형태로
+  tags: string[]
 }
 
 const postBoard = async (formData: FormValues): Promise<BoardResponse> => {
-  console.log('원본 formData:', formData.tags)
   const requestData: PostBoardRequest = {
-    ...formData,
-    tags: formData.tags.map((tag) => tag.tagName), // tagName만 추출하여 배열로 변환
+    title: formData.title,
+    content: formData.content,
+    categoryId: formData.categoryId,
+    tags: formData.tags?.map((tag) => tag.tagName) || [],
   }
 
   const response = await authInstance.post('/board', requestData)
