@@ -1,5 +1,7 @@
+import { QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import usePostToken from './apis/member/usePostToken'
+import queryClient from './apis/queryClient'
 import { Routes } from './routes'
 import './styles/global.css'
 
@@ -18,7 +20,11 @@ const App = () => {
     getToken()
   }, [postToken])
 
-  return <Routes />
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Routes />
+    </QueryClientProvider>
+  )
 }
 
 export default App
