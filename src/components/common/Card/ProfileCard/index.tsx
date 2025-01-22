@@ -20,7 +20,7 @@ const ProfileCard = ({
 }: ProfileCardProps) => {
   return (
     <Link to={`/profile/${profileId}`}>
-      <section className='w-full min-h-72'>
+      <section className='w-full min-h-52  border-[1px] rounded-xl'>
         <img
           src={profileImg}
           alt='프로필 이미지'

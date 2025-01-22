@@ -1,12 +1,12 @@
 import { CategoryType } from '../pages/BoardWrite'
 
 export const BOARD_CATEGORY_TABS = [
-  { path: '/board', categoryName: '전체', id: 351231 },
-  { path: '/board/community', categoryName: '자유게시판', id: 23623523 },
-  { path: '/board/programming', categoryName: '코딩 질문', id: 352342 },
-  { path: '/board/study', categoryName: '스터디', id: 324235 },
-  { path: '/board/project', categoryName: '프로젝트', id: 53243252 },
-  { path: '/board/experience', categoryName: '경험 공유', id: 2432522 },
+  { path: '/board', categoryName: '전체', id: 6 },
+  { path: '/board/community', categoryName: '자유게시판', id: 1 },
+  { path: '/board/programming', categoryName: '코딩 질문', id: 2 },
+  { path: '/board/study', categoryName: '스터디 구인', id: 3 },
+  { path: '/board/project', categoryName: '프로젝트 구인', id: 4 },
+  { path: '/board/experience', categoryName: '경험 공유', id: 5 },
 ] as const
 
 export const BOARD_BANNER_CONTENTS = [
@@ -152,4 +152,3 @@ export const contentTemplates: Record<CategoryType, string> = {
 <!-- 관련된 참고 자료가 있다면 공유해주세요 -->
 `,
 }
-
