@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import HeartFillIcon from '../../../../assets/icons/heart-fill.svg?react'
-import findCategoryPath from '../../../../utils/findCategoryPath'
+import { RouterPath } from '../../../../routes/path'
 import formatDateString from '../../../../utils/formatDate'
 import StatItem from '../../StatItem'
 /*
@@ -29,7 +29,6 @@ const BoardCard = ({
   title,
   content,
   thumbnail,
-  categoryId,
   categoryName,
   date,
   upCnt,
@@ -40,7 +39,7 @@ const BoardCard = ({
   tags,
 }: BoardCardProps) => {
   return (
-    <Link to={`${findCategoryPath(categoryId)}/${id}`}>
+    <Link to={`/${RouterPath.board}/${RouterPath.detail}/${id}`}>
       <section className='w-auto min-h-[450px] rounded-xl border-[1px] flex flex-col'>
         <section className='flex-grow-[7] flex-shrink-0 h-4/5 flex flex-col'>
           <div className='w-full h-2/5'>
