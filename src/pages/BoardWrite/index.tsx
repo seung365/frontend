@@ -1,31 +1,33 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import usePostBoard from '../../apis/board/usePostBoard.ts'
 import {
   Button,
   ContentInput,
   Dropdown,
+  Loader,
   Modal,
   Tag,
   TitleInput,
 } from '../../components'
 import { contentTemplates } from '../../constant'
 import { categories, tagName } from '../../mocks/data'
-
-export type CategoryType = (typeof categories)[number]
-
-export interface FormValues {
-  title: string
-  content: string
-  category: CategoryType
-  tags: string[]
-}
+import { FormValues, tagType } from '../../types'
 
 const BoardWrite = () => {
-  const { control, register, handleSubmit, setValue, watch } =
-    useForm<FormValues>()
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>()
   const [open, setOpen] = useState(false)
   const selectedTags = watch('tags', [])
-  const selectedCategory = watch('category')
+  const selectedCategory = watch('categoryId')
+
+  const { mutate, status } = usePostBoard()
 
   useEffect(() => {
     if (selectedCategory && contentTemplates[selectedCategory]) {
@@ -33,14 +35,14 @@ const BoardWrite = () => {
     }
   }, [selectedCategory, setValue])
 
-  const handleTagSelect = (tag: string) => {
+  const handleTagSelect = (tag: tagType) => {
     const currentTags = selectedTags || []
-    const isTagSelected = currentTags.includes(tag)
+    const isTagSelected = currentTags.some((t) => t.tagId === tag.tagId)
 
     if (isTagSelected) {
       setValue(
         'tags',
-        currentTags.filter((currentTag) => currentTag !== tag),
+        currentTags.filter((currentTag) => currentTag.tagId !== tag.tagId),
       )
     } else {
       setValue('tags', [...currentTags, tag])
@@ -48,7 +50,17 @@ const BoardWrite = () => {
   }
 
   const onClickSubmit = (data: FormValues) => {
-    console.log(data)
+    console.log('게시글 작성 데이터:', data)
+    mutate(data)
+  }
+
+  if (status === 'pending') {
+    return (
+      <div className='flex items-center justify-center min-h-screen'>
+        <Loader />
+        <span className='ml-3 text-lg text-gray-700'>Loading...</span>
+      </div>
+    )
   }
 
   return (
@@ -62,7 +74,8 @@ const BoardWrite = () => {
             placeholder='카테고리 선택'
             options={categories}
             control={control}
-            name='category'
+            name='categoryId'
+            rules={{ required: '카테고리를 선택해주세요' }}
           />
           <Button
             children='태그 선택'
@@ -77,32 +90,47 @@ const BoardWrite = () => {
             <div className='p-5'>
               <h1>태그 선택</h1>
               <div className='flex flex-wrap gap-2 mt-3'>
-                {tagName.map((name) => (
+                {tagName.map((tag) => (
                   <Button
-                    children={name}
-                    key={name}
+                    children={tag.tagName}
+                    key={tag.tagId}
                     type='button'
-                    onClick={() => handleTagSelect(name)}
-                    theme={selectedTags.includes(name) ? 'dark' : 'light'}
+                    onClick={() => handleTagSelect(tag)}
+                    theme={
+                      selectedTags.some((t) => t.tagId === tag.tagId)
+                        ? 'dark'
+                        : 'light'
+                    }
                   />
                 ))}
               </div>
             </div>
           }
         />
-        <div className='flex gap-2 mt-2'>
+        <div className='flex flex-wrap gap-2 mt-2'>
           {selectedTags.map((tag) => (
             <Tag
-              key={tag}
-              onClick={() => handleTagSelect(tag)}
               type='button'
-            >{`${tag} ×`}</Tag>
+              key={tag.tagId}
+              tagName={`${tag.tagName} ⨉`}
+              tagId={tag.tagId}
+              onClick={() => handleTagSelect(tag)}
+            />
           ))}
         </div>
       </div>
-      <TitleInput register={register} setValue={setValue} />
+      <TitleInput
+        register={register}
+        setValue={setValue}
+        rules={{ required: '제목을 입력해주세요' }}
+        error={errors.title}
+      />
       <div className='mt-3'>
-        <ContentInput control={control} setValue={setValue} />
+        <ContentInput
+          control={control}
+          setValue={setValue}
+          rules={{ required: '본문을 입력해주세요' }}
+        />
       </div>
       <div className='flex justify-end mt-5'>
         <Button type='submit' children='게시하기' />

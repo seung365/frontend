@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import heart from '../../../assets/icons/heart.svg'
+import { twMerge } from 'tailwind-merge'
+import Heart from '../../../assets/icons/heart.svg?react'
 
 interface FloatingPostProps {
   count: number
-  onheartClick?: () => void
+  onheartClick: () => void
 }
 
 /**
@@ -18,14 +20,26 @@ interface FloatingPostProps {
  */
 
 const FloatingPost = ({ count, onheartClick }: FloatingPostProps) => {
+  const [isLiked, setIsLiked] = useState(false)
+
+  const handleHeartClick = () => {
+    onheartClick()
+    setIsLiked(!isLiked)
+  }
+
   return (
     <div className='fixed z-10 flex flex-col items-center justify-center gap-1 p-2 rounded-full bg-sub-color top-32 right-10'>
       <div className='flex flex-col items-center justify-center gap-1'>
         <button
-          onClick={onheartClick}
-          className='flex items-center justify-center p-1 bg-white border-2 rounded-full w-11 h-11 hover:opacity-100 opacity-70'
+          onClick={handleHeartClick}
+          className='flex items-center justify-center p-1 bg-white border-2 rounded-full w-11 h-11 hover:opacity-100 opacity-80'
         >
-          <img src={heart} className='w-6 h-6' />
+          <Heart
+            className={twMerge(
+              'w-6 h-6',
+              isLiked ? 'text-main-color' : 'text-gray-400',
+            )}
+          />
         </button>
         <p>{count}</p>
       </div>

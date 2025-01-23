@@ -1,6 +1,6 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import usePostToken from './apis/member/usePostToken'
+import usePostToken from './apis/member/usePostToken.ts'
 import queryClient from './apis/queryClient'
 import { Routes } from './routes'
 import './styles/global.css'
