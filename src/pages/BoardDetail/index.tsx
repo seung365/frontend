@@ -33,7 +33,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
   const createdDate = `${date.getFullYear()}년 ${
     date.getMonth() + 1
   }월 ${date.getDate()}일`
-  const commentDate = new Date(data.comment[0].createdAt)
+  const commentDate = new Date(data.comment[0]?.createdAt)
   const commentCreatedDate = `${commentDate.getFullYear()}년 ${
     commentDate.getMonth() + 1
   }월 ${commentDate.getDate()}일`
