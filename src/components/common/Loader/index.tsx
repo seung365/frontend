@@ -1,9 +1,18 @@
-const Loader = () => {
+type LoaderProps = {
+  size?: 's' | 'm' | 'l'
+}
+
+const Loader = ({ size = 'm' }: LoaderProps) => {
+  const sizeClasses = {
+    s: 'w-8 h-8',
+    m: 'w-12 h-12',
+    l: 'w-16 h-16',
+  }
+
   return (
-    <div className='flex items-center justify-center min-h-screen'>
-      <div className='w-12 h-12 border-4 border-gray-300 rounded-full border-t-main-color animate-spin'></div>
-      <span className='ml-3 text-lg text-gray-700'>Loading...</span>
-    </div>
+    <div
+      className={`${sizeClasses[size]} border-4 border-gray-300 rounded-full border-t-main-color animate-spin`}
+    />
   )
 }
 
