@@ -1,10 +1,12 @@
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form'
-import { FormValues } from '../../../../pages/BoardWrite'
+import { FieldError, UseFormRegister, UseFormSetValue } from 'react-hook-form'
+import { FormValues } from '../../../../types'
 
 interface TitleInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   register: UseFormRegister<FormValues>
   setValue: UseFormSetValue<FormValues>
+  rules?: object
+  error?: FieldError
 }
 
 /**
@@ -21,6 +23,8 @@ const TitleInput = ({
   placeholder = '제목을 입력해 주세요.',
   register,
   setValue,
+  rules,
+  error,
 }: TitleInputProps) => {
   const handleAutoResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target
@@ -31,6 +35,7 @@ const TitleInput = ({
     <div className='w-full mt-8'>
       <textarea
         {...register('title', {
+          ...rules,
           onChange: (e) => {
             setValue('title', e.target.value)
             handleAutoResize(e)
@@ -39,6 +44,7 @@ const TitleInput = ({
         className='w-full px-2 py-4 text-2xl font-medium border rounded-md resize-none border-light-gray cursor-text focus:outline-none'
         placeholder={placeholder}
       />
+      {error && <p className='mt-1 text-sm text-red-500'>{error.message}</p>}
     </div>
   )
 }
