@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-import useGetBoardDetail from '../../apis/board/useGetBoardDetail'
-import usePatchBoard from '../../apis/board/usePatchBoard'
+import useGetBoardDetail from '../../apis/board/useGetBoardDetail.ts'
+import usePatchBoard from '../../apis/board/usePatchBoard.ts'
 import {
   Button,
   ContentInput,

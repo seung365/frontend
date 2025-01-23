@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import usePostBoard from '../../apis/board/usePostBoard'
+import usePostBoard from '../../apis/board/usePostBoard.ts'
 import {
   Button,
   ContentInput,
