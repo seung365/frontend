@@ -17,6 +17,8 @@ export interface Comment {
   nickName: string
   profileImage: string
   createdAt: string
+  commentCnt: number
+  parentCommentId: number
 }
 
 export interface BoardResponse {
