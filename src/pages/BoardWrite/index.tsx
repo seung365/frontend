@@ -5,6 +5,7 @@ import {
   Button,
   ContentInput,
   Dropdown,
+  Loader,
   Modal,
   Tag,
   TitleInput,
@@ -54,7 +55,12 @@ const BoardWrite = () => {
   }
 
   if (status === 'pending') {
-    return <div>로딩 중...</div>
+    return (
+      <div className='flex items-center justify-center min-h-screen'>
+        <Loader />
+        <span className='ml-3 text-lg text-gray-700'>Loading...</span>
+      </div>
+    )
   }
 
   return (
@@ -101,7 +107,7 @@ const BoardWrite = () => {
             </div>
           }
         />
-        <div className='flex gap-2 mt-2'>
+        <div className='flex flex-wrap gap-2 mt-2'>
           {selectedTags.map((tag) => (
             <Tag
               type='button'
