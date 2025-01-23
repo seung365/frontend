@@ -3,6 +3,7 @@ export const RouterPath = {
   board: 'board',
   categoryName: 'categoryName',
   id: 'id',
+  detail: 'detail',
   write: 'write',
   my: 'my',
   resume: 'resume',
