@@ -1,7 +1,6 @@
 import { CategoryType } from '../pages/BoardWrite'
 
 export const BOARD_CATEGORY_TABS = [
-  { path: '/board', categoryName: '전체', id: 6 },
   { path: '/board/community', categoryName: '자유게시판', id: 1 },
   { path: '/board/programming', categoryName: '코딩 질문', id: 2 },
   { path: '/board/study', categoryName: '스터디 구인', id: 3 },
@@ -28,12 +27,12 @@ export const BOARD_BANNER_CONTENTS = [
   },
   {
     path: '/board/study',
-    title: '스터디',
+    title: '스터디 구인',
     description: '📚 함께 배우고 성장하는 개발 학습의 시작점입니다.',
   },
   {
     path: '/board/project',
-    title: '프로젝트',
+    title: '프로젝트 구인',
     description: '🛠️ 창의적인 아이디어를 현실로 만들어가는 공간입니다.',
   },
   {
