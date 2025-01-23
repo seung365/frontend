@@ -5,6 +5,7 @@ import useGetBoardDetail from '../../apis/board/useGetBoardDetail.ts'
 
 import useDeleteBoard from '../../apis/board/useDeleteBoard.ts'
 import usePostRecommendation from '../../apis/board/usePostRecommendation.ts'
+import usePostComment from '../../apis/comment/usePostComment.ts'
 import queryClient from '../../apis/queryClient'
 import {
   Button,
@@ -17,6 +18,7 @@ import {
   TitleBar,
   WriterBar,
 } from '../../components/index'
+import formatDate from '../../utils/formatDate'
 
 const BoardDetailContent = ({ id }: { id: string }) => {
   if (!id) {
@@ -29,24 +31,23 @@ const BoardDetailContent = ({ id }: { id: string }) => {
 
   const { data } = useGetBoardDetail(id)
   const { mutate, status } = useDeleteBoard()
-  const date = new Date(data.createdAt)
-  const createdDate = `${date.getFullYear()}년 ${
-    date.getMonth() + 1
-  }월 ${date.getDate()}일`
-  const commentDate = new Date(data.comment[0]?.createdAt)
-  const commentCreatedDate = `${commentDate.getFullYear()}년 ${
-    commentDate.getMonth() + 1
-  }월 ${commentDate.getDate()}일`
+  const { mutate: commentMutate } = usePostComment(id)
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault()
       if (comment.trim()) {
+        const commentData = {
+          content: comment,
+          boardId: id,
+          parentCommentId: null,
+        }
+        commentMutate(commentData)
         console.log(comment)
         setComment('')
       }
     },
-    [comment],
+    [comment, commentMutate, id],
   )
 
   const handleClickRecommend = async () => {
@@ -78,7 +79,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
       <div className='flex items-center justify-between gap-4'>
         <WriterBar
           profile_id={data.nickName}
-          date={createdDate}
+          date={formatDate(data.createdAt)}
           profile_img={data.profileImage}
         />
         {data.memberId === memberId ? (
@@ -111,16 +112,27 @@ const BoardDetailContent = ({ id }: { id: string }) => {
           <CommentInput onCommentChange={setComment} comment={comment} />
           <Button children='댓글 작성' onClick={handleSubmit} />
         </div>
-        {data.comment.map((comment) => (
-          <div key={comment.id} className='mb-10 text-lg'>
-            <CommentBar
-              userName={comment.nickName}
-              date={commentCreatedDate}
-              imageUrl={comment.profileImage}
-              comment={comment.content}
-            />
-          </div>
-        ))}
+        {data.comment.map((comment) => {
+          const commentDate = new Date(comment.createdAt)
+          const commentCreatedDate = `${commentDate.getFullYear()}년 ${
+            commentDate.getMonth() + 1
+          }월 ${commentDate.getDate()}일`
+
+          return (
+            <div key={comment.id} className='mb-10 text-lg'>
+              <CommentBar
+                commentMemberId={comment.memberId}
+                boardId={id}
+                userName={comment.nickName}
+                date={commentCreatedDate}
+                imageUrl={comment.profileImage}
+                comment={comment.content}
+                commentCnt={comment.commentCnt}
+                commentId={comment.id}
+              />
+            </div>
+          )
+        })}
       </div>
     </div>
   )
