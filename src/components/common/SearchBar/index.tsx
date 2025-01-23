@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { SetURLSearchParams } from 'react-router-dom'
 import SearchCancel from '../../../assets/icons/search-cancel.svg?react'
 import SearchIcon from '../../../assets/icons/search.svg?react'
 
@@ -20,13 +21,21 @@ export const ParentComponents = () => {
 interface SearchBarProps {
   placeholder?: string
   onSearch: (search?: string) => void
+  params: URLSearchParams
+  onSearchParams: SetURLSearchParams
+  path?: string
 }
 
 const SearchBar = ({
   onSearch,
   placeholder = '검색어를 입력해주세요.',
+  params,
+  onSearchParams,
+  path,
 }: SearchBarProps) => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState<string>('')
+
+  useEffect(() => setSearch(''), [path])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -34,6 +43,8 @@ const SearchBar = ({
 
   const handleCancelClick = () => {
     setSearch('')
+    params.delete('searchContents')
+    onSearchParams(params)
   }
 
   const handleSearchClick = () => {
