@@ -29,7 +29,7 @@ const router = createBrowserRouter([
           { index: true, element: <Board /> },
           { path: `:${RouterPath.categoryName}`, element: <Board /> },
           {
-            path: `:${RouterPath.categoryName}/:${RouterPath.id}`,
+            path: `${RouterPath.detail}/:${RouterPath.id}`,
             element: <BoardDetail />,
           },
           { path: RouterPath.write, element: <BoardWrite /> },
