@@ -1,5 +1,3 @@
-import { CategoryType } from '../pages/BoardWrite'
-
 export const BOARD_CATEGORY_TABS = [
   { path: '/board', categoryName: '전체', id: 351231 },
   { path: '/board/community', categoryName: '자유게시판', id: 23623523 },
@@ -87,10 +85,10 @@ export const CAREER_TERM = [
   '10년차 이상',
 ] as const
 
-export const contentTemplates: Record<CategoryType, string> = {
-  자유게시판: `<!--자유롭게 글을 작성해주세요-->`,
+export const contentTemplates: Record<number, string> = {
+  '1': `<!--자유롭게 글을 작성해주세요-->`,
 
-  '코딩 질문': `### 문제 상황
+  '2': `### 문제 상황
 <!-- 어떤 문제가 발생했는지 설명해주세요 -->
 
 ### 시도한 방법
@@ -106,7 +104,7 @@ export const contentTemplates: Record<CategoryType, string> = {
 여기에 에러 메시지를 붙여넣어주세요
 \`\`\`
 `,
-  '스터디 구인': `### 스터디 정보
+  '3': `### 스터디 정보
 - 주제: 
 - 예상 인원: 
 - 시작 예정일: 
@@ -120,7 +118,7 @@ export const contentTemplates: Record<CategoryType, string> = {
 ### 이런 분을 찾습니다
 <!-- 함께하고 싶은 스터디원의 조건이나 성향을 설명해주세요 -->
 `,
-  '프로젝트 구인': `### 프로젝트 소개
+  '4': `### 프로젝트 소개
 <!-- 프로젝트에 대한 간단한 소개를 해주세요 -->
 
 ### 모집 인원
@@ -142,7 +140,7 @@ export const contentTemplates: Record<CategoryType, string> = {
 ### 지원 자격
 <!-- 필요한 경력이나 조건을 설명해주세요 -->
 `,
-  '경험 공유': `### 공유하고 싶은 경험
+  '5': `### 공유하고 싶은 경험
 <!-- 어떤 경험을 공유하고 싶으신가요? -->
 
 ### 배운 점
@@ -152,4 +150,3 @@ export const contentTemplates: Record<CategoryType, string> = {
 <!-- 관련된 참고 자료가 있다면 공유해주세요 -->
 `,
 }
-
