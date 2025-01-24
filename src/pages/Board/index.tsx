@@ -55,19 +55,20 @@ const Board = () => {
   return (
     <section className='flex flex-col w-full h-full gap-8 py-10'>
       <BoardBanner pathname={location.pathname} />
-      <section className='flex items-center justify-center w-full h-8'>
-        <Link className='px-4 py-2 rounded-lg bg-main-color' to='/board/write'>
-          <span className='text-white'>게시글 작성하러 가기</span>
-        </Link>
-      </section>
       <BoardCategoryTab pathname={location.pathname} />
-      <section className='flex items-center justify-center w-full'>
+      <section className='relative flex items-center justify-center w-full'>
         <SearchBar
           params={params}
           onSearchParams={setSearchParams}
           onSearch={onSearch}
           path={location.pathname}
         />
+        <Link
+          className='absolute right-0 px-4 py-2 rounded-lg bg-main-color'
+          to='/board/write'
+        >
+          <span className='text-white'>게시글 작성</span>
+        </Link>
       </section>
       <BoardTagFilter
         selectedTags={selectedTags}
