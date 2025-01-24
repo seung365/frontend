@@ -18,7 +18,7 @@ const useDeleteBoard = () => {
     mutationFn: (id) => deleteBoard(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['board'],
+        queryKey: ['AllBoardsList'],
       })
       navigate(-1)
     },
