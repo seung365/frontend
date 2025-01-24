@@ -1,8 +1,9 @@
 import React from 'react'
-import useFetchAllBoards from '../../apis/board/useFetchAllBoards'
+import useFetchBoardList from '../../apis/board/useFetchBoardList'
 import {
   BoardCard,
   BoardListSkeleton,
+  ErrorComponent,
   Grid,
   Loader,
   ProfileSlider,
@@ -11,7 +12,7 @@ import { BoardCardType, BoardListResponse } from '../../types'
 
 const Home = () => {
   const { data, status, ref, isFetchingNextPage, hasNextPage } =
-    useFetchAllBoards()
+    useFetchBoardList()
 
   return (
     <section className='flex flex-col w-full h-full gap-12 py-10'>
@@ -21,19 +22,7 @@ const Home = () => {
           🚀 성장과 도전이 공유되는 공간입니다. 지금 바로 탐험을 시작하세요!
         </span>
         {status === 'pending' && <BoardListSkeleton type='main' />}
-        {status === 'error' && (
-          <div className='flex flex-col items-center justify-center gap-4'>
-            <h1 className='text-lg text-red-500'>
-              데이터를 불러오는 중 오류가 발생했습니다.
-            </h1>
-            <button
-              className='px-4 py-2 text-white rounded-md bg-main-color'
-              onClick={() => window.location.reload()}
-            >
-              다시 시도하기
-            </button>
-          </div>
-        )}
+        {status === 'error' && <ErrorComponent />}
 
         {status === 'success' && (
           <Grid type='main'>

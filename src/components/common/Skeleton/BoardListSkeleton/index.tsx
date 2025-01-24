@@ -13,7 +13,7 @@ const BoardListSkeleton = ({ type }: BoardListSkeletonProps) => {
       {Array.from({ length: count }).map((_, i) => (
         <section
           key={i}
-          className='w-auto min-h-[450px] rounded-xl mt-4 flex flex-col'
+          className='w-auto min-h-[450px] rounded-xl mt-4 mb-4 flex flex-col'
         >
           <section className='flex-grow-[7] flex-shrink-0 h-4/5 flex flex-col'>
             <div className='w-full h-3/5'>
