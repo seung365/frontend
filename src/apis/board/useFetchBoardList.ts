@@ -5,20 +5,40 @@ import { publicInstance } from '../fetchInstance'
 
 const fetchAllBoards = async ({
   pageParam = 0,
+  queryString = '',
 }: {
   pageParam?: number
+  queryString?: string
 }): Promise<BoardListResponse> => {
   const response = await publicInstance.get<BoardListResponse>(
-    `/board?size=10&page=${pageParam}`,
+    `/board?size=10&page=${pageParam}&${queryString}`,
   )
   return response.data
 }
 
-const useFetchAllBoards = () => {
+const fetchCategoriesBoard = async (
+  categoryId: number,
+  {
+    pageParam = 0,
+    queryString = '',
+  }: { pageParam?: number; queryString?: string },
+): Promise<BoardListResponse> => {
+  const response = await publicInstance.get(
+    `/board/category/${categoryId}?size=9&page=${pageParam}&${queryString}`,
+  )
+  return response.data
+}
+
+const useFetchBoardList = (categoryId?: number, queryString?: string) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ['AllBoardsList'],
-      queryFn: fetchAllBoards,
+      queryKey: categoryId
+        ? ['CategoriesBoardList', categoryId, queryString]
+        : ['AllBoardsList', queryString],
+      queryFn: ({ pageParam = 0 }) =>
+        categoryId
+          ? fetchCategoriesBoard(categoryId, { pageParam, queryString })
+          : fetchAllBoards({ pageParam, queryString }),
       initialPageParam: 0,
       getNextPageParam: (lastPage) => {
         return lastPage.number + 1 <= lastPage.totalPages
@@ -31,7 +51,7 @@ const useFetchAllBoards = () => {
     (entry, observer) => {
       observer.unobserve(entry.target)
       if (hasNextPage && !isFetchingNextPage) {
-        setTimeout(() => fetchNextPage(), 500)
+        setTimeout(() => fetchNextPage(), 700)
       }
     },
     { threshold: 1.0 },
@@ -40,4 +60,4 @@ const useFetchAllBoards = () => {
   return { data, status, ref, isFetchingNextPage, hasNextPage }
 }
 
-export default useFetchAllBoards
+export default useFetchBoardList

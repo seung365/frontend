@@ -7,7 +7,7 @@ const MainProfileSkeleton = () => {
     <Grid type='profile'>
       {Array.from({ length: 4 }).map((_, i) => {
         return (
-          <section key={i} className='w-full mt-4 min-h-52 rounded-xl'>
+          <section key={i} className='w-full mt-4 mb-4 min-h-52 rounded-xl'>
             <Skeleton
               className='object-cover w-full h-1/2 rounded-xl'
               height='60%'
