@@ -26,17 +26,6 @@ const postBoard = async (formData: FormValues): Promise<BoardResponse> => {
 const usePostBoard = () => {
   const navigate = useNavigate()
 
-  const getCategoryPath = (categoryName: string) => {
-    const categoryPaths: { [key: string]: string } = {
-      자유게시판: 'community',
-      프로그래밍: 'programming',
-      스터디: 'study',
-      프로젝트: 'project',
-      취업상담: 'experience',
-    }
-    return categoryPaths[categoryName] || 'community'
-  }
-
   const { mutate, status, data } = useMutation<
     BoardResponse,
     Error,
@@ -44,8 +33,7 @@ const usePostBoard = () => {
   >({
     mutationFn: (formData) => postBoard(formData),
     onSuccess: (data) => {
-      const categoryPath = getCategoryPath(data.categoryName)
-      navigate(`/board/${categoryPath}/${data.id}`)
+      navigate(`/board/detail/${data.id}`)
     },
     onError: (error) => {
       console.error('API call failed:', error)
