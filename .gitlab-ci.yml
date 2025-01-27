@@ -1,0 +1,31 @@
+stages:
+    - build
+    - deploy
+
+before_script:
+    - echo "start gitlab-runner cicd bot...."
+
+build:
+    stage: build
+    tags:
+        - all
+    script:
+        - echo "build 실행 ..."
+        - cp /home/gitlab-runner/.env ./.env
+        - npm install        
+        - npm run build        
+        - cp -r ./dist/* /var/www/html/
+    only:
+        - dev
+
+deploy:
+    stage: deploy
+    tags:
+        - all
+    script:
+        - echo "배포를 위한 nginx 재실행행 ..."
+        - sudo systemctl restart nginx
+    only:
+        - dev
+
+        
