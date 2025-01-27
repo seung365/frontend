@@ -120,7 +120,7 @@ export type Skills = {
   skill: string
 }
 
-type Experience = {
+export type Experience = {
   company_name: string
   position: string
   start_date: string
