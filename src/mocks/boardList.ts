@@ -200,7 +200,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드', '백엔드'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 2,
@@ -218,7 +218,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드', 'WAS'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 3,
@@ -235,7 +235,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 4,
@@ -253,7 +253,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 5,
@@ -270,7 +270,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 6,
@@ -287,7 +287,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 7,
@@ -304,7 +304,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드', '코딩 테스트', '면접'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 8,
@@ -320,7 +320,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드', 'React'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 9,
@@ -337,18 +337,7 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: [
-      'C',
-      'Spring',
-      '프론트엔드',
-      'React',
-      'JS',
-      'TS',
-      '면접',
-      '인터뷰',
-      'Java',
-      'Kotlin',
-    ],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
   {
     id: 10,
@@ -366,6 +355,6 @@ export const boardPageBoardLit = [
     memberId: '101',
     profileImg: 'https://placehold.co/600x400',
     nickName: 'WebWizard',
-    tags: ['C', 'Spring', '프론트엔드'],
+    tags: [{ tagId: 4, tagName: 'JS' }],
   },
 ]
