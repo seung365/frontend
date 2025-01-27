@@ -10,7 +10,7 @@ build:
     tags:
         - all
     script:
-        - echo "hello world this stage is build ..."
+        - echo "build 실행 ..."
         - npm install
         - npm run build
         - cp -r ./dist/* /var/www/html/
@@ -22,8 +22,9 @@ deploy:
     tags:
         - all
     script:
-        - echo "heloo world. this stage is deploy ..."
+        - echo "배포를 위한 nginx 재실행행 ..."
+        - sudo systemctl nginx restart
     only:
-        - main
+        - dev
 
         
