@@ -12,7 +12,8 @@ build:
     script:
         - echo "hello world this stage is build ..."
         - npm install
-        - npm run dev
+        - npm run build
+        - cp -r ./dist/* /var/www/html/
     only:
         - dev
 
