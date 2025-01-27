@@ -1,24 +1,25 @@
 import { QueryClientProvider } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import usePostToken from './apis/member/usePostToken.ts'
 import queryClient from './apis/queryClient'
 import { Routes } from './routes'
+import { useAuthStore } from './store/AuthStore.ts'
 import './styles/global.css'
 
 const App = () => {
+  const isLogin = useAuthStore((state) => state.isLogin)
   const postToken = usePostToken()
 
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        await postToken()
-      } catch (error) {
-        console.error('토큰 발급 실패:', error)
-      }
-    }
-
-    getToken()
+  const getToken = useCallback(async () => {
+    await postToken()
   }, [postToken])
+
+  useEffect(() => {
+    if (isLogin) {
+      return
+    }
+    getToken()
+  }, [isLogin, getToken])
 
   return (
     <QueryClientProvider client={queryClient}>

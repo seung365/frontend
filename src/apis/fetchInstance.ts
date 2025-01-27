@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { API_CONFIG } from '../constant/config'
+import { useAuthStore } from '../store/AuthStore'
 
 const authInstance = axios.create({
   baseURL: API_CONFIG.BASE_URL,
@@ -11,9 +12,9 @@ const authInstance = axios.create({
 })
 
 authInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken')
-  if (token) {
-    config.headers.access = `${token}`
+  const accessToken = useAuthStore.getState().accessToken
+  if (accessToken) {
+    config.headers.access = `${accessToken}`
   }
   return config
 })
