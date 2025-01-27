@@ -10,7 +10,8 @@ build:
     tags:
         - all
     script:
-        - echo "hello world this stage is build ..."        
+        - echo "hello world this stage is build ..."
+        - echo "build and hello MinSung" > /home/kdt/build_log.txt
     only:
         - dev
 
