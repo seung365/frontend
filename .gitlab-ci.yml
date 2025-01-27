@@ -11,8 +11,9 @@ build:
         - all
     script:
         - echo "build 실행 ..."
-        - npm install
-        - npm run build
+        - cp /home/gitlab-runner/.env ./.env
+        - npm install        
+        - npm run build        
         - cp -r ./dist/* /var/www/html/
     only:
         - dev
