@@ -11,7 +11,7 @@ build:
         - all
     script:
         - echo "hello world this stage is build ..."
-        - echo "build and hello MinSung" > /home/kdt/build_log.txt
+        - echo "build and hello MinSung" > ./build_log.txt
     only:
         - dev
 
@@ -22,6 +22,6 @@ deploy:
     script:
         - echo "heloo world. this stage is deploy ..."
     only:
-        - dev
+        - main
 
         
