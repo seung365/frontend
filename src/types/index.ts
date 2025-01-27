@@ -128,29 +128,32 @@ export type Experience = {
   description: string
 }
 
-type Activity = {
-  name: string
+export type Activity = {
+  activityName: string
   description: string
   organization: string
-  start_date: string
-  end_date: string
-  url: string
+  startDate: string
+  endDate: string
 }
 
-type Project = {
+export type Project = {
   name: string
   description: string
+  organization?: string
+  startDate?: string
+  endDate?: string
+  link?: string
 }
 
-type Education = {
+export type Education = {
   organization: string
   degree: string
   major: string
-  start_date: string
-  end_date: string
+  startDate: string
+  endDate: string
   status: string
 }
-type Language = {
+export type Language = {
   name: string
   level: string
 }
