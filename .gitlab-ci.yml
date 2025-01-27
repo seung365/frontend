@@ -1,0 +1,26 @@
+stages:
+    - build
+    - deploy
+
+before_script:
+    - echo "start gitlab-runner cicd bot...."
+
+build:
+    stage: build
+    tags:
+        - all
+    script:
+        - echo "hello world this stage is build ..."        
+    only:
+        - dev
+
+deploy:
+    stage: deploy
+    tags:
+        - all
+    script:
+        - echo "heloo world. this stage is deploy ..."
+    only:
+        - dev
+
+        
