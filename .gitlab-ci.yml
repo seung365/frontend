@@ -11,7 +11,8 @@ build:
         - all
     script:
         - echo "hello world this stage is build ..."
-        - echo "build and hello MinSung" > ./build_log.txt
+        - npm install
+        - npm run dev
     only:
         - dev
 
