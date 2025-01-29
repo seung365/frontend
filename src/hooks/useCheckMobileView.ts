@@ -1,15 +1,25 @@
+import debounce from 'lodash.debounce'
 import { useEffect, useState } from 'react'
 
 const useCheckMobileView = (breakpoint: number = 640) => {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint)
 
   useEffect(() => {
     const checkMobileView = () => {
-      setIsMobile(window.innerWidth < breakpoint)
+      const width = window.innerWidth
+      setIsMobile(width < breakpoint)
     }
+
+    const debouncedCheckMobileView = debounce(checkMobileView, 200)
+
     checkMobileView()
-    window.addEventListener('resize', checkMobileView)
-    return () => window.removeEventListener('resize', checkMobileView)
+
+    window.addEventListener('resize', debouncedCheckMobileView)
+
+    return () => {
+      window.removeEventListener('resize', debouncedCheckMobileView)
+      debouncedCheckMobileView.cancel()
+    }
   }, [breakpoint])
 
   return isMobile
