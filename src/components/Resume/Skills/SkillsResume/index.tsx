@@ -1,63 +1,72 @@
 import { useState } from 'react'
-import { Control, useFieldArray } from 'react-hook-form'
-import { Skills, UserResume } from '../../../../types'
+import { UseFormRegister } from 'react-hook-form'
+import { UserResume } from '../../../../types'
 import { Button } from '../../../index'
 import SkillsForm from '../SkillsForm'
 
 interface SkillStackProps {
-  control: Control<UserResume>
-  onSectionSubmit: (data: Skills[]) => void
+  register: UseFormRegister<UserResume>
+  defaultValues?: string[]
+  onSectionSubmit: (data: string[]) => void
 }
 
-const SkillsResume = ({ control, onSectionSubmit }: SkillStackProps) => {
+const SkillsResume = ({
+  register,
+  defaultValues = [],
+  onSectionSubmit,
+}: SkillStackProps) => {
   const [isEdit, setIsEdit] = useState(false)
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'skills',
-  })
+  const [skills, setSkills] = useState<string[]>(defaultValues)
 
-  const handleAddSkill = (skillObj: Skills) => {
-    const skillIndex = fields.findIndex(
-      (field) => field.skill === skillObj.skill,
-    )
+  const handleAddSkill = (skill: string) => {
+    const skillIndex = skills.findIndex((s) => s === skill)
     if (skillIndex === -1) {
-      append(skillObj)
+      const newSkills = [...skills, skill]
+      setSkills(newSkills)
+      onSectionSubmit(newSkills)
     } else {
-      remove(skillIndex)
+      const newSkills = skills.filter((_, index) => index !== skillIndex)
+      setSkills(newSkills)
+      onSectionSubmit(newSkills)
     }
   }
 
   const handleSubmit = () => {
-    onSectionSubmit(fields)
+    onSectionSubmit(skills)
     setIsEdit(false)
   }
 
   return (
     <div className='p-8 bg-white rounded-lg shadow-md'>
       {isEdit ? (
-        <SkillsForm fields={fields} onAddSkill={handleAddSkill} />
+        <SkillsForm fields={skills} onAddSkill={handleAddSkill} />
       ) : null}
 
-      {fields.length > 0 && (
+      {skills.length > 0 && (
         <div className='mb-6'>
           <h3 className='mb-3 text-sm font-medium text-gray-700'>
             보유 기술 스택
           </h3>
           <div className='flex flex-wrap gap-2'>
-            {fields.map((field, index) => (
+            {skills.map((skill, index) => (
               <span
-                key={field.id}
+                key={index}
                 className={`inline-flex items-center px-3 py-1 text-sm rounded-full ${
                   isEdit
                     ? 'bg-main-color text-white'
                     : 'bg-sub-color-2 text-black'
                 }`}
               >
-                {field.skill}
+                {skill}
+                <input
+                  type='hidden'
+                  {...register(`skills.${index}`)}
+                  value={skill}
+                />
                 {isEdit && (
                   <button
                     type='button'
-                    onClick={() => remove(index)}
+                    onClick={() => handleAddSkill(skill)}
                     className='ml-2 hover:text-gray-200'
                   >
                     ×

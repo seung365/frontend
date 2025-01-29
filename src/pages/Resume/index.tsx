@@ -15,7 +15,6 @@ import {
   Experience,
   Language,
   Project,
-  Skills,
   UserInfo,
   UserResume,
 } from '../../types'
@@ -95,7 +94,7 @@ const Resume = () => {
     console.log(data)
   }
 
-  const handleSkillsSubmit = (data: Skills[]) => {
+  const handleSkillsSubmit = (data: string[]) => {
     console.log(data)
   }
 
@@ -149,7 +148,8 @@ const Resume = () => {
           description='✏️ 기술스택을 설정해주세요!'
         >
           <SkillsResume
-            control={control}
+            register={register}
+            defaultValues={watch('skills')}
             onSectionSubmit={handleSkillsSubmit}
           />
         </ResumeContainer>
