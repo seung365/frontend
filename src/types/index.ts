@@ -102,7 +102,7 @@ export type ProfileRandomResponse = ProfileCardType[]
 export interface UserResume {
   member_id: string
   userInfo: UserInfo
-  skills: Skills[]
+  skills: string[]
   experiences: Experience[]
   activities: Activity[]
   projects: Project[]
@@ -114,10 +114,6 @@ export type UserInfo = {
   position: string
   summary: string
   portfolio: string
-}
-
-export type Skills = {
-  skill: string
 }
 
 export type Experience = {
