@@ -11,7 +11,7 @@ const fetchAllBoards = async ({
   queryString?: string
 }): Promise<BoardListResponse> => {
   const response = await publicInstance.get<BoardListResponse>(
-    `/board?size=10&page=${pageParam}&${queryString}`,
+    `/boards?size=10&page=${pageParam}&${queryString}`,
   )
   return response.data
 }
@@ -24,7 +24,7 @@ const fetchCategoriesBoard = async (
   }: { pageParam?: number; queryString?: string },
 ): Promise<BoardListResponse> => {
   const response = await publicInstance.get(
-    `/board/category/${categoryId}?size=9&page=${pageParam}&${queryString}`,
+    `/boards/category/${categoryId}?size=9&page=${pageParam}&${queryString}`,
   )
   return response.data
 }
