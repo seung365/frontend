@@ -29,22 +29,7 @@ const Home = () => {
             {data?.pages.map((page: BoardListResponse, pageIndex: number) => (
               <React.Fragment key={pageIndex}>
                 {page.content.map((board: BoardCardType) => (
-                  <BoardCard
-                    key={board.id}
-                    id={board.id}
-                    title={board.title}
-                    content={board.content}
-                    thumbnail={board.thumbnail}
-                    categoryId={board.categoryId}
-                    categoryName={board.categoryName}
-                    date={board.createdAt}
-                    upCnt={board.upCnt}
-                    commentCnt={board.commentCnt}
-                    viewCnt={board.viewCnt}
-                    profileImg={board.profileImage}
-                    nickName={board.nickName}
-                    tags={board.tag}
-                  />
+                  <BoardCard key={board.id} {...board} />
                 ))}
               </React.Fragment>
             ))}
