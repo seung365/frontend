@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { API_ROUTES } from '../../constant/api'
 import { authInstance } from '../fetchInstance'
 
 const deleteComment = async ({
@@ -8,7 +9,7 @@ const deleteComment = async ({
   boardId: string
   commentId: number
 }) => {
-  await authInstance.delete(`/comment/${commentId}`, {
+  await authInstance.delete(`/${API_ROUTES.COMMENTS}/${commentId}`, {
     data: {
       boardId: Number(boardId), // 명시적으로 숫자로 변환
     },
