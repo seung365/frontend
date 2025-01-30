@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { API_ROUTES } from '../../constant/api'
 import { BoardResponse, FormValues } from '../../types/index'
 import { authInstance } from '../fetchInstance'
 
@@ -18,7 +19,7 @@ const postBoard = async (formData: FormValues): Promise<BoardResponse> => {
     tags: formData.tags?.map((tag) => tag.tagName) || [],
   }
 
-  const response = await authInstance.post('/board', requestData)
+  const response = await authInstance.post(`/${API_ROUTES.BOARDS}`, requestData)
   console.log('게시글 작성 응답:', response)
   return response.data
 }
