@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import { Filter, Grid, HubBanner, ProfileCard } from '../../components'
-import { profileList } from '../../mocks/profileList'
+import { useMemo, useState } from 'react'
+import useGetHubList from '../../apis/hub/useGetHubList'
+import { Filter, Grid, HubBanner, Loader, ProfileCard } from '../../components'
+import useIntersect from '../../hooks/useIntersect'
 
 export type SortingType = '최신순' | '인기순'
 export type TermType =
@@ -16,11 +17,23 @@ const Hub = () => {
   const [term, setTerm] = useState<TermType[]>([])
 
   console.log(sorting, skills, term)
+  const { data, isFetching, hasNextPage, fetchNextPage } = useGetHubList()
+
+  const users = useMemo(
+    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
+    [data],
+  )
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target)
+    if (hasNextPage && !isFetching) {
+      fetchNextPage()
+    }
+  })
 
   const handleSorting = (newSorting: SortingType) => {
     setSorting(newSorting)
   }
-
   const handleSkills = (newSkill: string) => {
     setSkills((prev) =>
       prev.includes(newSkill)
@@ -42,7 +55,7 @@ const Hub = () => {
       <HubBanner />
       <div className='flex flex-row gap-4'>
         <Grid type='board'>
-          {profileList.map((profile) => (
+          {users.map((profile) => (
             <ProfileCard
               key={profile.profileId}
               profileId={profile.profileId}
@@ -51,6 +64,9 @@ const Hub = () => {
               about={profile.about}
             />
           ))}
+          <div className='flex justify-center w-full col-span-full'>
+            {isFetching && <Loader size='s' />}
+          </div>
         </Grid>
         <Filter
           skills={skills}
@@ -59,6 +75,7 @@ const Hub = () => {
           onTerm={handleTerm}
         />
       </div>
+      <div ref={ref} />
     </div>
   )
 }
