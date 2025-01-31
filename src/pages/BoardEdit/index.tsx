@@ -1,48 +1,66 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import useGetBoardDetail from '../../apis/board/useGetBoardDetail.ts'
+import usePatchBoard from '../../apis/board/usePatchBoard.ts'
 import {
   Button,
   ContentInput,
   Dropdown,
+  Loader,
   Modal,
   Tag,
   TitleInput,
 } from '../../components'
+import { contentTemplates } from '../../constant'
 import { categories, tagName } from '../../mocks/data'
+import { FormValues, tagType } from '../../types'
 
-export interface FormValues {
-  title: string
-  content: string
-  category: string
-  tags: string[]
-}
-
-/*
-  useEffect를 통해 데이터를 가져온후 setValue를 통해 데이터를 채워넣을 예정..
-  그 후 수정하는 부분들은 Write와 동일
-*/
-
-const BoardEdit = () => {
-  const { control, register, handleSubmit, setValue, watch } =
-    useForm<FormValues>()
-
+const BoardWrite = () => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>()
+  const [open, setOpen] = useState(false)
+  const selectedTags = watch('tags', [])
+  const selectedCategory = watch('categoryId')
   const { id } = useParams()
 
-  const [open, setOpen] = useState(false)
+  const { data } = useGetBoardDetail(id!)
+  const { mutate, status } = usePatchBoard(id!)
 
-  const selectedTags = watch('tags', [])
+  useEffect(() => {
+    if (selectedCategory && contentTemplates[selectedCategory] && !data) {
+      // data가 없을 때만 템플릿 적용
+      setValue('content', contentTemplates[selectedCategory])
+    }
+  }, [selectedCategory, setValue, data])
 
-  console.log(id)
+  useEffect(() => {
+    console.log('게시글 데이터:', data)
+    if (data) {
+      setValue('title', data.title)
+      setValue('content', data.content)
+      setValue('categoryId', data.categoryId)
 
-  const handleTagSelect = (tag: string) => {
+      if (data.tag && data.tag.length > 0) {
+        setValue('tags', data.tag)
+      }
+    }
+  }, [data, setValue])
+
+  const handleTagSelect = (tag: tagType) => {
     const currentTags = selectedTags || []
-    const isTagSelected = currentTags.includes(tag)
+    const isTagSelected = currentTags.some((t) => t.tagId === tag.tagId)
 
     if (isTagSelected) {
       setValue(
         'tags',
-        currentTags.filter((currentTag) => currentTag !== tag),
+        currentTags.filter((currentTag) => currentTag.tagId !== tag.tagId),
       )
     } else {
       setValue('tags', [...currentTags, tag])
@@ -50,7 +68,17 @@ const BoardEdit = () => {
   }
 
   const onClickSubmit = (data: FormValues) => {
-    console.log(data)
+    console.log('게시글 작성 데이터:', data)
+    mutate({ formData: data, id: id! })
+  }
+
+  if (status === 'pending') {
+    return (
+      <div className='flex items-center justify-center min-h-screen'>
+        <Loader />
+        <span className='ml-3 text-lg text-gray-700'>Loading...</span>
+      </div>
+    )
   }
 
   return (
@@ -64,7 +92,8 @@ const BoardEdit = () => {
             placeholder='카테고리 선택'
             options={categories}
             control={control}
-            name='category'
+            name='categoryId'
+            rules={{ required: '카테고리를 선택해주세요' }}
           />
           <Button
             children='태그 선택'
@@ -79,32 +108,47 @@ const BoardEdit = () => {
             <div className='p-5'>
               <h1>태그 선택</h1>
               <div className='flex flex-wrap gap-2 mt-3'>
-                {tagName.map((name) => (
+                {tagName.map((tag) => (
                   <Button
-                    children={name}
-                    key={name}
+                    children={tag.tagName}
+                    key={tag.tagId}
                     type='button'
-                    onClick={() => handleTagSelect(name)}
-                    theme={selectedTags.includes(name) ? 'dark' : 'light'}
+                    onClick={() => handleTagSelect(tag)}
+                    theme={
+                      selectedTags.some((t) => t.tagId === tag.tagId)
+                        ? 'dark'
+                        : 'light'
+                    }
                   />
                 ))}
               </div>
             </div>
           }
         />
-        <div className='flex gap-2 mt-2'>
+        <div className='flex flex-wrap gap-2 mt-2'>
           {selectedTags.map((tag) => (
             <Tag
-              key={tag}
-              onClick={() => handleTagSelect(tag)}
               type='button'
-            >{`${tag} ×`}</Tag>
+              key={tag.tagId}
+              tagName={`${tag.tagName} ⨉`}
+              tagId={tag.tagId}
+              onClick={() => handleTagSelect(tag)}
+            />
           ))}
         </div>
       </div>
-      <TitleInput register={register} setValue={setValue} />
+      <TitleInput
+        register={register}
+        setValue={setValue}
+        rules={{ required: '제목을 입력해주세요' }}
+        error={errors.title}
+      />
       <div className='mt-3'>
-        <ContentInput control={control} setValue={setValue} />
+        <ContentInput
+          control={control}
+          setValue={setValue}
+          rules={{ required: '본문을 입력해주세요' }}
+        />
       </div>
       <div className='flex justify-end mt-5'>
         <Button type='submit' children='수정하기' />
@@ -113,4 +157,4 @@ const BoardEdit = () => {
   )
 }
 
-export default BoardEdit
+export default BoardWrite

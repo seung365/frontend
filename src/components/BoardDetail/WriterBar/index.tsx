@@ -18,7 +18,7 @@ interface WriterBarProps {
 const WriterBar = ({ profile_id, date, profile_img }: WriterBarProps) => {
   return (
     <div className='flex items-center gap-3 my-6 align-center'>
-      <img src={profile_img} className='w-10 h-10' />
+      <img src={profile_img} className='w-10 h-10 rounded-full' />
       <span className='font-semibold'>{profile_id}</span>
       <span className='text-dark-gray'>{date}</span>
     </div>

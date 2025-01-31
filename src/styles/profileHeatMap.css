@@ -1,0 +1,31 @@
+.react-calendar-heatmap {
+  max-width: 800px;
+  max-height: 500px;
+  width: 100%;
+}
+
+.react-calendar-heatmap rect {
+  width: 10px;
+  height: 10px;
+  margin: 2px;
+}
+
+.react-calendar-heatmap-all-weeks {
+  width: 100%;
+}
+
+.color-empty {
+  fill: #ebedf0; /* 빈 셀 색상 (연한 회색) */
+}
+.color-scale-1 {
+  fill: #d4edda; /* 낮은 활동량 (연한 녹색) */
+}
+.color-scale-2 {
+  fill: #a8ddb5; /* 중간 활동량 */
+}
+.color-scale-3 {
+  fill: #74c476; /* 높은 활동량 */
+}
+.color-scale-4 {
+  fill: #238b45; /* 매우 높은 활동량 */
+}

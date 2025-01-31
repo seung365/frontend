@@ -1,12 +1,11 @@
-import { CategoryType } from '../pages/BoardWrite'
+import { Skills } from '../types'
 
 export const BOARD_CATEGORY_TABS = [
-  { path: '/board', categoryName: '전체', id: 351231 },
-  { path: '/board/community', categoryName: '자유게시판', id: 23623523 },
-  { path: '/board/programming', categoryName: '코딩 질문', id: 352342 },
-  { path: '/board/study', categoryName: '스터디', id: 324235 },
-  { path: '/board/project', categoryName: '프로젝트', id: 53243252 },
-  { path: '/board/experience', categoryName: '경험 공유', id: 2432522 },
+  { path: '/board/community', categoryName: '자유게시판', id: 1 },
+  { path: '/board/programming', categoryName: '코딩 질문', id: 2 },
+  { path: '/board/study', categoryName: '스터디 구인', id: 3 },
+  { path: '/board/project', categoryName: '프로젝트 구인', id: 4 },
+  { path: '/board/experience', categoryName: '경험 공유', id: 5 },
 ] as const
 
 export const BOARD_BANNER_CONTENTS = [
@@ -28,12 +27,12 @@ export const BOARD_BANNER_CONTENTS = [
   },
   {
     path: '/board/study',
-    title: '스터디',
+    title: '스터디 구인',
     description: '📚 함께 배우고 성장하는 개발 학습의 시작점입니다.',
   },
   {
     path: '/board/project',
-    title: '프로젝트',
+    title: '프로젝트 구인',
     description: '🛠️ 창의적인 아이디어를 현실로 만들어가는 공간입니다.',
   },
   {
@@ -87,10 +86,10 @@ export const CAREER_TERM = [
   '10년차 이상',
 ] as const
 
-export const contentTemplates: Record<CategoryType, string> = {
-  자유게시판: `<!--자유롭게 글을 작성해주세요-->`,
+export const contentTemplates: Record<number, string> = {
+  '1': `<!--자유롭게 글을 작성해주세요-->`,
 
-  '코딩 질문': `### 문제 상황
+  '2': `### 문제 상황
 <!-- 어떤 문제가 발생했는지 설명해주세요 -->
 
 ### 시도한 방법
@@ -106,7 +105,7 @@ export const contentTemplates: Record<CategoryType, string> = {
 여기에 에러 메시지를 붙여넣어주세요
 \`\`\`
 `,
-  '스터디 구인': `### 스터디 정보
+  '3': `### 스터디 정보
 - 주제: 
 - 예상 인원: 
 - 시작 예정일: 
@@ -120,7 +119,7 @@ export const contentTemplates: Record<CategoryType, string> = {
 ### 이런 분을 찾습니다
 <!-- 함께하고 싶은 스터디원의 조건이나 성향을 설명해주세요 -->
 `,
-  '프로젝트 구인': `### 프로젝트 소개
+  '4': `### 프로젝트 소개
 <!-- 프로젝트에 대한 간단한 소개를 해주세요 -->
 
 ### 모집 인원
@@ -142,7 +141,7 @@ export const contentTemplates: Record<CategoryType, string> = {
 ### 지원 자격
 <!-- 필요한 경력이나 조건을 설명해주세요 -->
 `,
-  '경험 공유': `### 공유하고 싶은 경험
+  '5': `### 공유하고 싶은 경험
 <!-- 어떤 경험을 공유하고 싶으신가요? -->
 
 ### 배운 점
@@ -153,3 +152,25 @@ export const contentTemplates: Record<CategoryType, string> = {
 `,
 }
 
+export const SKILL_STACKS: Skills[] = [
+  { skill: 'JavaScript' },
+  { skill: 'Git' },
+  { skill: 'MySQL' },
+  { skill: 'Java' },
+  { skill: 'Spring Framework' },
+  { skill: 'AWS' },
+  { skill: 'HTML' },
+  { skill: 'Github' },
+  { skill: 'TypeScript' },
+  { skill: 'React' },
+  { skill: 'Spring Boot' },
+  { skill: 'Docker' },
+  { skill: 'JPA' },
+  { skill: 'Python' },
+  { skill: 'Linux' },
+  { skill: 'SQL' },
+  { skill: 'CSS' },
+  { skill: 'Node.js' },
+  { skill: 'Oracle' },
+  { skill: 'jQuery' },
+]

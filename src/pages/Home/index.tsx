@@ -1,35 +1,62 @@
-import { BoardCard, Grid, ProfileSlider } from '../../components'
-import { mainPageBoardList } from '../../mocks/boardList'
+import React from 'react'
+import useFetchBoardList from '../../apis/board/useFetchBoardList'
+import {
+  BoardCard,
+  BoardListSkeleton,
+  ErrorComponent,
+  Grid,
+  Loader,
+  ProfileSlider,
+} from '../../components'
+import { BoardCardType, BoardListResponse } from '../../types'
 
 const Home = () => {
+  const { data, status, ref, isFetchingNextPage, hasNextPage } =
+    useFetchBoardList()
+
   return (
-    <section className='flex flex-col w-full h-full gap-12 py-10 '>
+    <section className='flex flex-col w-full h-full gap-12 py-10'>
       <ProfileSlider />
-      {/* 추후에 컴포넌트로 분리 예정. */}
       <section>
         <span className='block mb-6 text-main-color text-size-title w-fit rounded-xl'>
           🚀 성장과 도전이 공유되는 공간입니다. 지금 바로 탐험을 시작하세요!
         </span>
-        <Grid type='main'>
-          {mainPageBoardList.map((item) => (
-            <BoardCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              content={item.content}
-              thumbnail={item.thumbnail}
-              categoryId={item.categoryId}
-              categoryName={item.categoryName}
-              date={item.createdAt}
-              upCnt={item.upCnt}
-              commentCnt={item.commentCnt}
-              viewCnt={item.viewCnt}
-              profileImg={item.profileImg}
-              nickName={item.nickName}
-              tags={item.tags}
-            />
-          ))}
-        </Grid>
+        {status === 'pending' && <BoardListSkeleton type='main' />}
+        {status === 'error' && <ErrorComponent />}
+
+        {status === 'success' && (
+          <Grid type='main'>
+            {data?.pages.map((page: BoardListResponse, pageIndex: number) => (
+              <React.Fragment key={pageIndex}>
+                {page.content.map((board: BoardCardType) => (
+                  <BoardCard
+                    key={board.id}
+                    id={board.id}
+                    title={board.title}
+                    content={board.content}
+                    thumbnail={board.thumbnail}
+                    categoryId={board.categoryId}
+                    categoryName={board.categoryName}
+                    date={board.createdAt}
+                    upCnt={board.upCnt}
+                    commentCnt={board.commentCnt}
+                    viewCnt={board.viewCnt}
+                    profileImg={board.profileImage}
+                    nickName={board.nickName}
+                    tags={board.tag}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
+          </Grid>
+        )}
+        {hasNextPage && (
+          <div ref={ref}>
+            <section className='flex items-center justify-center w-full mt-3'>
+              {isFetchingNextPage ? <Loader /> : null}
+            </section>
+          </div>
+        )}
       </section>
     </section>
   )

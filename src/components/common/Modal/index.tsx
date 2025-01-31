@@ -57,9 +57,7 @@ const Modal = ({ isOpen, onClose, content }: ModalProps) => {
 
     return () => {
       window.removeEventListener('keydown', handleEsc)
-      if (!isOpen) {
-        document.body.style.overflow = 'auto'
-      }
+      document.body.style.overflow = 'auto'
     }
   }, [isOpen, onClose])
 

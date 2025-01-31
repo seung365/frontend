@@ -40,7 +40,7 @@ const CommentInput = ({
       <textarea
         ref={textareaRef}
         value={comment}
-        className='w-full p-6 text-xl font-normal border-2 border-solid rounded-md resize-none h-30 cursor-text focus:outline-none border-sub-color'
+        className='w-full p-4 text-base font-normal border border-solid rounded-md resize-none min-h-[60px] cursor-text focus:outline-none focus:border-main-color border-sub-color transition-colors'
         placeholder={placeholder}
         onChange={(e) => {
           onCommentChange(e.target.value)

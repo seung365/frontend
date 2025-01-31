@@ -1,11 +1,13 @@
 import { Control, Controller } from 'react-hook-form'
-import { FormValues } from '../../../pages/BoardWrite/index'
+import { Option } from '../../../mocks/data'
+import { FormValues } from '../../../types'
 
 interface SelectDropdownProps {
   placeholder: string
-  options: string[]
+  options: Option[]
   control: Control<FormValues>
-  name: keyof FormValues
+  name: 'categoryId' | 'title' | 'content'
+  rules?: object
 }
 /**
  * 선택 드롭다운 컴포넌트
@@ -23,26 +25,27 @@ const Dropdown = ({
   options,
   control,
   name,
+  rules,
 }: SelectDropdownProps) => {
   return (
     <div className='w-full max-w-xs'>
       <Controller
         name={name}
         control={control}
-        rules={{ required: '카테고리를 선택해주세요' }}
+        rules={rules}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <div>
             <select
               value={value || ''}
-              onChange={onChange}
+              onChange={(e) => onChange(Number(e.target.value))}
               className='w-full p-2 border rounded-md'
             >
               <option value='' disabled>
                 {placeholder}
               </option>
               {options.map((option) => (
-                <option key={option} value={option}>
-                  {option}
+                <option key={option.value} value={option.value}>
+                  {option.label}
                 </option>
               ))}
             </select>

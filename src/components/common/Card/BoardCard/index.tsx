@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import HeartFillIcon from '../../../../assets/icons/heart-fill.svg?react'
-import findCategoryPath from '../../../../utils/findCategoryPath'
+import { RouterPath } from '../../../../routes/path'
 import formatDateString from '../../../../utils/formatDate'
 import StatItem from '../../StatItem'
 /*
@@ -11,7 +11,7 @@ BardCard 컴포넌트
 interface BoardCardProps {
   id: number
   title: string
-  thumbnail?: string
+  thumbnail?: string | null
   content: string
   categoryId: number
   categoryName: string
@@ -21,7 +21,7 @@ interface BoardCardProps {
   viewCnt: number
   profileImg: string
   nickName: string
-  tags: string[]
+  tags: { tagId: number; tagName: string }[]
 }
 
 const BoardCard = ({
@@ -29,7 +29,6 @@ const BoardCard = ({
   title,
   content,
   thumbnail,
-  categoryId,
   categoryName,
   date,
   upCnt,
@@ -40,18 +39,19 @@ const BoardCard = ({
   tags,
 }: BoardCardProps) => {
   return (
-    <Link to={`${findCategoryPath(categoryId)}/${id}`}>
+    <Link to={`/${RouterPath.board}/${RouterPath.detail}/${id}`}>
       <section className='w-auto min-h-[450px] rounded-xl border-[1px] flex flex-col'>
         <section className='flex-grow-[7] flex-shrink-0 h-4/5 flex flex-col'>
-          <div className='w-full h-2/5'>
-            {thumbnail && (
+          {thumbnail && (
+            <div className='w-full h-3/5'>
               <img
                 src={thumbnail}
                 alt='게시글 이미지'
                 className='object-cover w-full h-full cursor-pointer rounded-xl'
               />
-            )}
-          </div>
+            </div>
+          )}
+
           <div className='flex flex-col flex-grow gap-2 p-2'>
             <span className='font-semibold text-size-subbody text-main-color'>
               {categoryName}
@@ -67,9 +67,9 @@ const BoardCard = ({
             {tags.map((tag) => (
               <span
                 className='px-[4px] py-[2px] rounded-xl text-[10px] text-main-color bg-sub-color'
-                key={tag}
+                key={tag.tagId}
               >
-                {tag}
+                {tag.tagName}
               </span>
             ))}
           </div>

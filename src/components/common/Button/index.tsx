@@ -32,6 +32,7 @@ const themeClasses = {
 const Button = ({
   size = 'medium',
   theme = 'dark',
+  className,
   children,
   ...props
 }: ButtonProps) => {
@@ -41,6 +42,7 @@ const Button = ({
         'font-medium inline-flex hover:opacity-70 items-center justify-center',
         sizeClasses[size],
         themeClasses[theme],
+        className,
       )}
       {...props}
     >

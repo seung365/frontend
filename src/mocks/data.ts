@@ -1,27 +1,79 @@
-export const tagName = [
-  '프론트엔드',
-  '백엔드',
-  'Spring',
-  'React',
-  'JS',
-  'TS',
-  'Java',
-  'Python',
-  'C++',
-  'Web',
-  'AWS',
-  '부트캠프',
-  '인턴',
-  '코딩테스트',
-  '정규직',
+import { tagType } from '../types'
+
+export const tagName: tagType[] = [
+  {
+    tagId: 1,
+    tagName: '프론트엔드',
+  },
+  {
+    tagId: 2,
+    tagName: '백엔드',
+  },
+  {
+    tagId: 3,
+    tagName: 'Spring',
+  },
+  {
+    tagId: 4,
+    tagName: 'React',
+  },
+  {
+    tagId: 5,
+    tagName: 'JS',
+  },
+  {
+    tagId: 6,
+    tagName: 'TS',
+  },
+  {
+    tagId: 7,
+    tagName: 'Java',
+  },
+  {
+    tagId: 8,
+    tagName: 'Python',
+  },
+  {
+    tagId: 9,
+    tagName: 'C++',
+  },
+  {
+    tagId: 10,
+    tagName: 'Web',
+  },
+  {
+    tagId: 11,
+    tagName: 'AWS',
+  },
+  {
+    tagId: 12,
+    tagName: '부트캠프',
+  },
+  {
+    tagId: 13,
+    tagName: '인턴',
+  },
+  {
+    tagId: 14,
+    tagName: '코딩테스트',
+  },
+  {
+    tagId: 15,
+    tagName: '정규직',
+  },
 ]
 
-export const categories = [
-  '자유게시판',
-  '코딩 질문',
-  '스터디 구인',
-  '프로젝트 구인',
-  '경험 공유',
+export interface Option {
+  value: number
+  label: string
+}
+
+export const categories: Option[] = [
+  { value: 1, label: '자유게시판' },
+  { value: 2, label: '코딩질문' },
+  { value: 3, label: '스터디 구인' },
+  { value: 4, label: '프로젝트 구인' },
+  { value: 5, label: '경험 공유' },
 ]
 
 export const BoardDetailData = {
