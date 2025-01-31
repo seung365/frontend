@@ -1,6 +1,6 @@
 const FloatingButton = () => {
   return (
-    <button className='absolute flex items-center justify-center w-10 h-10 rounded-full text-main-color bg-sub-color right-10 bottom-1'>
+    <button className='fixed flex items-center justify-center rounded-full w-14 h-14 text-main-color bg-sub-color right-10 bottom-10'>
       Chat
     </button>
   )

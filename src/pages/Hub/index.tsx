@@ -1,6 +1,13 @@
 import { useMemo, useState } from 'react'
 import useGetHubList from '../../apis/hub/useGetHubList'
-import { Filter, Grid, HubBanner, Loader, ProfileCard } from '../../components'
+import {
+  Filter,
+  FloatingButton,
+  Grid,
+  HubBanner,
+  Loader,
+  ProfileCard,
+} from '../../components'
 import useIntersect from '../../hooks/useIntersect'
 
 export type SortingType = '최신순' | '인기순'
@@ -51,31 +58,34 @@ const Hub = () => {
   }
 
   return (
-    <div className='relative flex flex-col gap-4 my-4 '>
-      <HubBanner />
-      <div className='flex flex-row gap-4'>
-        <Grid type='board'>
-          {users.map((profile) => (
-            <ProfileCard
-              key={profile.profileId}
-              profileId={profile.profileId}
-              profileImg={profile.profileImg}
-              nickname={profile.nickname}
-              about={profile.about}
-            />
-          ))}
-          <div className='flex justify-center w-full col-span-full'>
-            {isFetching && <Loader size='s' />}
-          </div>
-        </Grid>
-        <Filter
-          skills={skills}
-          onSkills={handleSkills}
-          onSorting={handleSorting}
-          onTerm={handleTerm}
-        />
+    <div className='relative'>
+      <div className='flex flex-col gap-4 my-4 '>
+        <HubBanner />
+        <div className='flex flex-row gap-4'>
+          <Grid type='board'>
+            {users.map((profile) => (
+              <ProfileCard
+                key={profile.profileId}
+                profileId={profile.profileId}
+                profileImg={profile.profileImg}
+                nickname={profile.nickname}
+                about={profile.about}
+              />
+            ))}
+            <div className='flex justify-center w-full col-span-full'>
+              {isFetching && <Loader size='s' />}
+            </div>
+          </Grid>
+          <Filter
+            skills={skills}
+            onSkills={handleSkills}
+            onSorting={handleSorting}
+            onTerm={handleTerm}
+          />
+        </div>
+        <div ref={ref} />
       </div>
-      <div ref={ref} />
+      <FloatingButton />
     </div>
   )
 }
