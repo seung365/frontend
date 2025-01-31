@@ -1,6 +1,8 @@
 import { useLocation, useParams } from 'react-router-dom'
 import { useFetchProfileInfo } from '../../../apis/profile/useFetchProfileInfo'
 import {
+  ErrorComponent,
+  Loader,
   ProfileBoardList,
   ProfileInfo,
   ResumeDetail,
@@ -22,10 +24,23 @@ const ProfileContents = () => {
   const tabName = queryParams.get('tab')
 
   const { data, isPending, isError } = useFetchProfileInfo(profileId)
-  console.log(data, isPending, isError)
-  const isMyProfile = localStorage.getItem('memberId') === data?.memberId // memberId 전역상태 관리 예정
+  const isMyProfile =
+    localStorage.getItem('memberId')?.trim() === data?.memberId.trim() // memberId 전역상태 관리 예정
+  console.log(localStorage.getItem('memberId'))
+  console.log(typeof data?.memberId)
+  console.log(isMyProfile)
 
-  console.log(isMyProfile, localStorage.getItem('memberId'), data?.memberId)
+  if (isPending) {
+    return (
+      <section className='flex flex-col items-center justify-center w-full h-full'>
+        <Loader />
+        <h1>Loading...</h1>
+      </section>
+    )
+  }
+  if (isError) {
+    return <ErrorComponent />
+  }
   return (
     <section className='w-full px-8'>
       {data && (
@@ -37,6 +52,7 @@ const ProfileContents = () => {
           ) : (
             <ProfileInfo
               isMyProfile={isMyProfile}
+              memberId={data.memberId}
               nickName={data.nickname}
               profileImg={data.profileImage}
               about={data.about}

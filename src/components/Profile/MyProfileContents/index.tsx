@@ -1,6 +1,8 @@
 import { useLocation } from 'react-router-dom'
 import useFetchMyProfileInfo from '../../../apis/profile/useFetchMyProfileInfo'
 import {
+  ErrorComponent,
+  Loader,
   ProfileBoardList,
   ProfileInfo,
   ResumeDetail,
@@ -12,28 +14,40 @@ const MyProfileContents = () => {
   const tabName = queryParams.get('tab')
 
   const { data, isPending, isError } = useFetchMyProfileInfo()
-  console.log(data, isPending, isError)
-  console.log(data)
+  if (isPending) {
+    return (
+      <section className='flex flex-col items-center justify-center w-full h-full'>
+        <Loader />
+        <h1>Loading...</h1>
+      </section>
+    )
+  }
+  if (isError) {
+    return <ErrorComponent />
+  }
   return (
     <section className='w-full px-8'>
-      {tabName ? (
-        tabName === 'board' ? (
-          <ProfileBoardList memberId={ProfileData.memberId} />
-        ) : (
-          <ResumeDetail memberId={ProfileData.memberId} />
-        )
-      ) : (
-        <ProfileInfo
-          isMyProfile
-          nickName={ProfileData.nickname}
-          profileImg={ProfileData.profileImage}
-          about={ProfileData.about}
-          boardCnt={ProfileData.boardCount}
-          followerCnt={ProfileData.followerCount}
-          followingCnt={ProfileData.followingCount}
-          following={ProfileData.following}
-          boardStatistics={ProfileData.board_statistics}
-        />
+      {data && (
+        <>
+          {tabName === 'board' ? (
+            <ProfileBoardList memberId={data.memberId} />
+          ) : tabName === 'resume' ? (
+            <ResumeDetail memberId={data.memberId} />
+          ) : (
+            <ProfileInfo
+              isMyProfile
+              nickName={data.nickname}
+              memberId={data.memberId}
+              profileImg={data.profileImage}
+              about={data.about}
+              boardCnt={data.boardCount}
+              followerCnt={data.followerCount}
+              followingCnt={data.followingCount}
+              following={data.following}
+              boardStatistics={ProfileData.board_statistics}
+            />
+          )}
+        </>
       )}
     </section>
   )
