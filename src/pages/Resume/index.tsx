@@ -38,10 +38,10 @@ const Resume = () => {
       skills: [],
       experiences: [
         {
-          company_name: '',
+          companyName: '',
           position: '',
-          start_date: '',
-          end_date: '',
+          startDate: '',
+          endDate: '',
           description: '',
         },
       ],

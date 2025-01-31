@@ -19,6 +19,16 @@ const UserInfoForm = ({
       {isEdit ? (
         <div className='space-y-4'>
           <div className='form-group'>
+            <label className='block mb-1 text-sm font-medium text-gray-700'>
+              이름 <span className='text-red-500'>*</span>
+            </label>
+            <input
+              {...register('userInfo.name', {
+                required: '이름을 입력해주세요',
+              })}
+              type='text'
+              className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
+            />
             <label
               htmlFor='position'
               className='block mb-1 text-sm font-medium text-gray-700'
@@ -92,6 +102,14 @@ const UserInfoForm = ({
       ) : (
         <div className='space-y-3'>
           <div>
+            <div className='mb-3'>
+              <label className='block font-medium text-gray-700 text-medium'>
+                이름
+              </label>
+              <h3 className='mt-1 text-lg font-semibold text-gray-900'>
+                {watchedData.name || '-'}
+              </h3>
+            </div>
             <div className='mb-3'>
               <label className='block font-medium text-gray-700 text-medium'>
                 포지션

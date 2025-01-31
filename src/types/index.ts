@@ -111,16 +111,18 @@ export interface UserResume {
 }
 
 export type UserInfo = {
+  name: string
   position: string
   summary: string
   portfolio: string
 }
 
 export type Experience = {
-  company_name: string
+  companyName: string
+  employmentType: string
   position: string
-  start_date: string
-  end_date: string
+  startDate: string
+  endDate: string
   description: string
 }
 
