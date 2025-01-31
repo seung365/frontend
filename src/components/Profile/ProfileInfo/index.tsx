@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { useParams } from 'react-router-dom'
+import useProfileFollow from '../../../apis/profile/useProfileFollow'
 import EditIcon from '../../../assets/icons/edit.svg?react'
 import {
   Button,
@@ -12,11 +14,13 @@ import {
 interface ProfileInfoProps {
   isMyProfile: boolean
   nickName: string
+  memberId: string
   profileImg: string
   about: string
   boardCnt: number
   followerCnt: number
   followingCnt: number
+  following: boolean
   boardStatistics: { date: string; board_count: number }[]
 }
 /**
@@ -29,21 +33,29 @@ interface ProfileInfoProps {
 const ProfileInfo = ({
   isMyProfile,
   nickName,
+  memberId,
   profileImg,
   about,
   boardCnt,
   followerCnt,
   followingCnt,
+  following,
   boardStatistics,
 }: ProfileInfoProps) => {
-  console.log(boardStatistics)
+  const { id: profileId } = useParams()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
+  const { mutate: postFollow, status } = useProfileFollow(profileId)
+  console.log(status)
   const handleModalClose = () => {
     setIsEditOpen(false)
   }
+  const handleFollow = () => {
+    postFollow(memberId)
+  }
+
   return (
-    <section className='flex flex-col'>
+    <section className='flex flex-col w-full'>
       <h1 className='mb-3 text-main-black text-size-title text-semibold'>
         👨🏻‍💻 프로필
       </h1>
@@ -54,7 +66,15 @@ const ProfileInfo = ({
             alt={nickName}
             className='object-cover w-40 h-40 rounded-full'
           />
-          {!isMyProfile && <Button size='small'>팔로우 하기</Button>}
+          {!isMyProfile ? (
+            following ? (
+              <Button size='small'>팔로우 취소</Button>
+            ) : (
+              <Button onClick={handleFollow} size='small'>
+                팔로잉 하기
+              </Button>
+            )
+          ) : null}
         </section>
 
         <section className='flex flex-grow-[7] flex-col gap-4 p-2'>

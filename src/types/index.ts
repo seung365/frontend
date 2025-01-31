@@ -49,7 +49,7 @@ export type BoardCardType = {
   memberId: string
   nickName: string
   profileImage: string
-  tag: { tagId: number; tagName: string }[]
+  tag?: { tagId: number; tagName: string }[]
   thumbnail?: string | null
   title: string
   upCnt: number
@@ -156,4 +156,16 @@ export type Education = {
 export type Language = {
   name: string
   level: string
+}
+
+export type ProfileInfoResponse = {
+  id: string
+  nickname: string
+  memberId: string
+  about: string
+  boardCount: number
+  followerCount: number
+  followingCount: number
+  following: boolean
+  profileImage: string
 }
