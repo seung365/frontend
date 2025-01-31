@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Filter, Grid, HubBanner, ProfileCard } from '../../components'
+import { FloatingButton } from '../../components/index'
 import { profileList } from '../../mocks/profileList'
 
 export type SortingType = '최신순' | '인기순'
@@ -38,7 +39,7 @@ const Hub = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4 my-4 '>
+    <div className='relative flex flex-col gap-4 my-4 '>
       <HubBanner />
       <div className='flex flex-row gap-4'>
         <Grid type='board'>
@@ -59,6 +60,7 @@ const Hub = () => {
           onTerm={handleTerm}
         />
       </div>
+      <FloatingButton />
     </div>
   )
 }
