@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { API_ROUTES } from '../../constant/api'
 import useIntersect from '../../hooks/useIntersect'
 import { BoardListResponse } from '../../types'
 import { publicInstance } from '../fetchInstance'
@@ -11,7 +12,7 @@ const fetchAllBoards = async ({
   queryString?: string
 }): Promise<BoardListResponse> => {
   const response = await publicInstance.get<BoardListResponse>(
-    `/board?size=10&page=${pageParam}&${queryString}`,
+    `/${API_ROUTES.BOARDS}?size=10&page=${pageParam}&${queryString}`,
   )
   return response.data
 }
@@ -24,7 +25,7 @@ const fetchCategoriesBoard = async (
   }: { pageParam?: number; queryString?: string },
 ): Promise<BoardListResponse> => {
   const response = await publicInstance.get(
-    `/board/category/${categoryId}?size=9&page=${pageParam}&${queryString}`,
+    `/${API_ROUTES.BOARDS}/category/${categoryId}?size=9&page=${pageParam}&${queryString}`,
   )
   return response.data
 }
