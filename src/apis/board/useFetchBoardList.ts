@@ -25,7 +25,7 @@ const fetchCategoriesBoard = async (
   }: { pageParam?: number; queryString?: string },
 ): Promise<BoardListResponse> => {
   const response = await publicInstance.get(
-    `/${API_ROUTES.BOARDS}/${API_ROUTES.CATEGORIES}/${categoryId}?size=9&page=${pageParam}&${queryString}`,
+    `/${API_ROUTES.BOARDS}/category/${categoryId}?size=9&page=${pageParam}&${queryString}`,
   )
   return response.data
 }
