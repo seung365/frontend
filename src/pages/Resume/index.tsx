@@ -2,15 +2,50 @@ import { useForm } from 'react-hook-form'
 import {
   ActivityResume,
   EducationResume,
+  ExperienceResume,
   LanguageResume,
   ProjectResume,
   ResumeContainer,
-} from '../../components'
-import { Activity, Education, Language, Project, UserResume } from '../../types'
+  SkillsResume,
+  UserInfoResume,
+} from '../../components/index'
+import {
+  Activity,
+  Education,
+  Experience,
+  Language,
+  Project,
+  Skills,
+  UserInfo,
+  UserResume,
+} from '../../types'
 
 const Resume = () => {
-  const { register, handleSubmit, control, getValues } = useForm<UserResume>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = useForm<UserResume>({
     defaultValues: {
+      userInfo: {
+        position: '',
+        summary: '',
+        portfolio: '',
+      },
+      skills: [],
+      experiences: [
+        {
+          company_name: '',
+          position: '',
+          start_date: '',
+          end_date: '',
+          description: '',
+        },
+      ],
       projects: [
         {
           name: '',
@@ -49,7 +84,22 @@ const Resume = () => {
     },
   })
 
+  const userInfoData = watch('userInfo')
+  const exprienceData = watch('experiences')
+
   const onClickSubmit = (data: UserResume) => {
+    console.log(data)
+  }
+
+  const handleUserInfoSubmit = (data: UserInfo) => {
+    console.log(data)
+  }
+
+  const handleSkillsSubmit = (data: Skills[]) => {
+    console.log(data)
+  }
+
+  const handleExperienceSubmit = (data: Experience[]) => {
     console.log(data)
   }
 
@@ -84,19 +134,37 @@ const Resume = () => {
         <ResumeContainer
           title='인적 사항'
           description='✏️ 본인에 대해서 작성해주세요!'
-        ></ResumeContainer>
+        >
+          <UserInfoResume
+            register={register}
+            onSectionSubmit={handleUserInfoSubmit}
+            watchedData={userInfoData}
+            errors={errors}
+          />
+        </ResumeContainer>
 
         {/*기술 스택 */}
         <ResumeContainer
           title='기술 스택'
           description='✏️ 기술스택을 설정해주세요!'
-        ></ResumeContainer>
+        >
+          <SkillsResume
+            control={control}
+            onSectionSubmit={handleSkillsSubmit}
+          />
+        </ResumeContainer>
 
         {/*경력 */}
-        <ResumeContainer
-          title='경력'
-          description='✏️ 경력사항을 입력해주세요!'
-        ></ResumeContainer>
+        <ResumeContainer title='경력' description='✏️ 경력사항을 입력해주세요!'>
+          <ExperienceResume
+            register={register}
+            onSectionSubmit={handleExperienceSubmit}
+            watchedData={exprienceData}
+            control={control}
+            errors={errors}
+            trigger={trigger}
+          />
+        </ResumeContainer>
 
         {/*프로젝트 */}
         <ResumeContainer
