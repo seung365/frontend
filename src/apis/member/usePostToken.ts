@@ -1,3 +1,4 @@
+import { API_ROUTES } from '../../constant/api'
 import { publicInstance } from '../fetchInstance'
 
 type PostTokenResponse = {
@@ -10,7 +11,9 @@ const usePostToken = () => {
     try {
       console.log('현재 쿠키:', document.cookie)
 
-      const response = await publicInstance.post<PostTokenResponse>('/reissue')
+      const response = await publicInstance.post<PostTokenResponse>(
+        `/${API_ROUTES.REISSUE}`,
+      )
       console.log('성공 응답:', response)
       const accessToken = response.headers.access
       console.log('발급된 토큰:', accessToken)

@@ -1,3 +1,5 @@
+import { Skills } from '../types'
+
 export const BOARD_CATEGORY_TABS = [
   { path: '/board/community', categoryName: '자유게시판', id: 1 },
   { path: '/board/programming', categoryName: '코딩 질문', id: 2 },
@@ -149,3 +151,26 @@ export const contentTemplates: Record<number, string> = {
 <!-- 관련된 참고 자료가 있다면 공유해주세요 -->
 `,
 }
+
+export const SKILL_STACKS: Skills[] = [
+  { skill: 'JavaScript' },
+  { skill: 'Git' },
+  { skill: 'MySQL' },
+  { skill: 'Java' },
+  { skill: 'Spring Framework' },
+  { skill: 'AWS' },
+  { skill: 'HTML' },
+  { skill: 'Github' },
+  { skill: 'TypeScript' },
+  { skill: 'React' },
+  { skill: 'Spring Boot' },
+  { skill: 'Docker' },
+  { skill: 'JPA' },
+  { skill: 'Python' },
+  { skill: 'Linux' },
+  { skill: 'SQL' },
+  { skill: 'CSS' },
+  { skill: 'Node.js' },
+  { skill: 'Oracle' },
+  { skill: 'jQuery' },
+]

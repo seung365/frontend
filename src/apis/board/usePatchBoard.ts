@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { API_ROUTES } from '../../constant/api'
 import { BoardResponse, FormValues } from '../../types/index'
 import { authInstance } from '../fetchInstance'
 
@@ -26,7 +27,10 @@ const patchBoard = async ({
     tags: formData.tags?.map((tag) => tag.tagName) || [],
   }
 
-  const response = await authInstance.patch(`/board/${id}`, requestData)
+  const response = await authInstance.patch(
+    `/${API_ROUTES.BOARDS}/${id}`,
+    requestData,
+  )
   console.log('게시글 수정 응답:', response)
   return response.data
 }
