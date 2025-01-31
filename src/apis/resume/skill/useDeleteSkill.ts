@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { API_ROUTES } from '../../../constant/api'
 import { authInstance } from '../../fetchInstance'
 
 const deleteSkill = async (id: string) => {
-  await authInstance.delete(`/resume/skill/${id}`)
+  await authInstance.delete(`/${API_ROUTES.RESUME}/skill/${id}`)
 }
 
 const useDeleteSkill = () => {
