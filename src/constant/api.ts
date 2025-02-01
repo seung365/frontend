@@ -4,4 +4,5 @@ export const API_ROUTES = {
   REISSUE: 'reissue',
   PROFILE: 'profile',
   CATEGORIES: 'categories',
+  FOLLOWS: 'follows',
 } as const
