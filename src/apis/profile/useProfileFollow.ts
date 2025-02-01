@@ -1,30 +1,38 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { authInstance } from '../fetchInstance'
 
+interface FollowCallbacks {
+  onSuccess?: () => void
+  onError?: (error: Error) => void
+}
+
 const postFollow = async (memberId: string) => {
-  console.log(memberId)
   const response = await authInstance.post(`/follows/${memberId}`)
-  console.log(response)
   return response.data
 }
 
 const useProfileFollow = (profileId?: string) => {
-  //const queryClient = useQueryClient()
-  console.log(profileId)
-  const { mutate, status } = useMutation({
-    mutationFn: postFollow,
-    onSuccess: (data) => {
-      //   queryClient.invalidateQueries({
-      //     queryKey: ['profileInfo', profileId],
-      //   })
-      console.log('성공', data)
+  const queryClient = useQueryClient()
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (params: { memberId: string; callbacks?: FollowCallbacks }) =>
+      postFollow(params.memberId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['profileInfo', profileId],
+      })
+      variables.callbacks?.onSuccess?.()
     },
-    onError: (error) => {
-      console.error('팔로우 요청 실패', error)
+    onError: (error: Error, variables) => {
+      variables.callbacks?.onError?.(error)
     },
   })
 
-  return { mutate, status }
+  const mutateFollow = (memberId: string, callbacks?: FollowCallbacks) => {
+    mutate({ memberId, callbacks })
+  }
+
+  return { mutate: mutateFollow, isPending }
 }
 
 export default useProfileFollow
