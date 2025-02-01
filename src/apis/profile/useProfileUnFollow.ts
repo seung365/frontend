@@ -6,17 +6,17 @@ interface FollowCallbacks {
   onError?: (error: Error) => void
 }
 
-const postFollow = async (memberId: string) => {
-  const response = await authInstance.post(`/follows/${memberId}`)
+const deleteFollow = async (memberId: string) => {
+  const response = await authInstance.delete(`/follows/${memberId}`)
   return response.data
 }
 
-const useProfileFollow = (profileId?: string) => {
+const useProfileUnfollow = (profileId?: string) => {
   const queryClient = useQueryClient()
 
   const { mutate, isPending } = useMutation({
     mutationFn: (params: { memberId: string; callbacks?: FollowCallbacks }) =>
-      postFollow(params.memberId),
+      deleteFollow(params.memberId),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ['profileInfo', profileId],
@@ -35,4 +35,4 @@ const useProfileFollow = (profileId?: string) => {
   return { mutate: mutateFollow, isPending }
 }
 
-export default useProfileFollow
+export default useProfileUnfollow
