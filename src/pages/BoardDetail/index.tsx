@@ -2,11 +2,11 @@ import { Suspense, useCallback, useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useNavigate, useParams } from 'react-router-dom'
 import useDeleteBoard from '../../apis/board/useDeleteBoard.ts'
+import useDeleteFollow from '../../apis/board/useDeleteFollow.ts'
 import useGetBoardDetail from '../../apis/board/useGetBoardDetail.ts'
+import useProfileFollow from '../../apis/board/usePostFollow.ts'
 import usePostRecommendation from '../../apis/board/usePostRecommendation.ts'
 import usePostComment from '../../apis/comment/usePostComment.ts'
-import useDeleteFollow from '../../apis/profile/useDeleteFollow.ts'
-import useProfileFollow from '../../apis/profile/useProfileFollow.ts'
 import queryClient from '../../apis/queryClient'
 import {
   Button,

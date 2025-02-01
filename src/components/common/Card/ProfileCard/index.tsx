@@ -20,13 +20,16 @@ const ProfileCard = ({
 }: ProfileCardProps) => {
   return (
     <Link to={`/profile/${profileId}`}>
-      <section className='w-full min-h-52  border-[1px] rounded-xl'>
-        <img
-          src={profileImg}
-          alt='프로필 이미지'
-          className='object-cover w-full cursor-pointer h-1/2 rounded-xl'
-        />
-        <div className='flex flex-col gap-2 p-2'>
+      <section className='w-full h-80 border-[1px] rounded-xl'>
+        <div className='w-full h-1/2'>
+          <img
+            src={profileImg}
+            alt='프로필 이미지'
+            className='object-cover w-full h-full cursor-pointer rounded-xl'
+          />
+        </div>
+
+        <div className='flex flex-col w-full gap-2 p-2 h-1/2'>
           <span className='text-main-black line-clamp-1'>{nickname}</span>
           <p className='text-[14px] text-dark-gray line-clamp-3 min-h-16'>
             {about}

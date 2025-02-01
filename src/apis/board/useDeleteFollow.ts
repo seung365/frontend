@@ -13,7 +13,6 @@ const useDeleteFollow = (profileId: string, id: string) => {
     mutationFn: () => deleteFollow(profileId),
     onSettled: () => {
       console.log('팔로우 삭제 요청 성공')
-      queryClient.invalidateQueries({ queryKey: ['profileInfo', profileId] })
       queryClient.invalidateQueries({ queryKey: ['board', id] })
     },
     onError: (error) => {
