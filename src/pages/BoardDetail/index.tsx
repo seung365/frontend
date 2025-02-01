@@ -7,7 +7,6 @@ import useGetBoardDetail from '../../apis/board/useGetBoardDetail.ts'
 import useProfileFollow from '../../apis/board/usePostFollow.ts'
 import usePostRecommendation from '../../apis/board/usePostRecommendation.ts'
 import usePostComment from '../../apis/comment/usePostComment.ts'
-import queryClient from '../../apis/queryClient'
 import {
   Button,
   CommentBar,
@@ -27,7 +26,6 @@ const BoardDetailContent = ({ id }: { id: string }) => {
   }
   const navigate = useNavigate()
   const [comment, setComment] = useState<string>('')
-  const postRecommendation = usePostRecommendation()
   const memberId = localStorage.getItem('memberId')
 
   const { data } = useGetBoardDetail(id)
@@ -35,6 +33,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
   const { mutate: commentMutate } = usePostComment(id)
   const { mutate: followMutate } = useProfileFollow(data.memberId, id)
   const { mutate: unfollowMutate } = useDeleteFollow(data.memberId, id)
+  const { mutate: postRecommendMutate } = usePostRecommendation()
   console.log(data.memberId)
 
   const handleSubmit = useCallback(
@@ -54,17 +53,8 @@ const BoardDetailContent = ({ id }: { id: string }) => {
     [comment, commentMutate, id],
   )
 
-  const handleClickRecommend = async () => {
-    try {
-      await postRecommendation(data.id)
-      console.log('쿼리 무효화 시도')
-
-      console.log('무효화 전 count:', data.upCnt)
-      await queryClient.invalidateQueries({ queryKey: ['board', id] })
-      console.log('무효화 후 count:', data.upCnt)
-    } catch (error) {
-      console.error('추천 중 에러:', error)
-    }
+  const handleClickRecommend = () => {
+    postRecommendMutate(data.id)
   }
 
   if (status === 'pending') {
@@ -80,7 +70,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
     <div>
       <FloatingPost
         count={data.upCnt}
-        isRecommend={data.recommended}
+        initialIsRecommend={data.recommended}
         onheartClick={handleClickRecommend}
       />
       <TitleBar title={data.title} />

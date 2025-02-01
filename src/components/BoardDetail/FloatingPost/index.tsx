@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { twMerge } from 'tailwind-merge'
 import Heart from '../../../assets/icons/heart.svg?react'
 
 interface FloatingPostProps {
   count: number
-  isRecommend: boolean
+  initialIsRecommend: boolean
   onheartClick: () => void
 }
 
@@ -20,15 +21,24 @@ interface FloatingPostProps {
  */
 
 const FloatingPost = ({
-  count,
-  isRecommend,
+  count: initialCount,
+  initialIsRecommend,
   onheartClick,
 }: FloatingPostProps) => {
+  const [isRecommend, setIsRecommend] = useState(initialIsRecommend)
+  const [count, setCount] = useState(initialCount)
+
+  const handleHeartClick = () => {
+    onheartClick()
+    setIsRecommend(!isRecommend)
+    setCount(isRecommend ? count - 1 : count + 1)
+  }
+
   return (
     <div className='fixed z-10 flex flex-col items-center justify-center gap-1 p-2 rounded-full bg-sub-color top-32 right-10'>
       <div className='flex flex-col items-center justify-center gap-1'>
         <button
-          onClick={onheartClick}
+          onClick={handleHeartClick}
           className='flex items-center justify-center p-1 bg-white border-2 rounded-full w-11 h-11 hover:opacity-100 opacity-80'
         >
           <Heart
