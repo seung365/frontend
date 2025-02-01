@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 import useProfileFollow from '../../../apis/profile/useProfileFollow'
+import useProfileUnfollow from '../../../apis/profile/useProfileUnFollow'
 import EditIcon from '../../../assets/icons/edit.svg?react'
 import {
   Button,
@@ -39,20 +40,36 @@ const ProfileInfo = ({
   boardCnt,
   followerCnt,
   followingCnt,
-  following,
+  following: initialFollowing,
   boardStatistics,
 }: ProfileInfoProps) => {
   const { id: profileId } = useParams()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [following, setFollowing] = useState<boolean>(initialFollowing)
 
-  const { mutate: postFollow, status } = useProfileFollow(profileId)
-  console.log(status)
+  const { mutate: postFollow, isPending: isFollowPending } =
+    useProfileFollow(profileId)
+  const { mutate: deleteFollow, isPending: isUnfollowPending } =
+    useProfileUnfollow(profileId)
+
   const handleModalClose = () => {
     setIsEditOpen(false)
   }
   const handleFollow = () => {
-    postFollow(memberId)
+    postFollow(memberId, {
+      onSuccess: () => setFollowing(true),
+      onError: (error) => console.error('팔로우 실패:', error),
+    })
   }
+
+  const handleUnFollow = () => {
+    deleteFollow(memberId, {
+      onSuccess: () => setFollowing(false),
+      onError: (error) => console.error('언팔로우 실패:', error),
+    })
+  }
+
+  const isLoading = isFollowPending || isUnfollowPending
 
   return (
     <section className='flex flex-col w-full'>
@@ -66,15 +83,21 @@ const ProfileInfo = ({
             alt={nickName}
             className='object-cover w-40 h-40 rounded-full'
           />
-          {!isMyProfile ? (
-            following ? (
-              <Button size='small'>팔로우 취소</Button>
-            ) : (
-              <Button onClick={handleFollow} size='small'>
-                팔로잉 하기
-              </Button>
-            )
-          ) : null}
+          {!isMyProfile && (
+            <Button
+              onClick={following ? handleUnFollow : handleFollow}
+              size='small'
+              disabled={isLoading}
+            >
+              {isLoading
+                ? following
+                  ? '취소 중...'
+                  : '팔로우 중...'
+                : following
+                ? '팔로우 취소'
+                : '팔로잉 하기'}
+            </Button>
+          )}
         </section>
 
         <section className='flex flex-grow-[7] flex-col gap-4 p-2'>
