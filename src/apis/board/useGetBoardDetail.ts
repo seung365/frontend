@@ -13,6 +13,7 @@ const useGetBoardDetail = (id: string) => {
   const { data } = useSuspenseQuery({
     queryKey: ['board', id],
     queryFn: () => getBoardDetail(id),
+    staleTime: 0,
   })
   return { data }
 }
