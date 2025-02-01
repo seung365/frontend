@@ -1,30 +1,26 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { API_ROUTES } from '../../constant/api'
 import { authInstance } from '../fetchInstance'
 
 const postFollow = async (memberId: string) => {
-  console.log(memberId)
-  const response = await authInstance.post(`/follows/${memberId}`)
-  console.log(response)
-  return response.data
+  await authInstance.post(`/${API_ROUTES.FOLLOWS}/${memberId}`)
 }
 
-const useProfileFollow = (profileId?: string) => {
-  //const queryClient = useQueryClient()
-  console.log(profileId)
-  const { mutate, status } = useMutation({
-    mutationFn: postFollow,
-    onSuccess: (data) => {
-      //   queryClient.invalidateQueries({
-      //     queryKey: ['profileInfo', profileId],
-      //   })
-      console.log('성공', data)
+const useProfileFollow = (profileId: string, id: string) => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: () => postFollow(profileId),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['profileInfo', profileId] })
+      queryClient.invalidateQueries({ queryKey: ['board', id] })
+
+      console.log('팔로우 요청 성공')
     },
     onError: (error) => {
       console.error('팔로우 요청 실패', error)
     },
   })
-
-  return { mutate, status }
+  return { mutate }
 }
 
 export default useProfileFollow
