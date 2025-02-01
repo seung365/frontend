@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
+import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
 const deleteComment = async ({
@@ -18,13 +19,23 @@ const deleteComment = async ({
 
 const useDeleteComment = (boardId: string, commentId: number) => {
   const queryClient = useQueryClient()
+
   const { mutate } = useMutation({
     mutationFn: () => deleteComment({ boardId, commentId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['board', boardId] })
-      queryClient.invalidateQueries({ queryKey: ['replyComment'] })
+      queryClient.setQueryData(
+        ['board', boardId],
+        (oldData: BoardResponse) => ({
+          ...oldData,
+          comment: oldData.comment.filter(
+            (comment) => comment.id !== commentId,
+          ),
+          commentCnt: oldData.commentCnt - 1,
+        }),
+      )
     },
   })
+
   return { mutate }
 }
 

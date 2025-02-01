@@ -37,6 +37,8 @@ export interface BoardResponse {
   tag: tagType[]
   createdAt: string
   updatedAt: string
+  recommended: boolean
+  following: boolean
 }
 
 export type BoardCardType = {
