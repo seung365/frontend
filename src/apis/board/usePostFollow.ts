@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
+import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
 const postFollow = async (memberId: string) => {
@@ -10,8 +11,11 @@ const useProfileFollow = (profileId: string, id: string) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
     mutationFn: () => postFollow(profileId),
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['board', id] })
+    onSuccess: () => {
+      queryClient.setQueryData(['board', id], (oldData: BoardResponse) => ({
+        ...oldData,
+        following: !oldData.following,
+      }))
       console.log('팔로우 요청 성공')
     },
     onError: (error) => {
@@ -20,5 +24,4 @@ const useProfileFollow = (profileId: string, id: string) => {
   })
   return { mutate }
 }
-
 export default useProfileFollow

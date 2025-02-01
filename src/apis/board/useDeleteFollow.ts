@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
+import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
 const deleteFollow = async (userId: string) => {
@@ -13,7 +14,10 @@ const useDeleteFollow = (profileId: string, id: string) => {
     mutationFn: () => deleteFollow(profileId),
     onSettled: () => {
       console.log('팔로우 삭제 요청 성공')
-      queryClient.invalidateQueries({ queryKey: ['board', id] })
+      queryClient.setQueryData(['board', id], (oldData: BoardResponse) => ({
+        ...oldData,
+        following: !oldData.following,
+      }))
     },
     onError: (error) => {
       console.error('팔로우 삭제 요청 실패', error)
