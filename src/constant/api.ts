@@ -5,5 +5,6 @@ export const API_ROUTES = {
   PROFILE: 'profile',
   CATEGORIES: 'categories',
   RESUME: 'resume',
+  RESUMES: 'resumes',
   FOLLOWS: 'follows',
 } as const
