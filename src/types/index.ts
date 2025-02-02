@@ -102,9 +102,9 @@ export type ProfileCardType = {
 export type ProfileRandomResponse = ProfileCardType[]
 
 export interface UserResume {
-  member_id: string
-  userInfo: UserInfo
-  skills: Skills[]
+  memberId: string
+  information: information
+  skills: string[]
   experiences: Experience[]
   activities: Activity[]
   projects: Project[]
@@ -112,21 +112,37 @@ export interface UserResume {
   languages: Language[]
 }
 
-export type UserInfo = {
+export interface ResumeResponse {
+  memberId: string
+  information: information
+  skills: ResponseSkills[]
+  experiences: Experience[]
+  activities: Activity[]
+  projects: Project[]
+  educations: Education[]
+  languages: Language[]
+}
+
+export type ResponseSkills = {
+  id: number
+  name: string
+}
+
+export type information = {
+  id: number
+  name: string
   position: string
   summary: string
   portfolio: string
-}
-
-export type Skills = {
-  skill: string
+  employmentPeriod: '신입' | '1~3년차' | '4~6년차' | '7~9년차' | '10년차이상'
 }
 
 export type Experience = {
-  company_name: string
+  companyName: string
+  employmentType: string
   position: string
-  start_date: string
-  end_date: string
+  startDate: string
+  endDate: string
   description: string
 }
 

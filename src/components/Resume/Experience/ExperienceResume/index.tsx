@@ -6,6 +6,7 @@ import {
   UseFormRegister,
   UseFormTrigger,
 } from 'react-hook-form'
+import usePostExperience from '../../../../apis/resume/experience/usePostExperience'
 import { Experience, UserResume } from '../../../../types'
 import { Button } from '../../../index'
 import ExperienceForm from '../ExperienceForm'
@@ -36,12 +37,14 @@ const ExperienceResume = ({
     name: 'experiences',
   })
   const [isEdit, setIsEdit] = useState(false)
+  const { mutate: postExperience } = usePostExperience()
 
   const handleSectionSubmit = async () => {
     const isValid = await trigger('experiences')
     if (!isValid) {
       return
     }
+    postExperience(watchedData)
     onSectionSubmit(watchedData)
     setIsEdit(!isEdit)
   }
@@ -70,10 +73,11 @@ const ExperienceResume = ({
               type='button'
               onClick={() =>
                 appendExperience({
-                  company_name: '',
+                  companyName: '',
+                  employmentType: '',
                   position: '',
-                  start_date: '',
-                  end_date: '',
+                  startDate: '',
+                  endDate: '',
                   description: '',
                 })
               }

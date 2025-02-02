@@ -1,10 +1,9 @@
 import { SKILL_STACKS } from '../../../../constant'
-import { Skills } from '../../../../types'
 import { Button } from '../../../index'
 
 interface SkillsFormProps {
-  fields: Skills[]
-  onAddSkill: (skillObj: Skills) => void
+  fields: string[]
+  onAddSkill: (skillObj: string) => void
 }
 
 const SkillsForm = ({ fields, onAddSkill }: SkillsFormProps) => {
@@ -39,10 +38,8 @@ const SkillsForm = ({ fields, onAddSkill }: SkillsFormProps) => {
           기술 스택 선택
         </h3>
         <div className='flex flex-wrap gap-2'>
-          {SKILL_STACKS.map((skillObj, index) => {
-            const isSelected = fields.some(
-              (field) => field.skill === skillObj.skill,
-            )
+          {SKILL_STACKS.map((skill, index) => {
+            const isSelected = fields.some((field) => field === skill)
 
             return (
               <Button
@@ -54,9 +51,9 @@ const SkillsForm = ({ fields, onAddSkill }: SkillsFormProps) => {
                     ? 'bg-main-color text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
-                onClick={() => onAddSkill(skillObj)}
+                onClick={() => onAddSkill(skill)}
               >
-                {skillObj.skill}
+                {skill}
               </Button>
             )
           })}
