@@ -1,9 +1,12 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import useGetResume from '../../apis/resume/useGetResume'
 import {
   ActivityResume,
   EducationResume,
   ExperienceResume,
   LanguageResume,
+  Loader,
   ProjectResume,
   ResumeContainer,
   SkillsResume,
@@ -13,11 +16,12 @@ import {
   Activity,
   Education,
   Experience,
+  information,
   Language,
   Project,
-  UserInfo,
   UserResume,
 } from '../../types'
+import resumeTransform from '../../utils/resumeTransform'
 
 const Resume = () => {
   const {
@@ -27,13 +31,17 @@ const Resume = () => {
     control,
     trigger,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<UserResume>({
     defaultValues: {
-      userInfo: {
+      information: {
+        id: 0,
+        name: '',
         position: '',
         summary: '',
         portfolio: '',
+        employmentPeriod: '신입',
       },
       skills: [],
       experiences: [
@@ -83,14 +91,41 @@ const Resume = () => {
     },
   })
 
-  const userInfoData = watch('userInfo')
+  const memberId = localStorage.getItem('memberId')
+  const { data: resumeData, status: resumeStatus } = useGetResume(
+    memberId?.toString() || '',
+  )
+
+  const userInfoData = watch('information')
   const exprienceData = watch('experiences')
 
+  useEffect(() => {
+    if (resumeStatus === 'success' && resumeData) {
+      const transformedData = resumeTransform(resumeData)
+      reset(transformedData)
+    }
+  }, [resumeStatus, resumeData, reset])
+
+  if (resumeStatus === 'pending') {
+    return (
+      <div className='fixed inset-0 flex items-center justify-center'>
+        <Loader />
+      </div>
+    )
+  }
+
+  if (resumeStatus === 'error') {
+    return (
+      <div className='fixed inset-0 flex items-center justify-center font-bold text-red-500'>
+        이력서를 조회할 수 없습니다.
+      </div>
+    )
+  }
   const onClickSubmit = (data: UserResume) => {
     console.log(data)
   }
 
-  const handleUserInfoSubmit = (data: UserInfo) => {
+  const handleUserInfoSubmit = (data: information) => {
     console.log(data)
   }
 
