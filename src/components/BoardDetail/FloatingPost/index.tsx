@@ -5,6 +5,7 @@ import Heart from '../../../assets/icons/heart.svg?react'
 
 interface FloatingPostProps {
   count: number
+  initialIsRecommend: boolean
   onheartClick: () => void
 }
 
@@ -19,12 +20,18 @@ interface FloatingPostProps {
  * 위치 지정은 부모 요소를 기준으로 상대적으로 배치되어야 합니다.
  */
 
-const FloatingPost = ({ count, onheartClick }: FloatingPostProps) => {
-  const [isLiked, setIsLiked] = useState(false)
+const FloatingPost = ({
+  count: initialCount,
+  initialIsRecommend,
+  onheartClick,
+}: FloatingPostProps) => {
+  const [isRecommend, setIsRecommend] = useState(initialIsRecommend)
+  const [count, setCount] = useState(initialCount)
 
   const handleHeartClick = () => {
     onheartClick()
-    setIsLiked(!isLiked)
+    setIsRecommend(!isRecommend)
+    setCount(isRecommend ? count - 1 : count + 1)
   }
 
   return (
@@ -37,7 +44,7 @@ const FloatingPost = ({ count, onheartClick }: FloatingPostProps) => {
           <Heart
             className={twMerge(
               'w-6 h-6',
-              isLiked ? 'text-main-color' : 'text-gray-400',
+              isRecommend ? 'text-main-color' : 'text-gray-400',
             )}
           />
         </button>
