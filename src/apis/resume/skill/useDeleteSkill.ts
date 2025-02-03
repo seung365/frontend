@@ -3,7 +3,7 @@ import { API_ROUTES } from '../../../constant/api'
 import { authInstance } from '../../fetchInstance'
 
 const deleteSkill = async (id: string) => {
-  await authInstance.delete(`/${API_ROUTES.RESUME}/skill/${id}`)
+  await authInstance.delete(`/${API_ROUTES.RESUME}/skills/${id}`)
 }
 
 const useDeleteSkill = () => {
@@ -12,7 +12,7 @@ const useDeleteSkill = () => {
     mutationFn: (id) => deleteSkill(id),
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['skill'],
+        queryKey: ['skills'],
       })
     },
   })

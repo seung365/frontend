@@ -9,7 +9,7 @@ const getSkill = async () => {
 
 const useGetSkill = () => {
   const { data } = useQuery({
-    queryKey: ['skill'],
+    queryKey: ['skills'],
     queryFn: getSkill,
   })
   return { data }
