@@ -1,6 +1,12 @@
 import { useMemo, useState } from 'react'
 import useGetHubList from '../../apis/hub/useGetHubList'
-import { Filter, Grid, HubBanner, Loader, ProfileCard } from '../../components'
+import {
+  Filter,
+  Grid,
+  HubBanner,
+  HubListSkeleton,
+  ProfileCard,
+} from '../../components'
 import useIntersect from '../../hooks/useIntersect'
 
 export type SortingType = '최신순' | '인기순'
@@ -26,7 +32,7 @@ const Hub = () => {
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target)
-    if (hasNextPage && !isFetching) {
+    if (hasNextPage && !isFetching && entry.intersectionRatio >= 0.1) {
       fetchNextPage()
     }
   })
@@ -51,7 +57,7 @@ const Hub = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4 my-4 '>
+    <div className='flex flex-col gap-4 my-4 mb-20'>
       <HubBanner />
       <div className='flex flex-row gap-4'>
         <Grid type='board'>
@@ -65,7 +71,7 @@ const Hub = () => {
             />
           ))}
           <div className='flex justify-center w-full col-span-full'>
-            {isFetching && <Loader size='s' />}
+            {isFetching && <HubListSkeleton isInitialLoading={!users.length} />}
           </div>
         </Grid>
         <Filter
