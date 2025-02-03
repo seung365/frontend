@@ -3,7 +3,7 @@ stages:
     - deploy
 
 before_script:
-    - echo "start gitlab-runner cicd bot...."
+    - echo "start gitlab-runner cicd bot..."
 
 build:
     stage: build
