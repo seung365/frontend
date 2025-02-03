@@ -24,6 +24,13 @@ const UserInfoResume = ({
   const { mutate: postUserInfo } = usePostUserInfo()
   const { mutate: patchUserInfo } = usePatchUserInfo(watchedData.id ?? 0)
 
+  const isDataFilled = Boolean(
+    watchedData.name &&
+      watchedData.position &&
+      watchedData.summary &&
+      watchedData.employmentPeriod,
+  )
+
   const handleSectionSubmit = () => {
     if (!watchedData.position || !watchedData.summary) {
       return
@@ -38,13 +45,6 @@ const UserInfoResume = ({
     onSectionSubmit(watchedData)
     setIsEdit(false)
   }
-
-  const isDataFilled = Boolean(
-    watchedData.name &&
-      watchedData.position &&
-      watchedData.summary &&
-      watchedData.employmentPeriod,
-  )
 
   return (
     <div className='flex flex-col items-end p-8 bg-white rounded-lg shadow-md'>
