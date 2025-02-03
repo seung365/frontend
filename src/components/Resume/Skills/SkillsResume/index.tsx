@@ -1,37 +1,52 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UseFormRegister } from 'react-hook-form'
+import usePatchSkill from '../../../../apis/resume/skill/usePatchSkill'
+import usePostSkill from '../../../../apis/resume/skill/usePostSkill'
 import { UserResume } from '../../../../types'
 import { Button } from '../../../index'
 import SkillsForm from '../SkillsForm'
 
 interface SkillStackProps {
   register: UseFormRegister<UserResume>
-  defaultValues?: string[]
+  defaultValues: string[]
   onSectionSubmit: (data: string[]) => void
 }
 
 const SkillsResume = ({
   register,
-  defaultValues = [],
+  defaultValues,
   onSectionSubmit,
 }: SkillStackProps) => {
   const [isEdit, setIsEdit] = useState(false)
-  const [skills, setSkills] = useState<string[]>(defaultValues)
+  const [skills, setSkills] = useState<string[]>([])
+
+  const { mutate: postSkill } = usePostSkill()
+  const { mutate: patchSkill } = usePatchSkill()
+
+  const isDataFilled = Boolean(skills.length > 0)
+
+  useEffect(() => {
+    console.log('defaultValues changed:', defaultValues)
+    setSkills(defaultValues)
+  }, [defaultValues])
 
   const handleAddSkill = (skill: string) => {
     const skillIndex = skills.findIndex((s) => s === skill)
     if (skillIndex === -1) {
       const newSkills = [...skills, skill]
       setSkills(newSkills)
-      onSectionSubmit(newSkills)
     } else {
       const newSkills = skills.filter((_, index) => index !== skillIndex)
       setSkills(newSkills)
-      onSectionSubmit(newSkills)
     }
   }
 
   const handleSubmit = () => {
+    if (isDataFilled) {
+      patchSkill(skills)
+    } else {
+      postSkill(skills)
+    }
     onSectionSubmit(skills)
     setIsEdit(false)
   }
