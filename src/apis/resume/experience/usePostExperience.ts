@@ -9,7 +9,7 @@ const postExperience = async (experience: Experience[]) => {
 
 const usePostExperience = () => {
   const { mutate, status } = useMutation({
-    mutationKey: ['experience'],
+    mutationKey: ['experiences'],
     mutationFn: (experience: Experience[]) => postExperience(experience),
   })
   return { mutate, status }
