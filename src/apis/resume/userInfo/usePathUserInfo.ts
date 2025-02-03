@@ -18,7 +18,7 @@ const patchUserInfo = async ({ userInfo, id }: patchUserInfoProps) => {
 
 const usePatchUserInfo = (id: number) => {
   const { mutate, status } = useMutation({
-    mutationKey: ['information', id],
+    mutationKey: ['information'],
     mutationFn: (userInfo: information) => patchUserInfo({ userInfo, id }),
   })
   return { mutate, status }
