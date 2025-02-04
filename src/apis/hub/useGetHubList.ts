@@ -37,18 +37,19 @@ const getMockHubList = async ({ size = 9, pageParam = 0 }: getHubListProps) => {
 }
 
 const useGetHubList = () => {
-  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery({
-    queryKey: userkeys.lists(),
-    queryFn: ({ pageParam = 0 }) => getMockHubList({ size: 9, pageParam }),
-    getNextPageParam: (data, pages) => {
-      if (data.data.lastPage) {
-        return undefined
-      }
-      return pages.length + 1
-    },
-    initialPageParam: 0,
-  })
-  return { data, hasNextPage, isFetching, fetchNextPage }
+  const { data, hasNextPage, status, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: userkeys.lists(),
+      queryFn: ({ pageParam = 0 }) => getMockHubList({ size: 9, pageParam }),
+      getNextPageParam: (data, pages) => {
+        if (data.data.lastPage) {
+          return undefined
+        }
+        return pages.length + 1
+      },
+      initialPageParam: 0,
+    })
+  return { data, hasNextPage, status, isFetchingNextPage, fetchNextPage }
 }
 
 export default useGetHubList
