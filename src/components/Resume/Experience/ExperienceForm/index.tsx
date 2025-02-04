@@ -1,5 +1,6 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
 import useDeleteExperience from '../../../../apis/resume/experience/useDeleteExperience'
+import { Button } from '../../../../components'
 import { Experience, UserResume } from '../../../../types'
 import formatDateForInput from '../../../../utils/formatDateInput'
 
@@ -24,9 +25,9 @@ const ExperienceForm = ({
   const { mutate: deleteExperience } = useDeleteExperience()
 
   return (
-    <div className='p-6 mb-6 bg-white rounded-lg shadow'>
+    <>
       {isEdit ? (
-        <div className='space-y-4'>
+        <section className='space-y-4 border-b-[1px] py-4'>
           <div>
             <label
               htmlFor={`company-name-${index}`}
@@ -184,7 +185,7 @@ const ExperienceForm = ({
               </p>
             )}
           </div>
-          <button
+          <Button
             onClick={(e) => {
               e.preventDefault()
               if (watchedData[index].id) {
@@ -193,15 +194,15 @@ const ExperienceForm = ({
               onRemove(index)
             }}
             type='button'
-            className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
+            theme='light'
           >
-            삭제
-          </button>
-        </div>
+            취소
+          </Button>
+        </section>
       ) : (
-        <div className='space-y-3'>
+        <div className='flex flex-col gap-2 p-4 border rounded-lg shadow-sm'>
           <div>
-            <h3 className='text-lg font-semibold text-gray-900'>
+            <h3 className='text-lg font-semibold text-gray-700'>
               {experience?.companyName}
             </h3>
             <p className='text-sm text-gray-600'>
@@ -226,21 +227,25 @@ const ExperienceForm = ({
             {experience?.description}
           </p>
           {watchedData[index]?.id !== undefined && (
-            <button
-              onClick={() => {
-                onRemove(index)
-                if (watchedData[index].id) {
-                  deleteExperience(watchedData[index].id)
-                }
-              }}
-              className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
-            >
-              삭제
-            </button>
+            <div>
+              <Button
+                theme='light'
+                type='button'
+                size='small'
+                onClick={() => {
+                  onRemove(index)
+                  if (watchedData[index].id) {
+                    deleteExperience(watchedData[index].id)
+                  }
+                }}
+              >
+                삭제
+              </Button>
+            </div>
           )}
         </div>
       )}
-    </div>
+    </>
   )
 }
 
