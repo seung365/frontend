@@ -27,10 +27,10 @@ const ProfileHeatMap = ({ boardStatistics }: ProfileHeatMapProps) => {
   const getClassForValue = (
     value: ReactCalendarHeatmap.ReactCalendarHeatmapValue<string> | undefined,
   ) => {
-    if (!value || value.board_count === 0) return 'color-empty'
-    if (value.board_count <= 2) return 'color-scale-1'
-    if (value.board_count <= 5) return 'color-scale-2'
-    if (value.board_count <= 8) return 'color-scale-3'
+    if (!value || value.boardCount === 0) return 'color-empty'
+    if (value.boardCount <= 2) return 'color-scale-1'
+    if (value.boardCount <= 5) return 'color-scale-2'
+    if (value.boardCount <= 8) return 'color-scale-3'
     return 'color-scale-4'
   }
 
