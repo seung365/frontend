@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { UseFormRegister } from 'react-hook-form'
 import usePatchSkill from '../../../../apis/resume/skill/usePatchSkill'
-import usePostSkill from '../../../../apis/resume/skill/usePostSkill'
 import { UserResume } from '../../../../types'
 import { Button } from '../../../index'
 import SkillsForm from '../SkillsForm'
@@ -20,10 +19,10 @@ const SkillsResume = ({
   const [isEdit, setIsEdit] = useState(false)
   const [skills, setSkills] = useState<string[]>([])
 
-  const { mutate: postSkill } = usePostSkill()
+  //const { mutate: postSkill } = usePostSkill()
   const { mutate: patchSkill } = usePatchSkill()
 
-  const isDataFilled = Boolean(skills.length > 0)
+  //const isDataFilled = Boolean(skills.length > 0)
 
   useEffect(() => {
     console.log('defaultValues changed:', defaultValues)
@@ -42,11 +41,8 @@ const SkillsResume = ({
   }
 
   const handleSubmit = () => {
-    if (isDataFilled) {
-      patchSkill(skills)
-    } else {
-      postSkill(skills)
-    }
+    patchSkill(skills)
+
     onSectionSubmit(skills)
     setIsEdit(false)
   }
@@ -95,20 +91,11 @@ const SkillsResume = ({
 
       <div className='flex justify-end pt-4 border-t border-gray-200'>
         {isEdit ? (
-          <Button
-            type='button'
-            onClick={handleSubmit}
-            className='px-6 py-2 text-white rounded-lg bg-main-color hover:bg-main-color/90'
-          >
+          <Button type='button' onClick={handleSubmit}>
             저장하기
           </Button>
         ) : (
-          <Button
-            theme='dark'
-            type='button'
-            onClick={() => setIsEdit(true)}
-            className='px-6 py-2 rounded-lg'
-          >
+          <Button theme='dark' type='button' onClick={() => setIsEdit(true)}>
             수정하기
           </Button>
         )}
