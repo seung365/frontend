@@ -19,11 +19,10 @@ const ProjectDetails = ({ project, onDelete }: ProjectDetailsProps) => {
   } = project
 
   return (
-    <div className='p-4 border rounded-lg shadow-sm'>
+    <div className='flex flex-col gap-3 p-4 border rounded-lg shadow-sm'>
       <h3 className='text-lg font-semibold'>{projectName}</h3>
-      <p className='mt-2 text-sm text-gray-700'>{description}</p>
 
-      <div className='mt-4 space-y-2'>
+      <div className='space-y-2'>
         {organization && (
           <div className='text-sm'>
             <span className='font-medium'>소속/기관명:</span> {organization}
@@ -57,17 +56,24 @@ const ProjectDetails = ({ project, onDelete }: ProjectDetailsProps) => {
           </div>
         )}
       </div>
+      <div>
+        <p className='text-sm text-gray-700'>
+          <span className='font-medium'>프로젝트 설명:</span> {description}
+        </p>
+      </div>
 
-      {onDelete && id && (
-        <Button
-          size='small'
-          theme='light'
-          type='button'
-          onClick={() => onDelete(id)}
-        >
-          삭제
-        </Button>
-      )}
+      <div>
+        {onDelete && id && (
+          <Button
+            size='small'
+            theme='light'
+            type='button'
+            onClick={() => onDelete(id)}
+          >
+            삭제
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

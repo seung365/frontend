@@ -13,7 +13,7 @@ import ExperienceForm from '../ExperienceForm'
 
 interface ExperienceResumeProps {
   register: UseFormRegister<UserResume>
-  onSectionSubmit: (data: Experience[]) => void
+  //onSectionSubmit: (data: Experience[]) => void
   watchedData: Experience[]
   control: Control<UserResume>
   errors: FieldErrors<UserResume>
@@ -22,7 +22,7 @@ interface ExperienceResumeProps {
 
 const ExperienceResume = ({
   register,
-  onSectionSubmit,
+  //onSectionSubmit,
   watchedData,
   control,
   errors,
@@ -45,30 +45,31 @@ const ExperienceResume = ({
       return
     }
     putExperience(watchedData)
-    onSectionSubmit(watchedData)
+    // onSectionSubmit(watchedData)
     setIsEdit(!isEdit)
   }
 
   return (
-    <div className='p-8 bg-white rounded-lg shadow-md'>
-      <div>
-        {experienceFields.map((field, index) => (
-          <ExperienceForm
-            register={register}
-            key={field.id}
-            index={index}
-            isEdit={isEdit}
-            watchedData={watchedData}
-            onRemove={removeExperience}
-            errors={errors}
-          />
-        ))}
-      </div>
+    <section className='flex flex-col w-full gap-3'>
+      {experienceFields.map((field, index) => (
+        <ExperienceForm
+          register={register}
+          key={field.id}
+          index={index}
+          isEdit={isEdit}
+          watchedData={watchedData}
+          onRemove={removeExperience}
+          errors={errors}
+        />
+      ))}
 
-      <div className='flex justify-end gap-4 p-3'>
+      <div className='flex justify-center gap-4 p-3'>
         {isEdit ? (
           <div className='flex gap-4'>
-            <Button onClick={handleSectionSubmit}>저장하기</Button>
+            {experienceFields.length !== 0 && (
+              <Button onClick={handleSectionSubmit}>저장하기</Button>
+            )}
+
             <Button
               type='button'
               onClick={() =>
@@ -81,18 +82,39 @@ const ExperienceResume = ({
                   description: '',
                 })
               }
-              className=' bg-dark-gray'
+              className='bg-dark-gray'
             >
               경력 추가
             </Button>
           </div>
         ) : (
-          <Button type='button' onClick={() => setIsEdit(!isEdit)}>
-            수정하기
-          </Button>
+          <>
+            {watchedData.length !== 0 ? (
+              <Button type='button' onClick={() => setIsEdit(!isEdit)}>
+                수정하기
+              </Button>
+            ) : (
+              <Button
+                type='button'
+                onClick={() => {
+                  setIsEdit(true)
+                  appendExperience({
+                    companyName: '',
+                    employmentType: '',
+                    position: '',
+                    startDate: '',
+                    endDate: '',
+                    description: '',
+                  })
+                }}
+              >
+                경력 작성하기
+              </Button>
+            )}
+          </>
         )}
       </div>
-    </div>
+    </section>
   )
 }
 

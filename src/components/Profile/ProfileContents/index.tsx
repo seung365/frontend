@@ -7,7 +7,6 @@ import {
   ProfileInfo,
   ResumeDetail,
 } from '../../../components'
-import { ProfileData } from '../../../mocks/profileData'
 
 /**
  * 프로필 관련된 컨텐츠 보관하는 컴포넌트
@@ -26,9 +25,6 @@ const ProfileContents = () => {
   const { data, isPending, isError } = useFetchProfileInfo(profileId)
   const isMyProfile =
     localStorage.getItem('memberId')?.trim() === data?.memberId.trim() // memberId 전역상태 관리 예정
-  console.log(localStorage.getItem('memberId'))
-  console.log(typeof data?.memberId)
-  console.log(isMyProfile)
 
   if (isPending) {
     return (
@@ -60,7 +56,6 @@ const ProfileContents = () => {
               followerCnt={data.followerCount}
               followingCnt={data.followingCount}
               following={data.following}
-              boardStatistics={ProfileData.board_statistics}
             />
           )}
         </>
