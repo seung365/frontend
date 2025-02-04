@@ -3,19 +3,14 @@ import { API_ROUTES } from '../../../constant/api'
 import { Experience } from '../../../types'
 import { authInstance } from '../../fetchInstance'
 
-const patchExperience = async (experience: Experience) => {
-  const response = await authInstance.patch(
-    `/${API_ROUTES.RESUME}/experiences/`,
-    experience,
-  )
-  return response.data
+const putExperience = async (experience: Experience[]) => {
+  await authInstance.put(`/${API_ROUTES.RESUME}/experiences`, experience)
 }
 
-const usePatchExperience = () => {
+const usePutExperience = () => {
   const queryClient = useQueryClient()
   const { mutate, status } = useMutation({
-    mutationKey: ['resume'],
-    mutationFn: (experience: Experience) => patchExperience(experience),
+    mutationFn: (experience: Experience[]) => putExperience(experience),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['resume'],
@@ -25,4 +20,4 @@ const usePatchExperience = () => {
   return { mutate, status }
 }
 
-export default usePatchExperience
+export default usePutExperience

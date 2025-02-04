@@ -102,6 +102,7 @@ const Resume = () => {
   useEffect(() => {
     if (resumeStatus === 'success' && resumeData) {
       const transformedData = resumeTransform(resumeData)
+      console.log(transformedData)
       reset(transformedData)
     }
   }, [resumeStatus, resumeData, reset])

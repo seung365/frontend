@@ -1,4 +1,5 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
+import useDeleteExperience from '../../../../apis/resume/experience/useDeleteExperience'
 import { Experience, UserResume } from '../../../../types'
 import formatDateForInput from '../../../../utils/formatDateInput'
 
@@ -20,6 +21,8 @@ const ExperienceForm = ({
   errors,
 }: ExperienceFormProps) => {
   const experience = watchedData[index]
+  const { mutate: deleteExperience } = useDeleteExperience()
+
   return (
     <div className='p-6 mb-6 bg-white rounded-lg shadow'>
       {isEdit ? (
@@ -56,8 +59,15 @@ const ExperienceForm = ({
               id={`employmentType-${index}`}
               type='text'
               className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
-              {...register(`experiences.${index}.employmentType`)}
+              {...register(`experiences.${index}.employmentType`, {
+                required: '고용 형태를 입력해주세요',
+              })}
             />
+            {errors.experiences?.[index]?.employmentType && (
+              <p className='mt-1 text-sm text-red-500'>
+                {errors.experiences[index].employmentType.message}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -175,7 +185,14 @@ const ExperienceForm = ({
             )}
           </div>
           <button
-            onClick={() => onRemove(index)}
+            onClick={(e) => {
+              e.preventDefault()
+              if (watchedData[index].id) {
+                deleteExperience(watchedData[index].id)
+              }
+              onRemove(index)
+            }}
+            type='button'
             className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
           >
             삭제
@@ -188,12 +205,16 @@ const ExperienceForm = ({
               {experience?.companyName}
             </h3>
             <p className='text-sm text-gray-600'>
-              {experience?.employmentType && `${experience.employmentType} | `}
+              {`${experience.employmentType} | `}
               {experience?.position}
             </p>
           </div>
           <div className='text-sm text-gray-500'>
-            <span>{new Date(experience?.startDate).toLocaleDateString()}</span>
+            <span>
+              {experience?.startDate
+                ? new Date(experience.startDate).toLocaleDateString()
+                : ' '}
+            </span>
             <span className='mx-2'>~</span>
             <span>
               {experience?.endDate
@@ -204,12 +225,19 @@ const ExperienceForm = ({
           <p className='text-gray-700 whitespace-pre-line'>
             {experience?.description}
           </p>
-          <button
-            onClick={() => onRemove(index)}
-            className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
-          >
-            삭제
-          </button>
+          {watchedData[index]?.id !== undefined && (
+            <button
+              onClick={() => {
+                onRemove(index)
+                if (watchedData[index].id) {
+                  deleteExperience(watchedData[index].id)
+                }
+              }}
+              className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
+            >
+              삭제
+            </button>
+          )}
         </div>
       )}
     </div>

@@ -20,7 +20,9 @@ const resumeTransform = (resumeData: ResumeResponse) => {
     },
     skills: resumeData.skills?.map((skill: ResponseSkills) => skill.name) || [],
     experiences: resumeData.experiences?.map((exp: Experience) => ({
+      ...(exp.id && { id: exp.id }),
       companyName: exp.companyName || '',
+      employmentType: exp.employmentType || '',
       position: exp.position || '',
       startDate: exp.startDate || '',
       endDate: exp.endDate || '',
