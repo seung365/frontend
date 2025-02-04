@@ -76,7 +76,7 @@ const UserInfoForm = ({
               <option value='1~3년차'>1~3년차</option>
               <option value='4~6년차'>4~6년차</option>
               <option value='7~9년차'>7~9년차</option>
-              <option value='10년차이상'>10년차 이상</option>
+              <option value='10년차 이상'>10년차 이상</option>
             </select>
             {errors.information?.employmentPeriod && (
               <p className='mt-1 text-sm text-red-500'>
