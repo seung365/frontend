@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../../constant/api'
 import { Experience } from '../../../types'
 import { authInstance } from '../../fetchInstance'
@@ -12,11 +12,17 @@ const patchExperience = async (experience: Experience) => {
 }
 
 const usePatchExperience = () => {
-  const { data, status } = useMutation({
-    mutationKey: ['experiences'],
+  const queryClient = useQueryClient()
+  const { mutate, status } = useMutation({
+    mutationKey: ['resume'],
     mutationFn: (experience: Experience) => patchExperience(experience),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['resume'],
+      })
+    },
   })
-  return { data, status }
+  return { mutate, status }
 }
 
 export default usePatchExperience
