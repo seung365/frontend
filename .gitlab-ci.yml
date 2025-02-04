@@ -24,7 +24,7 @@ deploy:
         - all
     script:
         - echo "배포를 위한 nginx 재실행행 ..."
-        - systemctl restart nginx
+        - sudo systemctl restart nginx
     only:
         - dev
 
