@@ -8,4 +8,5 @@ export const API_ROUTES = {
   RESUME: 'resume',
   RESUMES: 'resumes',
   FOLLOWS: 'follows',
+  MEMBERS: 'members',
 } as const

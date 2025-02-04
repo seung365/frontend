@@ -5,7 +5,7 @@ import '../../../styles/profileHeatMap.css'
 
 type HeatMapValue = {
   date: string
-  board_count: number
+  boardCount: number
 }
 
 type CustomTooltipDataAttrs = TooltipDataAttrs & {
@@ -39,7 +39,7 @@ const ProfileHeatMap = ({ boardStatistics }: ProfileHeatMapProps) => {
       <ReactCalendarHeatmap
         startDate={firstDayOfYear}
         endDate={lastDayOfYear}
-        values={boardStatistics}
+        values={boardStatistics || []}
         classForValue={getClassForValue}
         tooltipDataAttrs={(
           value:
@@ -47,7 +47,7 @@ const ProfileHeatMap = ({ boardStatistics }: ProfileHeatMapProps) => {
             | undefined,
         ): CustomTooltipDataAttrs => {
           const tooltip = value?.date
-            ? `${value.date}: ${value.board_count} posts`
+            ? `${value.date}: ${value.boardCount} posts`
             : '작성한 포스트가 없습니다.'
 
           return {

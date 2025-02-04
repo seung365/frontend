@@ -1,11 +1,13 @@
 import { useState } from 'react'
 
 import { useParams } from 'react-router-dom'
+import useFetchBoardStatistics from '../../../apis/profile/useFetchBoardStatistics'
 import useProfileFollow from '../../../apis/profile/useProfileFollow'
 import useProfileUnfollow from '../../../apis/profile/useProfileUnFollow'
 import EditIcon from '../../../assets/icons/edit.svg?react'
 import {
   Button,
+  Loader,
   Modal,
   ProfileEdit,
   ProfileHeatMap,
@@ -22,7 +24,6 @@ interface ProfileInfoProps {
   followerCnt: number
   followingCnt: number
   following: boolean
-  boardStatistics: { date: string; board_count: number }[]
 }
 /**
  * 프로필 정보 컴포넌트
@@ -41,7 +42,6 @@ const ProfileInfo = ({
   followerCnt,
   followingCnt,
   following: initialFollowing,
-  boardStatistics,
 }: ProfileInfoProps) => {
   const { id: profileId } = useParams()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -51,6 +51,17 @@ const ProfileInfo = ({
     useProfileFollow(profileId)
   const { mutate: deleteFollow, isPending: isUnfollowPending } =
     useProfileUnfollow(profileId)
+
+  const { data: boardStatisticsData, status } =
+    useFetchBoardStatistics(memberId)
+
+  if (status === 'pending') {
+    return (
+      <div className='flex items-center justify-center w-full h-full'>
+        <Loader />
+      </div>
+    )
+  }
 
   const handleModalClose = () => {
     setIsEditOpen(false)
@@ -129,7 +140,7 @@ const ProfileInfo = ({
         <h1 className='text-main-black'>
           🔥 올해 <b>{nickName}</b> 님의 잔디는 이만큼 자랐어요!
         </h1>
-        <ProfileHeatMap boardStatistics={boardStatistics} />
+        <ProfileHeatMap boardStatistics={boardStatisticsData} />
       </section>
       {isEditOpen && (
         <Modal
