@@ -9,7 +9,7 @@ const postUserInfo = async (userInfo: information) => {
 
 const usePostUserInfo = () => {
   const { mutate, status } = useMutation({
-    mutationKey: ['information'],
+    mutationKey: ['resume'],
     mutationFn: (userInfo: information) => postUserInfo(userInfo),
   })
   return { mutate, status }
