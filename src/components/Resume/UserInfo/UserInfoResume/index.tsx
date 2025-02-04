@@ -24,19 +24,11 @@ const UserInfoResume = ({
   const { mutate: postUserInfo } = usePostUserInfo()
   const { mutate: patchUserInfo } = usePatchUserInfo(watchedData.id ?? 0)
 
-  const isDataFilled = Boolean(
-    watchedData.name &&
-      watchedData.position &&
-      watchedData.summary &&
-      watchedData.employmentPeriod,
-  )
-
   const handleSectionSubmit = () => {
     if (!watchedData.position || !watchedData.summary) {
       return
     }
-
-    if (isDataFilled) {
+    if (watchedData.id) {
       patchUserInfo(watchedData)
     } else {
       postUserInfo(watchedData)
