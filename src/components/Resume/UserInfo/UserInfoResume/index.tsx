@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
-import { UserInfo, UserResume } from '../../../../types'
+import usePatchUserInfo from '../../../../apis/resume/userInfo/usePathUserInfo'
+import usePostUserInfo from '../../../../apis/resume/userInfo/usePostUserInfo'
+import { information, UserResume } from '../../../../types'
 import { Button } from '../../../index'
 import UserInfoForm from '../UserInfoForm'
 
 interface UserInfoResumeProps {
   register: UseFormRegister<UserResume>
-  onSectionSubmit: (data: UserInfo) => void
-  watchedData: UserInfo
+  onSectionSubmit: (data: information) => void
+  watchedData: information
   errors: FieldErrors<UserResume>
 }
 
@@ -19,9 +21,17 @@ const UserInfoResume = ({
 }: UserInfoResumeProps) => {
   const [isEdit, setIsEdit] = useState(false)
 
+  const { mutate: postUserInfo } = usePostUserInfo()
+  const { mutate: patchUserInfo } = usePatchUserInfo(watchedData.id ?? 0)
+
   const handleSectionSubmit = () => {
     if (!watchedData.position || !watchedData.summary) {
       return
+    }
+    if (watchedData.id) {
+      patchUserInfo(watchedData)
+    } else {
+      postUserInfo(watchedData)
     }
 
     onSectionSubmit(watchedData)

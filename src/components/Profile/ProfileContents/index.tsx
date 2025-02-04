@@ -1,5 +1,8 @@
 import { useLocation, useParams } from 'react-router-dom'
+import { useFetchProfileInfo } from '../../../apis/profile/useFetchProfileInfo'
 import {
+  ErrorComponent,
+  Loader,
   ProfileBoardList,
   ProfileInfo,
   ResumeDetail,
@@ -19,26 +22,48 @@ const ProfileContents = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const tabName = queryParams.get('tab')
-  const isMyProfile = !profileId // isMyProfile의 값에 따라 불러오는 api가 다름
+
+  const { data, isPending, isError } = useFetchProfileInfo(profileId)
+  const isMyProfile =
+    localStorage.getItem('memberId')?.trim() === data?.memberId.trim() // memberId 전역상태 관리 예정
+  console.log(localStorage.getItem('memberId'))
+  console.log(typeof data?.memberId)
+  console.log(isMyProfile)
+
+  if (isPending) {
+    return (
+      <section className='flex flex-col items-center justify-center w-full h-full'>
+        <Loader />
+        <h1>Loading...</h1>
+      </section>
+    )
+  }
+  if (isError) {
+    return <ErrorComponent />
+  }
   return (
-    <section className='px-8'>
-      {tabName ? (
-        tabName === 'board' ? (
-          <ProfileBoardList memberId={ProfileData.memberId} />
-        ) : (
-          <ResumeDetail memberId={ProfileData.memberId} />
-        )
-      ) : (
-        <ProfileInfo
-          isMyProfile={isMyProfile}
-          nickName={ProfileData.nickname}
-          profileImg={ProfileData.profile_image}
-          about={ProfileData.about}
-          boardCnt={ProfileData.board_cnt}
-          followerCnt={ProfileData.follower_cnt}
-          followingCnt={ProfileData.following_cnt}
-          boardStatistics={ProfileData.board_statistics}
-        />
+    <section className='w-full px-8'>
+      {data && (
+        <>
+          {tabName === 'board' ? (
+            <ProfileBoardList memberId={data.memberId} />
+          ) : tabName === 'resume' ? (
+            <ResumeDetail memberId={data.memberId} />
+          ) : (
+            <ProfileInfo
+              isMyProfile={isMyProfile}
+              memberId={data.memberId}
+              nickName={data.nickname}
+              profileImg={data.profileImage}
+              about={data.about}
+              boardCnt={data.boardCount}
+              followerCnt={data.followerCount}
+              followingCnt={data.followingCount}
+              following={data.following}
+              boardStatistics={ProfileData.board_statistics}
+            />
+          )}
+        </>
       )}
     </section>
   )

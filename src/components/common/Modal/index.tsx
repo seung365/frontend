@@ -74,7 +74,6 @@ const Modal = ({ isOpen, onClose, content }: ModalProps) => {
         className='w-full max-w-md p-6 mx-4 overflow-y-auto bg-white rounded-lg'
         onClick={(e) => {
           e.stopPropagation()
-          e.preventDefault()
         }}
       >
         {content}

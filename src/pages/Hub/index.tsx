@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react'
 import useGetHubList from '../../apis/hub/useGetHubList'
 import {
   Filter,
+  FloatingButton,
   Grid,
   HubBanner,
   HubListSkeleton,
+  Loader,
   ProfileCard,
 } from '../../components'
 import useIntersect from '../../hooks/useIntersect'
@@ -23,7 +25,8 @@ const Hub = () => {
   const [term, setTerm] = useState<TermType[]>([])
 
   console.log(sorting, skills, term)
-  const { data, isFetching, hasNextPage, fetchNextPage } = useGetHubList()
+  const { data, status, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useGetHubList()
 
   const users = useMemo(
     () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
@@ -32,7 +35,7 @@ const Hub = () => {
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target)
-    if (hasNextPage && !isFetching && entry.intersectionRatio >= 0.1) {
+    if (hasNextPage && !isFetchingNextPage && entry.intersectionRatio >= 0.1) {
       fetchNextPage()
     }
   })
@@ -57,31 +60,37 @@ const Hub = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4 my-4 mb-20'>
-      <HubBanner />
-      <div className='flex flex-row gap-4'>
-        <Grid type='board'>
-          {users.map((profile) => (
-            <ProfileCard
-              key={profile.profileId}
-              profileId={profile.profileId}
-              profileImg={profile.profileImg}
-              nickname={profile.nickname}
-              about={profile.about}
-            />
-          ))}
-          <div className='flex justify-center w-full col-span-full'>
-            {isFetching && <HubListSkeleton isInitialLoading={!users.length} />}
-          </div>
-        </Grid>
-        <Filter
-          skills={skills}
-          onSkills={handleSkills}
-          onSorting={handleSorting}
-          onTerm={handleTerm}
-        />
+    <div className='relative'>
+      <div className='flex flex-col gap-4 my-4 '>
+        <HubBanner />
+        <div className='flex flex-row gap-4'>
+          <Grid type='board'>
+            {users.map((profile) => (
+              <ProfileCard
+                key={profile.profileId}
+                profileId={profile.profileId}
+                profileImg={profile.profileImg}
+                nickname={profile.nickname}
+                about={profile.about}
+              />
+            ))}
+            <div className='flex justify-center w-full col-span-full'>
+              {status === 'pending' && (
+                <HubListSkeleton isInitialLoading={!users.length} />
+              )}
+              {isFetchingNextPage && <Loader size='s' />}
+            </div>
+          </Grid>
+          <Filter
+            skills={skills}
+            onSkills={handleSkills}
+            onSorting={handleSorting}
+            onTerm={handleTerm}
+          />
+          <div ref={ref} />
+        </div>
+        <FloatingButton />
       </div>
-      <div ref={ref} />
     </div>
   )
 }
