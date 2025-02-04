@@ -1,5 +1,9 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import usePutActivity from '../../apis/resume/activity/usePutActivity'
+import usePutEducation from '../../apis/resume/education/usePutEducation'
+import usePutLanguage from '../../apis/resume/language/usePutLanguage'
+import usePutProject from '../../apis/resume/project/usePutProject'
 import useGetResume from '../../apis/resume/useGetResume'
 import {
   ActivityResume,
@@ -55,7 +59,7 @@ const Resume = () => {
       ],
       projects: [
         {
-          name: '',
+          projectName: '',
           description: '',
           organization: '',
           startDate: '',
@@ -96,8 +100,17 @@ const Resume = () => {
     memberId?.toString() || '',
   )
 
+  const { mutate: putProjects } = usePutProject()
+  const { mutate: putActivities } = usePutActivity()
+  const { mutate: putEducations } = usePutEducation()
+  const { mutate: putLanguages } = usePutLanguage()
+
   const userInfoData = watch('information')
   const exprienceData = watch('experiences')
+  const projectData = watch('projects')
+  const activityData = watch('activities')
+  const educationData = watch('educations')
+  const languageData = watch('languages')
 
   useEffect(() => {
     if (resumeStatus === 'success' && resumeData) {
@@ -121,6 +134,7 @@ const Resume = () => {
       </div>
     )
   }
+
   const onClickSubmit = (data: UserResume) => {
     console.log(data)
   }
@@ -139,22 +153,22 @@ const Resume = () => {
 
   const handleProjectsSubmit = (data: Project[]) => {
     // 프로젝트에 해당되는 데이터
-    console.log(data)
+    putProjects(data)
   }
 
   const handleActivitySubmit = (data: Activity[]) => {
     // 대외활동에 해당되는 데이터
-    console.log(data)
+    putActivities(data)
   }
 
   const handleEducationSubmit = (data: Education[]) => {
     // 교육에 해당되는 데이터
-    console.log(data)
+    putEducations(data)
   }
 
   const handleLaguageSubmit = (data: Language[]) => {
     // 외국어에 해당되는 데이터
-    console.log(data)
+    putLanguages(data)
   }
 
   return (
@@ -208,6 +222,7 @@ const Resume = () => {
         >
           <ProjectResume
             control={control}
+            watchedData={projectData}
             register={register}
             getValues={getValues}
             onProjectsSubmit={handleProjectsSubmit}
@@ -221,6 +236,7 @@ const Resume = () => {
         >
           <ActivityResume
             control={control}
+            watchedData={activityData}
             register={register}
             getValues={getValues}
             onActivitySubmit={handleActivitySubmit}
@@ -234,6 +250,7 @@ const Resume = () => {
         >
           <EducationResume
             control={control}
+            watchedData={educationData}
             register={register}
             getValues={getValues}
             onEducationSubmit={handleEducationSubmit}
@@ -247,6 +264,7 @@ const Resume = () => {
         >
           <LanguageResume
             control={control}
+            watchedData={languageData}
             register={register}
             getValues={getValues}
             onLanguageSubmit={handleLaguageSubmit}
