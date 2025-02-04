@@ -11,7 +11,7 @@ build:
         - all
     script:
         - echo "build 실행 ..."
-        - cp /home/gitlab-runner/.env ./.env
+        - cp ${DEVINIT_FRONT_ENV} ./.env
         - npm install        
         - npm run build        
         - cp -r ./dist/* /var/www/html/
