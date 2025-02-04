@@ -138,6 +138,7 @@ export type information = {
 }
 
 export type Experience = {
+  id?: number
   companyName: string
   employmentType: string
   position: string

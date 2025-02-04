@@ -11,7 +11,7 @@ const deleteUserInfo = async (id: string) => {
 
 const useDeleteUserInfo = () => {
   const { data, status } = useMutation({
-    mutationKey: ['information'],
+    mutationKey: ['resume'],
     mutationFn: (id: string) => deleteUserInfo(id),
   })
   return { data, status }

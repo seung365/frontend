@@ -6,7 +6,7 @@ import {
   UseFormRegister,
   UseFormTrigger,
 } from 'react-hook-form'
-import usePostExperience from '../../../../apis/resume/experience/usePostExperience'
+import usePutExperience from '../../../../apis/resume/experience/usePutExperience'
 import { Experience, UserResume } from '../../../../types'
 import { Button } from '../../../index'
 import ExperienceForm from '../ExperienceForm'
@@ -37,14 +37,14 @@ const ExperienceResume = ({
     name: 'experiences',
   })
   const [isEdit, setIsEdit] = useState(false)
-  const { mutate: postExperience } = usePostExperience()
+  const { mutate: putExperience } = usePutExperience()
 
   const handleSectionSubmit = async () => {
     const isValid = await trigger('experiences')
     if (!isValid) {
       return
     }
-    postExperience(watchedData)
+    putExperience(watchedData)
     onSectionSubmit(watchedData)
     setIsEdit(!isEdit)
   }
