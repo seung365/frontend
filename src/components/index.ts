@@ -26,6 +26,7 @@ export { default as BoardListSkeleton } from './common/Skeleton/BoardListSkeleto
 export { default as MainProfileSkeleton } from './common/Skeleton/MainProfileSkeleton'
 export { default as StatItem } from './common/StatItem'
 export { default as Tag } from './common/Tag'
+export { default as EmptyView } from './Hub/EmptyView'
 export { default as Filter } from './Hub/Filter'
 export { default as HubBanner } from './Hub/HubBanner'
 export { default as Footer } from './layouts/Footer'
