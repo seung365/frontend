@@ -22,6 +22,7 @@ const resumeTransform = (resumeData: ResumeResponse) => {
     experiences: resumeData.experiences?.map((exp: Experience) => ({
       ...(exp.id && { id: exp.id }),
       companyName: exp.companyName || '',
+      employmentType: exp.employmentType || '',
       position: exp.position || '',
       startDate: exp.startDate || '',
       endDate: exp.endDate || '',
