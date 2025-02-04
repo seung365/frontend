@@ -10,9 +10,9 @@ const useDeleteSkill = () => {
   const queryClient = useQueryClient()
   const { mutate, status } = useMutation<void, Error, string>({
     mutationFn: (id) => deleteSkill(id),
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['skills'],
+        queryKey: ['resume'],
       })
     },
   })

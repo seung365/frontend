@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../../constant/api'
 import { authInstance } from '../../fetchInstance'
 
@@ -10,9 +10,15 @@ const postSkill = async (skill: string[]) => {
 }
 
 const usePostSkill = () => {
+  const queryClient = useQueryClient()
   const { mutate, status } = useMutation({
-    mutationKey: ['skills'],
+    mutationKey: ['resume'],
     mutationFn: (skill: string[]) => postSkill(skill),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['resume'],
+      })
+    },
   })
   return { mutate, status }
 }
