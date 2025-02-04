@@ -134,8 +134,19 @@ export type information = {
   position: string
   summary: string
   portfolio: string
-  employmentPeriod: '신입' | '1~3년차' | '4~6년차' | '7~9년차' | '10년차이상'
+  employmentPeriod: TermType
 }
+
+export type SortingType = '최신순' | '인기순'
+
+export type TermType =
+  | '신입'
+  | '1~3년차'
+  | '4~6년차'
+  | '7~9년차'
+  | '10년차 이상'
+
+export type CheckTermType = TermType | '전체'
 
 export type Experience = {
   id?: number

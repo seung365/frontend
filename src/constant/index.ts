@@ -82,6 +82,7 @@ export const CAREER_TERM = [
   '4~6년차',
   '7~9년차',
   '10년차 이상',
+  '전체',
 ] as const
 
 export const contentTemplates: Record<number, string> = {
