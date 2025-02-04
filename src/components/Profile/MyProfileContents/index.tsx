@@ -1,5 +1,5 @@
-import { useLocation, useParams } from 'react-router-dom'
-import { useFetchProfileInfo } from '../../../apis/profile/useFetchProfileInfo'
+import { useLocation } from 'react-router-dom'
+import useFetchMyProfileInfo from '../../../apis/profile/useFetchMyProfileInfo'
 import {
   ErrorComponent,
   Loader,
@@ -8,28 +8,12 @@ import {
   ResumeDetail,
 } from '../../../components'
 import { ProfileData } from '../../../mocks/profileData'
-
-/**
- * 프로필 관련된 컨텐츠 보관하는 컴포넌트
- * @description
- * 프로필 기본 정보 - profileId로 조회
- * 작성한 게시글 - memberId로 조회
- * 이력서 - memberId로 조회
- */
-
-const ProfileContents = () => {
-  const { id: profileId } = useParams()
+const MyProfileContents = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const tabName = queryParams.get('tab')
 
-  const { data, isPending, isError } = useFetchProfileInfo(profileId)
-  const isMyProfile =
-    localStorage.getItem('memberId')?.trim() === data?.memberId.trim() // memberId 전역상태 관리 예정
-  console.log(localStorage.getItem('memberId'))
-  console.log(typeof data?.memberId)
-  console.log(isMyProfile)
-
+  const { data, isPending, isError } = useFetchMyProfileInfo()
   if (isPending) {
     return (
       <section className='flex flex-col items-center justify-center w-full h-full'>
@@ -51,9 +35,9 @@ const ProfileContents = () => {
             <ResumeDetail memberId={data.memberId} />
           ) : (
             <ProfileInfo
-              isMyProfile={isMyProfile}
-              memberId={data.memberId}
+              isMyProfile
               nickName={data.nickname}
+              memberId={data.memberId}
               profileImg={data.profileImage}
               about={data.about}
               boardCnt={data.boardCount}
@@ -69,4 +53,4 @@ const ProfileContents = () => {
   )
 }
 
-export default ProfileContents
+export default MyProfileContents

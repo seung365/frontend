@@ -1,10 +1,10 @@
-import { ProfileContents, ProfileMenuTab } from '../../components'
+import { MyProfileContents, ProfileMenuTab } from '../../components'
 
 const My = () => {
   return (
     <section className='flex w-full h-full py-10'>
       <ProfileMenuTab />
-      <ProfileContents />
+      <MyProfileContents />
     </section>
   )
 }

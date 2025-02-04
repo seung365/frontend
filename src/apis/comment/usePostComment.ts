@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
+import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
 interface PostCommentRequest {
@@ -24,8 +25,15 @@ const usePostComment = (id: string, commentId?: number) => {
     PostCommentRequest
   >({
     mutationFn: (commentData) => postComment(commentData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['board', id] })
+    onSuccess: (newComment) => {
+      if (!newComment.parentCommentId) {
+        queryClient.setQueryData(['board', id], (oldData: BoardResponse) => ({
+          ...oldData,
+          comment: [...oldData.comment, newComment],
+          commentCnt: oldData.commentCnt + 1,
+        }))
+      }
+
       if (commentId) {
         queryClient.invalidateQueries({ queryKey: ['replyComment', commentId] })
       }
