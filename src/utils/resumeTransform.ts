@@ -37,15 +37,16 @@ const resumeTransform = (resumeData: ResumeResponse) => {
       },
     ],
     projects: resumeData.projects?.map((proj: Project) => ({
-      name: proj.name || '',
+      ...(proj.id && { id: proj.id }),
+      projectName: proj.projectName || '',
       description: proj.description || '',
       organization: proj.organization || '',
       startDate: proj.startDate || '',
       endDate: proj.endDate || '',
-      link: '',
+      link: proj.link || '',
     })) || [
       {
-        name: '',
+        projectName: '',
         description: '',
         organization: '',
         startDate: '',
@@ -54,6 +55,7 @@ const resumeTransform = (resumeData: ResumeResponse) => {
       },
     ],
     activities: resumeData.activities?.map((act: Activity) => ({
+      ...(act.id && { id: act.id }),
       activityName: act.activityName || '',
       organization: act.organization || '',
       startDate: act.startDate || '',
@@ -69,6 +71,7 @@ const resumeTransform = (resumeData: ResumeResponse) => {
       },
     ],
     educations: resumeData.educations?.map((edu: Education) => ({
+      ...(edu.id && { id: edu.id }),
       organization: edu.organization || '',
       degree: edu.degree || '',
       major: edu.major || '',
@@ -86,6 +89,7 @@ const resumeTransform = (resumeData: ResumeResponse) => {
       },
     ],
     languages: resumeData.languages?.map((lang: Language) => ({
+      ...(lang.id && { id: lang.id }),
       name: lang.name || '',
       level: lang.level || '',
     })) || [
