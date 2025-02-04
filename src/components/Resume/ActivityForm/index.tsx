@@ -55,8 +55,11 @@ const ActivityForm = ({ index, register, onRemove }: ActivityFormProps) => {
           <input
             id={`activities.${index}.startDate`}
             type='date'
-            {...register(`activities.${index}.startDate`)}
-            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
+            {...register(`activities.${index}.startDate`, {
+              setValueAs: (value) =>
+                value ? new Date(value).toISOString() : undefined,
+            })}
+            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color'
           />
         </div>
 
@@ -71,8 +74,11 @@ const ActivityForm = ({ index, register, onRemove }: ActivityFormProps) => {
           <input
             id={`activities.${index}.endDate`}
             type='date'
-            {...register(`activities.${index}.endDate`)}
-            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
+            {...register(`activities.${index}.endDate`, {
+              setValueAs: (value) =>
+                value ? new Date(value).toISOString() : undefined,
+            })}
+            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color'
           />
         </div>
       </div>

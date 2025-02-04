@@ -148,6 +148,7 @@ export type Experience = {
 }
 
 export type Activity = {
+  id?: number
   activityName: string
   description: string
   organization: string
@@ -156,7 +157,8 @@ export type Activity = {
 }
 
 export type Project = {
-  name: string
+  id?: number
+  projectName: string
   description: string
   organization?: string
   startDate?: string
@@ -165,6 +167,7 @@ export type Project = {
 }
 
 export type Education = {
+  id?: number
   organization: string
   degree: string
   major: string
@@ -173,6 +176,7 @@ export type Education = {
   status: string
 }
 export type Language = {
+  id?: number
   name: string
   level: string
 }
