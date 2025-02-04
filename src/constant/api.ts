@@ -4,6 +4,7 @@ export const API_ROUTES = {
   REISSUE: 'reissue',
   PROFILE: 'profile',
   CATEGORIES: 'categories',
+  HUBS: 'hubs',
   RESUME: 'resume',
   RESUMES: 'resumes',
   FOLLOWS: 'follows',
