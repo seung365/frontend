@@ -115,7 +115,10 @@ const ResumeDetail = ({ memberId }: ResumeDetailProps) => {
         description='🏃🏻 어떤 대외 활동을 진행했는지 확인하는 공간입니다!'
       >
         {data?.activities.map((activity: Activity) => (
-          <AcitivtDetails activity={activity} />
+          <AcitivtDetails
+            key={`${activity.activityName}-${activity.description}`}
+            activity={activity}
+          />
         ))}
       </ResumeContainer>
       <ResumeContainer
