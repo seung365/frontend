@@ -4,7 +4,7 @@ Header 컴포넌트
 - 아직 특별한 기능은 넣지 않고 구조만 잡기위해 설계.
 */
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import useLogout from '../../../apis/member/useLogout'
 import useGetProfileImage from '../../../apis/profile/useGetProfileImage'
@@ -31,14 +31,15 @@ const Header = () => {
   const profileImageData = useProfileImageStore.getState().profileImage
   const setProfileImage = useProfileImageStore.getState().setProfileImage
 
-  const { data: profileHeaderImage } = useGetProfileImage()
+  const { data: profileHeaderImage, status: profileStatus } =
+    useGetProfileImage()
   const { mutate: postLogout, status } = useLogout()
 
-  useEffect(() => {
-    if (isLogin && profileHeaderImage) {
-      setProfileImage(profileHeaderImage)
-    }
-  }, [isLogin, profileHeaderImage, setProfileImage])
+  // useEffect(() => {
+  //   if (isLogin && profileHeaderImage) {
+  //     setProfileImage(profileHeaderImage)
+  //   }
+  // }, [isLogin, profileHeaderImage, setProfileImage])
 
   const handleLogout = () => {
     postLogout()
@@ -47,7 +48,10 @@ const Header = () => {
   if (status === 'success') {
     setLogout()
   }
-  console.log(profileImageData)
+
+  if (profileStatus === 'success') {
+    setProfileImage(profileHeaderImage)
+  }
 
   return (
     <header className='fixed top-0 left-0 z-50 bg-white w-full h-[60px] flex justify-center border-b'>

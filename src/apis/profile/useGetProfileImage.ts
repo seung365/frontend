@@ -11,12 +11,12 @@ const getProfileImage = async () => {
 }
 
 export const useGetProfileImage = () => {
-  const { data } = useQuery({
+  const { data, status } = useQuery({
     queryKey: ['profileImage'],
     queryFn: getProfileImage,
   })
 
-  return { data }
+  return { data, status }
 }
 
 export default useGetProfileImage
