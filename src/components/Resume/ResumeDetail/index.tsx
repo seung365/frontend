@@ -13,6 +13,7 @@ import {
   SkillDetails,
   UserInfoDetails,
 } from '../../../components'
+import { useAuthStore } from '../../../store/AuthStore'
 import {
   Activity,
   Education,
@@ -36,7 +37,7 @@ const ResumeDetail = ({ memberId }: ResumeDetailProps) => {
   const [isMine, setIsMine] = useState<boolean>(false)
   const navigate = useNavigate()
   useEffect(() => {
-    if (localStorage.getItem('memberId')?.trim() === memberId) {
+    if (useAuthStore.getState().memberId === memberId) {
       setIsMine(true)
     }
   }, [memberId])

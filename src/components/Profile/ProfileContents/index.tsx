@@ -7,14 +7,7 @@ import {
   ProfileInfo,
   ResumeDetail,
 } from '../../../components'
-
-/**
- * 프로필 관련된 컨텐츠 보관하는 컴포넌트
- * @description
- * 프로필 기본 정보 - profileId로 조회
- * 작성한 게시글 - memberId로 조회
- * 이력서 - memberId로 조회
- */
+import { useAuthStore } from '../../../store/AuthStore'
 
 const ProfileContents = () => {
   const { id: profileId } = useParams()
@@ -23,8 +16,7 @@ const ProfileContents = () => {
   const tabName = queryParams.get('tab')
 
   const { data, isPending, isError } = useFetchProfileInfo(profileId)
-  const isMyProfile =
-    localStorage.getItem('memberId')?.trim() === data?.memberId.trim() // memberId 전역상태 관리 예정
+  const isMyProfile = useAuthStore.getState().memberId === data?.memberId
 
   if (isPending) {
     return (
