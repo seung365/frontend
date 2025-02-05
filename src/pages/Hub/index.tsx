@@ -1,13 +1,6 @@
 import { useMemo, useState } from 'react'
 import useGetHubList from '../../apis/hub/useGetHubList'
-import {
-  Filter,
-  FloatingButton,
-  Grid,
-  HubBanner,
-  Loader,
-  ProfileCard,
-} from '../../components'
+import { Filter, Grid, HubBanner, Loader, ProfileCard } from '../../components'
 import useIntersect from '../../hooks/useIntersect'
 
 export type SortingType = '최신순' | '인기순'
@@ -85,7 +78,6 @@ const Hub = () => {
         </div>
         <div ref={ref} />
       </div>
-      <FloatingButton />
     </div>
   )
 }
