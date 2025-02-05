@@ -8,13 +8,20 @@ interface EducationDetailProps {
 }
 
 const EducationDetails = ({ education, onDelete }: EducationDetailProps) => {
-  const { id, organization, degree, startDate, endDate, status } = education
+  const { id, organization, major, degree, startDate, endDate, status } =
+    education
 
   return (
     <section className='p-4 space-y-4 border rounded-lg shadow-sm'>
       {/* 학교/기관명 */}
       <div>
         <h3 className='text-lg font-medium'>{organization}</h3>
+      </div>
+
+      <div>
+        <p className='text-sm text-gray-700'>
+          <span className='font-medium'>전공:</span> {major}
+        </p>
       </div>
 
       {/* 학위 */}

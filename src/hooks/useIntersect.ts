@@ -24,8 +24,8 @@ type IntersectHandler = (
  */
 
 const useIntersect = (
-  onIntersect: IntersectHandler, // 요소가 화면에 보일때 실행할 콜백 함수
-  options?: IntersectionObserverInit, //Intersection Observer의 옵션
+  onIntersect: IntersectHandler,
+  options?: IntersectionObserverInit,
 ) => {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -36,14 +36,14 @@ const useIntersect = (
       })
     },
     [onIntersect],
-  ) // 요소가 화면에 보일 때 onIntersect를 실행
+  )
 
   useEffect(() => {
     if (!ref.current) return
     const observer = new IntersectionObserver(callback, options)
     observer.observe(ref.current)
     return () => observer.disconnect()
-  }, [ref, options, callback]) //DOM이 렌더링 되고 observer 생성
+  }, [ref, options, callback])
   return ref
 }
 

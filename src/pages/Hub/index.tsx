@@ -15,7 +15,6 @@ import { CheckTermType, TermType } from '../../types'
 
 const Hub = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  console.log(searchParams)
 
   const [sorting, setSorting] = useState<string>(() => {
     const sortParam = searchParams.get('sortType')

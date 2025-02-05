@@ -16,7 +16,6 @@ const useProfileFollow = (profileId: string, id: string) => {
         ...oldData,
         following: !oldData.following,
       }))
-      console.log('팔로우 요청 성공')
     },
     onError: (error) => {
       console.error('팔로우 요청 실패', error)

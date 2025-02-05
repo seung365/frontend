@@ -20,13 +20,11 @@ const useChat = (roomId: string) => {
 
   useEffect(() => {
     if (!accessToken || !roomId) {
-      console.log('token 또는 roomId가 없습니다')
       setError(true)
       return
     }
 
     if (clientRef.current?.active) {
-      console.log('⚠️ 이미 활성화된 WebSocket 연결이 있습니다.')
       return
     }
 
@@ -35,7 +33,6 @@ const useChat = (roomId: string) => {
       connectHeaders: { access: accessToken },
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log('✅ STOMP 연결 완료')
         setIsConnected(true)
         clientRef.current = client
 
@@ -55,11 +52,9 @@ const useChat = (roomId: string) => {
         })
       },
       onDisconnect: () => {
-        console.log('❌ STOMP 연결 끊김')
         setIsConnected(false)
       },
       onWebSocketError: () => {
-        console.log('❌ WebSocket 연결 에러')
         setError(true)
       },
     })

@@ -7,7 +7,6 @@ const fetchBoardStatistics = async (memberId: string) => {
   const response = await publicInstance.get(
     `/${API_ROUTES.MEMBERS}/stats/${memberId}/${year}`,
   )
-  console.log(response.data)
   return response.data
 }
 

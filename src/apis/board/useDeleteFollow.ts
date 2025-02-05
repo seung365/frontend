@@ -13,7 +13,6 @@ const useDeleteFollow = (profileId: string, id: string) => {
   const { mutate } = useMutation({
     mutationFn: () => deleteFollow(profileId),
     onSuccess: () => {
-      console.log('팔로우 삭제 요청 성공')
       queryClient.setQueryData(['board', id], (oldData: BoardResponse) => ({
         ...oldData,
         following: !oldData.following,

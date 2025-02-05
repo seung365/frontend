@@ -31,7 +31,6 @@ const patchBoard = async ({
     `/${API_ROUTES.BOARDS}/${boardId}`,
     requestData,
   )
-  console.log('게시글 수정 응답:', response)
   return response.data
 }
 

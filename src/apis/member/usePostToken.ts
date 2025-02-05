@@ -13,7 +13,7 @@ const usePostToken = () => {
         setLogin(accessToken, memberId)
       }
     } catch (error) {
-      console.log('accesstoken 발급 실패', error)
+      console.error('accesstoken 발급 실패', error)
     }
   }
 

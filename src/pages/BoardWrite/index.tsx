@@ -79,7 +79,6 @@ const BoardWrite = () => {
   }
 
   const onClickSubmit = (data: FormValues) => {
-    console.log('게시글 작성 데이터:', data)
     mutate(data)
   }
 

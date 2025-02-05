@@ -8,7 +8,6 @@ const putActivity = async (activities: Activity[]) => {
     `/${API_ROUTES.RESUME}/activities`,
     activities,
   )
-  console.log(response.data)
   return response.data
 }
 

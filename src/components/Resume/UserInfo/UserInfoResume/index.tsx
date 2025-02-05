@@ -8,14 +8,12 @@ import UserInfoForm from '../UserInfoForm'
 
 interface UserInfoResumeProps {
   register: UseFormRegister<UserResume>
-  // onSectionSubmit: (data: information) => void
   watchedData: information
   errors: FieldErrors<UserResume>
 }
 
 const UserInfoResume = ({
   register,
-  //onSectionSubmit,
   watchedData,
   errors,
 }: UserInfoResumeProps) => {
@@ -33,8 +31,6 @@ const UserInfoResume = ({
     } else {
       postUserInfo(watchedData)
     }
-
-    //onSectionSubmit(watchedData)
     setIsEdit(false)
   }
   return (

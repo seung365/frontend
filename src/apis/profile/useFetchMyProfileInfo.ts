@@ -4,7 +4,6 @@ import { authInstance } from '../fetchInstance'
 
 const fetchMyProfileInfo = async (): Promise<ProfileInfoResponse> => {
   const response = await authInstance.get<ProfileInfoResponse>('/profile/me')
-  console.log(response)
   return response.data
 }
 
