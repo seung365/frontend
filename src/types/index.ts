@@ -99,6 +99,32 @@ export type ProfileCardType = {
   about: string
 }
 
+export interface Profile {
+  profileId: string
+  nickname: string
+  about: string
+  profileImage: string
+  employmentPeriod: string
+  skills: string[]
+}
+
+export interface PageResponse {
+  content: Profile[]
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  first: boolean
+  last: boolean
+  numberOfElements: number
+  empty: boolean
+  pageable: {
+    offset: number
+    pageSize: number
+    pageNumber: number
+  }
+}
+
 export type ProfileRandomResponse = ProfileCardType[]
 
 export interface UserResume {

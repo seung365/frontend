@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useGetHubList from '../../apis/hub/useGetHubList'
 import {
@@ -11,14 +11,15 @@ import {
   ProfileCard,
 } from '../../components'
 import useIntersect from '../../hooks/useIntersect'
-import { CheckTermType, SortingType, TermType } from '../../types'
+import { CheckTermType, TermType } from '../../types'
 
 const Hub = () => {
   const [searchParams, setSearchParams] = useSearchParams()
+  console.log(searchParams)
 
-  const [sorting, setSorting] = useState<SortingType>(() => {
+  const [sorting, setSorting] = useState<string>(() => {
     const sortParam = searchParams.get('sortType')
-    return sortParam === 'popular' ? '인기순' : '최신순'
+    return sortParam === 'popular' ? 'popular' : 'latest'
   })
 
   const [skills, setSkills] = useState<string[]>(() => {
@@ -27,7 +28,7 @@ const Hub = () => {
 
   const [term, setTerm] = useState<CheckTermType>(() => {
     const termParam = searchParams.get('employmentPeriod') as TermType
-    return termParam || '신입'
+    return termParam || '전체'
   })
   const params = new URLSearchParams(searchParams)
   const queryString = params.toString()
@@ -47,7 +48,18 @@ const Hub = () => {
     }
   })
 
-  const handleSortingChange = (newSorting: SortingType) => {
+  useEffect(() => {
+    const sortParam = searchParams.get('sortType')
+    setSorting(sortParam === 'popular' ? 'popular' : 'latest')
+
+    const skillParams = searchParams.getAll('skills')
+    setSkills(skillParams)
+
+    const termParam = searchParams.get('employmentPeriod') as TermType
+    setTerm(termParam || '전체')
+  }, [searchParams])
+
+  const handleSortingChange = (newSorting: string) => {
     setSorting(newSorting)
     const params = new URLSearchParams(searchParams)
     params.set('sortType', newSorting)
@@ -108,6 +120,7 @@ const Hub = () => {
               )}
               {isFetchingNextPage && <Loader size='s' />}
             </div>
+            <div ref={ref} />
           </Grid>
           <Filter
             skills={skills}
@@ -117,7 +130,6 @@ const Hub = () => {
             sorting={sorting}
             term={term}
           />
-          <div ref={ref} />
         </div>
       </div>
     </div>
