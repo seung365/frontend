@@ -5,7 +5,6 @@ import { authInstance } from '../fetchInstance'
 
 const getBoardDetail = async (boardId: string): Promise<BoardResponse> => {
   const response = await authInstance.get(`/${API_ROUTES.BOARDS}/${boardId}`)
-  console.log('게시글 상세 응답:', response)
   return response.data
 }
 
