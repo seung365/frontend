@@ -9,10 +9,10 @@ const getBoardDetail = async (boardId: string): Promise<BoardResponse> => {
   return response.data
 }
 
-const useGetBoardDetail = (id: string) => {
+const useGetBoardDetail = (boardId: string) => {
   const { data } = useSuspenseQuery({
-    queryKey: ['board', id],
-    queryFn: () => getBoardDetail(id),
+    queryKey: ['board', boardId],
+    queryFn: () => getBoardDetail(boardId),
     staleTime: 0,
   })
   return { data }
