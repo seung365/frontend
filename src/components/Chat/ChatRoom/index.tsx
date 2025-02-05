@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useDeleteChat from '../../../apis/chat/useDeleteChat'
 import useGetChatDetail from '../../../apis/chat/useGetChatDetail'
 import BackArrow from '../../../assets/icons/back-arrow.svg?react'
@@ -10,11 +10,14 @@ const ChatRoom = () => {
   const { selectedChatId, setSelectedChat, selectedChatName } = useChatStore()
   const { data: chatDetail } = useGetChatDetail(selectedChatId as string)
   const { mutate: deleteChat } = useDeleteChat()
-  //deleteChat(selectedChatId as string)
-  console.log(chatDetail)
   const { messages, sendMessage, error, isConnected } = useChat(
     selectedChatId as string,
   )
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const sendChatMessage = () => {
     if (inputMessage.trim()) {
@@ -22,6 +25,10 @@ const ChatRoom = () => {
       setInputMessage('')
     }
   }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
   const handleSend = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) {
@@ -46,7 +53,7 @@ const ChatRoom = () => {
         </div>
         <button
           onClick={() => setSelectedChat(null)}
-          className='px-4 py-2 mt-4 text-blue-500 hover:underline'
+          className='px-4 py-2 text-blue-500 hover:underline'
         >
           돌아가기
         </button>
@@ -105,6 +112,7 @@ const ChatRoom = () => {
             )}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className='pt-4 mt-auto border-t'>
         <div className='flex gap-2'>
