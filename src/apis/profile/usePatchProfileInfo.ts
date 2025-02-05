@@ -17,7 +17,6 @@ const patchProfileInfo = async (
 ): Promise<ProfileInfoResponse> => {
   const formDataObj = new FormData()
 
-  // `profile` 객체를 JSON 문자열로 변환 후 추가
   const profileData = {
     nickname: formData.nickName,
     about: formData.about,
@@ -49,7 +48,6 @@ const usePatchProfileInfo = () => {
       queryClient.invalidateQueries({
         queryKey: ['MyProfileInfo'],
       })
-      console.log(data)
       setProfileImage(data.profileImage)
     },
     onError: (error) => {

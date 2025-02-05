@@ -1,6 +1,6 @@
 import { UseFormRegister } from 'react-hook-form'
 import { Button } from '../../../components'
-import { UserResume } from '../../../types' // Language 타입을 가져옵니다.
+import { UserResume } from '../../../types'
 
 interface LanguageFormProps {
   register: UseFormRegister<UserResume>

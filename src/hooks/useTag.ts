@@ -18,7 +18,6 @@ const useTag = ({ params, setSearchParams }: UseTagProps) => {
 
     setSelectedTags(updatedTags)
 
-    // Update URL parameters
     params.delete('tagNames')
     updatedTags.forEach((tag) => params.append('tagNames', tag))
     setSearchParams(params)
