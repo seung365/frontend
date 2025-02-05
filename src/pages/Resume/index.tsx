@@ -16,6 +16,7 @@ import {
   SkillsResume,
   UserInfoResume,
 } from '../../components/index'
+import { useAuthStore } from '../../store/AuthStore'
 import { Activity, Education, Language, Project, UserResume } from '../../types'
 import resumeTransform from '../../utils/resumeTransform'
 
@@ -87,7 +88,7 @@ const Resume = () => {
     },
   })
 
-  const memberId = localStorage.getItem('memberId')
+  const memberId = useAuthStore.getState().memberId
   const { data: resumeData, status: resumeStatus } = useGetResume(
     memberId?.toString() || '',
   )
