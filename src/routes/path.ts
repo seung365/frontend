@@ -12,3 +12,14 @@ export const RouterPath = {
   signin: 'signin',
   notFound: '*',
 } as const
+
+export const PROTECTED_ROUTES = [
+  '/signin',
+  '/hub',
+  '/board',
+  '/board/community',
+  '/board/programming',
+  '/board/study',
+  '/board/project',
+  '/board/experience',
+]

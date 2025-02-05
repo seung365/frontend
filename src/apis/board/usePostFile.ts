@@ -9,7 +9,6 @@ const usePostFile = () => {
         'Content-Type': 'multipart/form-data',
       },
     })
-    console.log('파일 업로드 응답:', response)
     return response.data
   }
   return postFile

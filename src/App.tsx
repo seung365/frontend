@@ -5,23 +5,24 @@ import queryClient from './apis/queryClient'
 import { MobileView } from './components/index.ts'
 import useCheckMobileView from './hooks/useCheckMobileView.ts'
 import { Routes } from './routes'
+import { useAuthStore } from './store/AuthStore.ts'
 import './styles/global.css'
 
 const App = () => {
+  const isLogin = useAuthStore((state) => state.isLogin)
+  const pathname = window.location.pathname
   const postToken = usePostToken()
   const isMobile = useCheckMobileView()
 
   useEffect(() => {
-    const getToken = async () => {
-      try {
+    const checkAuth = async () => {
+      if (!isLogin) {
         await postToken()
-      } catch (error) {
-        console.error('토큰 발급 실패:', error)
       }
     }
 
-    getToken()
-  }, [postToken])
+    checkAuth()
+  }, [isLogin, postToken, pathname])
 
   if (isMobile) {
     return <MobileView />

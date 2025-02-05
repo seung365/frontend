@@ -13,12 +13,12 @@ interface PatchBoardRequest {
 
 interface MutationParams {
   formData: FormValues
-  id: string
+  boardId: string
 }
 
 const patchBoard = async ({
   formData,
-  id,
+  boardId,
 }: MutationParams): Promise<BoardResponse> => {
   const requestData: PatchBoardRequest = {
     title: formData.title,
@@ -28,21 +28,20 @@ const patchBoard = async ({
   }
 
   const response = await authInstance.patch(
-    `/${API_ROUTES.BOARDS}/${id}`,
+    `/${API_ROUTES.BOARDS}/${boardId}`,
     requestData,
   )
-  console.log('게시글 수정 응답:', response)
   return response.data
 }
 
-const usePatchBoard = (id: string) => {
+const usePatchBoard = (boardId: string) => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { mutate, status } = useMutation<BoardResponse, Error, MutationParams>({
-    mutationFn: ({ formData, id }) => patchBoard({ formData, id }),
+    mutationFn: ({ formData, boardId }) => patchBoard({ formData, boardId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['board', id],
+        queryKey: ['board', boardId],
       })
       navigate(-1)
     },

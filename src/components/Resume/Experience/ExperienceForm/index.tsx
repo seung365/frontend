@@ -1,5 +1,8 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
+import useDeleteExperience from '../../../../apis/resume/experience/useDeleteExperience'
+import { Button } from '../../../../components'
 import { Experience, UserResume } from '../../../../types'
+import formatDateForInput from '../../../../utils/formatDateInput'
 
 interface ExperienceFormProps {
   register: UseFormRegister<UserResume>
@@ -19,11 +22,13 @@ const ExperienceForm = ({
   errors,
 }: ExperienceFormProps) => {
   const experience = watchedData[index]
+  const { mutate: deleteExperience } = useDeleteExperience()
+
   return (
-    <div className='p-6 mb-6 bg-white rounded-lg shadow'>
+    <>
       {isEdit ? (
-        <div className='space-y-4'>
-          <div className='form-group'>
+        <section className='space-y-4 border-b-[1px] py-4'>
+          <div>
             <label
               htmlFor={`company-name-${index}`}
               className='block mb-1 text-sm font-medium text-gray-700'
@@ -34,18 +39,38 @@ const ExperienceForm = ({
               id={`company-name-${index}`}
               type='text'
               className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
-              {...register(`experiences.${index}.company_name`, {
+              {...register(`experiences.${index}.companyName`, {
                 required: '회사명을 입력해주세요',
               })}
             />
-            {errors.experiences?.[index]?.company_name && (
+            {errors.experiences?.[index]?.companyName && (
               <p className='mt-1 text-sm text-red-500'>
-                {errors.experiences[index].company_name.message}
+                {errors.experiences[index].companyName.message}
               </p>
             )}
           </div>
-
-          <div className='form-group'>
+          <div>
+            <label
+              htmlFor={`employmentType-${index}`}
+              className='block mb-1 text-sm font-medium text-gray-700'
+            >
+              고용 형태
+            </label>
+            <input
+              id={`employmentType-${index}`}
+              type='text'
+              className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
+              {...register(`experiences.${index}.employmentType`, {
+                required: '고용 형태를 입력해주세요',
+              })}
+            />
+            {errors.experiences?.[index]?.employmentType && (
+              <p className='mt-1 text-sm text-red-500'>
+                {errors.experiences[index].employmentType.message}
+              </p>
+            )}
+          </div>
+          <div>
             <label
               htmlFor={`position-${index}`}
               className='block mb-1 text-sm font-medium text-gray-700'
@@ -59,9 +84,8 @@ const ExperienceForm = ({
               {...register(`experiences.${index}.position`)}
             />
           </div>
-
           <div className='grid grid-cols-2 gap-4'>
-            <div className='form-group'>
+            <div>
               <label
                 htmlFor={`start-date-${index}`}
                 className='block mb-1 text-sm font-medium text-gray-700'
@@ -71,12 +95,18 @@ const ExperienceForm = ({
               <input
                 id={`start-date-${index}`}
                 type='date'
+                defaultValue={formatDateForInput(experience?.startDate)}
                 className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
-                {...register(`experiences.${index}.start_date`)}
+                {...register(`experiences.${index}.startDate`, {
+                  setValueAs: (value: string) => {
+                    if (!value) return value
+                    return new Date(value).toISOString()
+                  },
+                })}
               />
             </div>
 
-            <div className='form-group'>
+            <div>
               <label
                 htmlFor={`end-date-${index}`}
                 className='block mb-1 text-sm font-medium text-gray-700'
@@ -87,10 +117,15 @@ const ExperienceForm = ({
                 <input
                   id={`end-date-${index}`}
                   type='date'
+                  defaultValue={formatDateForInput(experience?.startDate)}
                   className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
-                  {...register(`experiences.${index}.end_date`, {
+                  {...register(`experiences.${index}.endDate`, {
+                    setValueAs: (value: string) => {
+                      if (!value) return value
+                      return new Date(value).toISOString()
+                    },
                     validate: (value) => {
-                      const startDate = watchedData[index].start_date
+                      const startDate = watchedData[index].startDate
                       if (!value || !startDate) return true
                       return (
                         new Date(value) >= new Date(startDate) ||
@@ -99,9 +134,9 @@ const ExperienceForm = ({
                     },
                   })}
                 />
-                {errors.experiences?.[index]?.end_date && (
+                {errors.experiences?.[index]?.endDate && (
                   <p className='mt-1 text-sm text-red-500'>
-                    {errors.experiences[index].end_date.message}
+                    {errors.experiences[index].endDate.message}
                   </p>
                 )}
                 <div className='flex items-center gap-2'>
@@ -130,8 +165,7 @@ const ExperienceForm = ({
               </div>
             </div>
           </div>
-
-          <div className='form-group'>
+          <div>
             <label
               htmlFor={`description-${index}`}
               className='block mb-1 text-sm font-medium text-gray-700'
@@ -151,42 +185,67 @@ const ExperienceForm = ({
               </p>
             )}
           </div>
-          <button
-            onClick={() => onRemove(index)}
-            className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              if (watchedData[index].id) {
+                deleteExperience(watchedData[index].id)
+              }
+              onRemove(index)
+            }}
+            type='button'
+            theme='light'
           >
-            삭제
-          </button>
-        </div>
+            취소
+          </Button>
+        </section>
       ) : (
-        <div className='space-y-3'>
-          <div className='flex items-start justify-between'>
-            <div>
-              <h3 className='text-lg font-semibold text-gray-900'>
-                {experience?.company_name}
-              </h3>
-              <p className='text-gray-600 text-md'>{experience?.position}</p>
-            </div>
-            <button
-              onClick={() => onRemove(index)}
-              className='px-3 py-1 text-sm text-red-600 rounded hover:text-red-800 hover:bg-red-50'
-            >
-              삭제
-            </button>
+        <div className='flex flex-col gap-2 p-4 border rounded-lg shadow-sm'>
+          <div>
+            <h3 className='text-lg font-semibold text-gray-700'>
+              {experience?.companyName}
+            </h3>
+            <p className='text-sm text-gray-600'>
+              {`${experience.employmentType} | `}
+              {experience?.position}
+            </p>
           </div>
-
           <div className='text-sm text-gray-500'>
-            <span>{experience?.start_date}</span>
+            <span>
+              {experience?.startDate
+                ? new Date(experience.startDate).toLocaleDateString()
+                : ' '}
+            </span>
             <span className='mx-2'>~</span>
-            <span>{experience?.end_date || '현재 진행 중'}</span>
+            <span>
+              {experience?.endDate
+                ? new Date(experience.endDate).toLocaleDateString()
+                : '현재 진행 중'}
+            </span>
           </div>
-
           <p className='text-gray-700 whitespace-pre-line'>
             {experience?.description}
           </p>
+          {watchedData[index]?.id !== undefined && (
+            <div>
+              <Button
+                theme='light'
+                type='button'
+                size='small'
+                onClick={() => {
+                  onRemove(index)
+                  if (watchedData[index].id) {
+                    deleteExperience(watchedData[index].id)
+                  }
+                }}
+              >
+                삭제
+              </Button>
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   )
 }
 

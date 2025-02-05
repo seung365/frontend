@@ -1,72 +1,309 @@
-export const profileList = [
+const profileList = [
   {
     profileId: '1',
     nickname: 'CodeMaster',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'A passionate full-stack developer exploring new technologies.A passionate full-stack developer exploring new technologies.',
+    about: 'A passionate full-stack developer exploring new technologies.',
   },
   {
     profileId: '2',
     nickname: 'DesignPro',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'UI/UX designer who loves crafting user-friendly interfaces.A passionate full-stack developer exploring new technologies.',
+    about: 'UI/UX designer who loves crafting user-friendly interfaces.',
   },
   {
     profileId: '3',
     nickname: 'ReactGuru',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'React developer building scalable web applications.A passionate full-stack developer exploring new technologies.',
+    about: 'React developer building scalable web applications.',
   },
   {
     profileId: '4',
     nickname: 'BackendNinja',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'Node.js enthusiast specializing in backend systems and APIs.A passionate full-stack developer exploring new technologies.',
+    about: 'Node.js enthusiast specializing in backend systems and APIs.',
   },
   {
     profileId: '5',
     nickname: 'FrontendQueen',
     profileImg: 'https://placehold.co/600x400',
     about:
-      'Frontend developer creating interactive and dynamic user experiences.A passionate full-stack developer exploring new technologies.',
+      'Frontend developer creating interactive and dynamic user experiences.',
   },
   {
     profileId: '6',
     nickname: 'DataWizard',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'Data scientist uncovering insights from big data.A passionate full-stack developer exploring new technologies.',
+    about: 'Data scientist uncovering insights from big data.',
   },
   {
     profileId: '7',
     nickname: 'DevOpsHero',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'DevOps engineer automating deployments and ensuring scalability.A passionate full-stack developer exploring new technologies.',
+    about: 'DevOps engineer automating deployments and ensuring scalability.',
   },
   {
     profileId: '8',
     nickname: 'TechExplorer',
     profileImg: 'https://placehold.co/600x400',
     about:
-      'Technology enthusiast always learning about emerging tools and trends.A passionate full-stack developer exploring new technologies.',
+      'Technology enthusiast always learning about emerging tools and trends.',
   },
   {
     profileId: '9',
     nickname: 'MobileGenius',
     profileImg: 'https://placehold.co/600x400',
-    about:
-      'Mobile app developer focused on cross-platform solutions.A passionate full-stack developer exploring new technologies.',
+    about: 'Mobile app developer focused on cross-platform solutions.',
   },
   {
     profileId: '10',
     nickname: 'AIArchitect',
     profileImg: 'https://placehold.co/600x400',
+    about: 'AI and ML specialist creating intelligent systems for the future.',
+  },
+  {
+    profileId: '11',
+    nickname: 'SecurityGuardian',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Cybersecurity expert protecting digital assets and infrastructure.',
+  },
+  {
+    profileId: '12',
+    nickname: 'CloudPioneer',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Cloud architect designing scalable and resilient systems.',
+  },
+  {
+    profileId: '13',
+    nickname: 'GameDev',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Game developer creating immersive gaming experiences.',
+  },
+  {
+    profileId: '14',
+    nickname: 'QualityMaster',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'QA engineer ensuring software quality and reliability.',
+  },
+  {
+    profileId: '15',
+    nickname: 'BlockchainInnovator',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Blockchain developer building decentralized applications.',
+  },
+  {
+    profileId: '16',
+    nickname: 'SystemArchitect',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'System architect designing robust enterprise solutions.',
+  },
+  {
+    profileId: '17',
+    nickname: 'DatabaseGuru',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Database administrator optimizing data storage and retrieval.',
+  },
+  {
+    profileId: '18',
+    nickname: 'IoTInnovator',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'IoT specialist connecting the physical and digital worlds.',
+  },
+  {
+    profileId: '19',
+    nickname: 'WebPerformance',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Performance engineer optimizing web applications.',
+  },
+  {
+    profileId: '20',
+    nickname: 'AccessibilityAdvocate',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Developer focused on making the web accessible to everyone.',
+  },
+  {
+    profileId: '21',
+    nickname: 'ARVRCreator',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'AR/VR developer building immersive experiences.',
+  },
+  {
+    profileId: '22',
+    nickname: 'EmbeddedPro',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Embedded systems engineer working on IoT devices.',
+  },
+  {
+    profileId: '23',
+    nickname: 'ProductOwner',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Product owner bridging business and development teams.',
+  },
+  {
+    profileId: '24',
+    nickname: 'ScrumMaster',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Agile practitioner facilitating team success.',
+  },
+  {
+    profileId: '25',
+    nickname: 'NetworkNinja',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Network engineer designing and maintaining infrastructure.',
+  },
+  {
+    profileId: '26',
+    nickname: 'CrossPlatformDev',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Developing applications that work seamlessly across all platforms.',
+  },
+  {
+    profileId: '27',
+    nickname: 'MachineLearningWiz',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Machine learning specialist developing intelligent algorithms.',
+  },
+  {
+    profileId: '28',
+    nickname: 'APIArchitect',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Designing and implementing robust API solutions.',
+  },
+  {
+    profileId: '29',
+    nickname: 'E2ETester',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'End-to-end testing specialist ensuring application quality.',
+  },
+  {
+    profileId: '30',
+    nickname: 'WebAssemblyPro',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'WebAssembly developer pushing web performance boundaries.',
+  },
+  {
+    profileId: '31',
+    nickname: 'MicroservicesArch',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Microservices architecture specialist building scalable systems.',
+  },
+  {
+    profileId: '32',
+    nickname: 'PWABuilder',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Progressive Web App developer creating native-like experiences.',
+  },
+  {
+    profileId: '33',
+    nickname: 'SEOExpert',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Search Engine Optimization specialist improving web visibility.',
+  },
+  {
+    profileId: '34',
+    nickname: 'Web3Developer',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Web3 enthusiast building decentralized applications.',
+  },
+  {
+    profileId: '35',
+    nickname: 'DataPrivacyPro',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Data privacy specialist implementing GDPR-compliant solutions.',
+  },
+  {
+    profileId: '36',
+    nickname: 'CloudNative',
+    profileImg: 'https://placehold.co/600x400',
     about:
-      'AI and ML specialist creating intelligent systems for the future.A passionate full-stack developer exploring new technologies.',
+      'Cloud-native application developer using cutting-edge technologies.',
+  },
+  {
+    profileId: '37',
+    nickname: 'TechnicalWriter',
+    profileImg: 'https://placehold.co/600x400',
+    about:
+      'Technical documentation specialist making complex topics accessible.',
+  },
+  {
+    profileId: '38',
+    nickname: 'GraphQLMaster',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'GraphQL specialist optimizing data queries and mutations.',
+  },
+  {
+    profileId: '39',
+    nickname: 'KubernetesOps',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Kubernetes operator managing container orchestration.',
+  },
+  {
+    profileId: '40',
+    nickname: 'JAMStackDev',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'JAMStack developer building modern web applications.',
+  },
+  {
+    profileId: '41',
+    nickname: 'EdTechInnovator',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Educational technology developer creating learning platforms.',
+  },
+  {
+    profileId: '42',
+    nickname: 'FinTechArchitect',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Financial technology specialist building secure payment systems.',
+  },
+  {
+    profileId: '43',
+    nickname: 'HealthTechDev',
+    profileImg: 'https://placehold.co/600x400',
+    about:
+      'Healthcare technology developer creating medical software solutions.',
+  },
+  {
+    profileId: '44',
+    nickname: 'RustEngineer',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Rust developer building high-performance systems.',
+  },
+  {
+    profileId: '45',
+    nickname: 'GoLangNinja',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Go developer creating efficient backend services.',
+  },
+  {
+    profileId: '46',
+    nickname: 'SwiftMaster',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'iOS developer crafting elegant mobile applications.',
+  },
+  {
+    profileId: '47',
+    nickname: 'KotlinPro',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Android developer specialized in Kotlin development.',
+  },
+  {
+    profileId: '48',
+    nickname: 'ElixirWizard',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Elixir developer building fault-tolerant applications.',
+  },
+  {
+    profileId: '49',
+    nickname: 'DataVizArtist',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Data visualization specialist creating interactive dashboards.',
+  },
+  {
+    profileId: '50',
+    nickname: 'ContainerMaster',
+    profileImg: 'https://placehold.co/600x400',
+    about: 'Container specialist optimizing deployment workflows.',
   },
 ]
+
+export default profileList

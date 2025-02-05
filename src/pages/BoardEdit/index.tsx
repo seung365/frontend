@@ -35,13 +35,11 @@ const BoardWrite = () => {
 
   useEffect(() => {
     if (selectedCategory && contentTemplates[selectedCategory] && !data) {
-      // data가 없을 때만 템플릿 적용
       setValue('content', contentTemplates[selectedCategory])
     }
   }, [selectedCategory, setValue, data])
 
   useEffect(() => {
-    console.log('게시글 데이터:', data)
     if (data) {
       setValue('title', data.title)
       setValue('content', data.content)
@@ -68,8 +66,7 @@ const BoardWrite = () => {
   }
 
   const onClickSubmit = (data: FormValues) => {
-    console.log('게시글 작성 데이터:', data)
-    mutate({ formData: data, id: id! })
+    mutate({ formData: data, boardId: id! })
   }
 
   if (status === 'pending') {

@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import Footer from '../Footer'
-import Header from '../Header'
+import { FloatingButton, Footer, Header } from '../../index'
 
 /*
 Layout 컴포넌트
@@ -13,6 +12,7 @@ export const Layout = () => {
     <div className='flex flex-col items-center min-h-screen'>
       <Header />
       <main className='w-full mt-[60px] min-h-[calc(100vh-60px-145px)] max-w-[1060px] mx-auto'>
+        <FloatingButton />
         <Outlet />
       </main>
       <Footer />

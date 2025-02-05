@@ -1,54 +1,57 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import usePutActivity from '../../apis/resume/activity/usePutActivity'
+import usePutEducation from '../../apis/resume/education/usePutEducation'
+import usePutLanguage from '../../apis/resume/language/usePutLanguage'
+import usePutProject from '../../apis/resume/project/usePutProject'
+import useGetResume from '../../apis/resume/useGetResume'
 import {
   ActivityResume,
   EducationResume,
   ExperienceResume,
   LanguageResume,
+  Loader,
   ProjectResume,
   ResumeContainer,
   SkillsResume,
   UserInfoResume,
 } from '../../components/index'
-import {
-  Activity,
-  Education,
-  Experience,
-  Language,
-  Project,
-  Skills,
-  UserInfo,
-  UserResume,
-} from '../../types'
+import { useAuthStore } from '../../store/AuthStore'
+import { Activity, Education, Language, Project, UserResume } from '../../types'
+import resumeTransform from '../../utils/resumeTransform'
 
 const Resume = () => {
   const {
     register,
-    handleSubmit,
     watch,
     control,
     trigger,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<UserResume>({
     defaultValues: {
-      userInfo: {
+      information: {
+        id: 0,
+        name: '',
         position: '',
         summary: '',
         portfolio: '',
+        employmentPeriod: '신입',
       },
       skills: [],
       experiences: [
         {
-          company_name: '',
+          companyName: '',
           position: '',
-          start_date: '',
-          end_date: '',
+          startDate: '',
+          endDate: '',
           description: '',
         },
       ],
       projects: [
         {
-          name: '',
+          projectName: '',
           description: '',
           organization: '',
           startDate: '',
@@ -84,52 +87,66 @@ const Resume = () => {
     },
   })
 
-  const userInfoData = watch('userInfo')
+  const memberId = useAuthStore.getState().memberId
+  const { data: resumeData, status: resumeStatus } = useGetResume(
+    memberId?.toString() || '',
+  )
+
+  const { mutate: putProjects } = usePutProject()
+  const { mutate: putActivities } = usePutActivity()
+  const { mutate: putEducations } = usePutEducation()
+  const { mutate: putLanguages } = usePutLanguage()
+
+  const userInfoData = watch('information')
   const exprienceData = watch('experiences')
+  const projectData = watch('projects')
+  const activityData = watch('activities')
+  const educationData = watch('educations')
+  const languageData = watch('languages')
 
-  const onClickSubmit = (data: UserResume) => {
-    console.log(data)
+  useEffect(() => {
+    if (resumeStatus === 'success' && resumeData) {
+      const transformedData = resumeTransform(resumeData)
+      reset(transformedData)
+    }
+  }, [resumeStatus, resumeData, reset])
+
+  if (resumeStatus === 'pending') {
+    return (
+      <div className='fixed inset-0 flex items-center justify-center'>
+        <Loader />
+      </div>
+    )
   }
 
-  const handleUserInfoSubmit = (data: UserInfo) => {
-    console.log(data)
-  }
-
-  const handleSkillsSubmit = (data: Skills[]) => {
-    console.log(data)
-  }
-
-  const handleExperienceSubmit = (data: Experience[]) => {
-    console.log(data)
+  if (resumeStatus === 'error') {
+    return (
+      <div className='fixed inset-0 flex items-center justify-center font-bold text-red-500'>
+        이력서를 조회할 수 없습니다.
+      </div>
+    )
   }
 
   const handleProjectsSubmit = (data: Project[]) => {
-    // 프로젝트에 해당되는 데이터
-    console.log(data)
+    putProjects(data)
   }
 
   const handleActivitySubmit = (data: Activity[]) => {
-    // 대외활동에 해당되는 데이터
-    console.log(data)
+    putActivities(data)
   }
 
   const handleEducationSubmit = (data: Education[]) => {
-    // 교육에 해당되는 데이터
-    console.log(data)
+    putEducations(data)
   }
 
   const handleLaguageSubmit = (data: Language[]) => {
-    // 외국어에 해당되는 데이터
-    console.log(data)
+    putLanguages(data)
   }
 
   return (
     <section>
       <h1 className='mt-10 text-size-title text-main-black'>💁🏻‍♂️ 이력서 작성</h1>
-      <form
-        onSubmit={handleSubmit(onClickSubmit)}
-        className='flex flex-col w-full h-full gap-12 py-10'
-      >
+      <form className='flex flex-col w-full h-full gap-12 py-10'>
         {/*인적사항 */}
         <ResumeContainer
           title='인적 사항'
@@ -137,7 +154,6 @@ const Resume = () => {
         >
           <UserInfoResume
             register={register}
-            onSectionSubmit={handleUserInfoSubmit}
             watchedData={userInfoData}
             errors={errors}
           />
@@ -148,17 +164,13 @@ const Resume = () => {
           title='기술 스택'
           description='✏️ 기술스택을 설정해주세요!'
         >
-          <SkillsResume
-            control={control}
-            onSectionSubmit={handleSkillsSubmit}
-          />
+          <SkillsResume register={register} defaultValues={watch('skills')} />
         </ResumeContainer>
 
         {/*경력 */}
         <ResumeContainer title='경력' description='✏️ 경력사항을 입력해주세요!'>
           <ExperienceResume
             register={register}
-            onSectionSubmit={handleExperienceSubmit}
             watchedData={exprienceData}
             control={control}
             errors={errors}
@@ -173,6 +185,7 @@ const Resume = () => {
         >
           <ProjectResume
             control={control}
+            watchedData={projectData}
             register={register}
             getValues={getValues}
             onProjectsSubmit={handleProjectsSubmit}
@@ -186,6 +199,7 @@ const Resume = () => {
         >
           <ActivityResume
             control={control}
+            watchedData={activityData}
             register={register}
             getValues={getValues}
             onActivitySubmit={handleActivitySubmit}
@@ -199,6 +213,7 @@ const Resume = () => {
         >
           <EducationResume
             control={control}
+            watchedData={educationData}
             register={register}
             getValues={getValues}
             onEducationSubmit={handleEducationSubmit}
@@ -212,6 +227,7 @@ const Resume = () => {
         >
           <LanguageResume
             control={control}
+            watchedData={languageData}
             register={register}
             getValues={getValues}
             onLanguageSubmit={handleLaguageSubmit}

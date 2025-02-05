@@ -51,7 +51,7 @@ const Board = () => {
 
   const { data, status, ref, isFetchingNextPage, hasNextPage } =
     useFetchBoardList(categoryId, queryString)
-  console.log(data)
+
   return (
     <section className='flex flex-col w-full h-full gap-8 py-10'>
       <BoardBanner pathname={location.pathname} />
@@ -81,22 +81,7 @@ const Board = () => {
           {data?.pages.map((page, pageIndex) => (
             <React.Fragment key={pageIndex}>
               {page.content.map((board) => (
-                <BoardCard
-                  key={board.id}
-                  id={board.id}
-                  title={board.title}
-                  content={board.content}
-                  thumbnail={board.thumbnail}
-                  categoryId={board.categoryId}
-                  categoryName={board.categoryName}
-                  date={board.createdAt}
-                  upCnt={board.upCnt}
-                  commentCnt={board.commentCnt}
-                  viewCnt={board.viewCnt}
-                  profileImg={board.profileImage}
-                  nickName={board.nickName}
-                  tags={board.tag}
-                />
+                <BoardCard key={board.id} {...board} />
               ))}
             </React.Fragment>
           ))}

@@ -1,9 +1,10 @@
 import { ChangeEvent, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import usePatchProfileInfo from '../../../apis/profile/usePatchProfileInfo'
 import PlusIcon from '../../../assets/icons/plus.svg?react'
 import { Button } from '../../../components'
 
-interface ProfileFormValues {
+export interface ProfileFormValues {
   profileImg: File | null
   nickName: string
   about: string
@@ -32,6 +33,8 @@ const ProfileEdit = ({
   const [previewImg, setPreviewImg] = useState<string>(profileImg)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
+  const { mutate: patchProfile } = usePatchProfileInfo()
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files ? e.target.files[0] : null
     if (imageFile) {
@@ -50,9 +53,9 @@ const ProfileEdit = ({
   }
 
   const handleClickSubmit = (data: ProfileFormValues) => {
-    console.log(data)
+    patchProfile(data)
+    onCloseModal()
   }
-
   return (
     <form
       className='flex flex-col gap-4'
@@ -68,6 +71,7 @@ const ProfileEdit = ({
           />
         )}
         <button
+          type='button'
           className='absolute bottom-0 transform translate-x-16 w-6 h-6 border-[1px] bg-main-color flex items-center justify-center rounded-md'
           onClick={() => fileInputRef.current?.click()}
         >
@@ -111,7 +115,7 @@ const ProfileEdit = ({
         />
       </section>
       <section className='flex justify-center gap-4'>
-        <Button theme='light' onClick={onCloseModal}>
+        <Button type='button' theme='light' onClick={onCloseModal}>
           닫기
         </Button>
         <Button type='submit'>작성</Button>
