@@ -1,29 +1,19 @@
-import { API_ROUTES } from '../../constant/api'
+import { useAuthStore } from '../../store/AuthStore'
 import { publicInstance } from '../fetchInstance'
 
-type PostTokenResponse = {
-  access: string
-  refresh: string
-}
-
 const usePostToken = () => {
-  const postToken = async () => {
+  const setLogin = useAuthStore((state) => state.setLogin)
+
+  const postToken = async (): Promise<void> => {
     try {
-      console.log('현재 쿠키:', document.cookie)
-
-      const response = await publicInstance.post<PostTokenResponse>(
-        `/${API_ROUTES.REISSUE}`,
-      )
-      console.log('성공 응답:', response)
+      const response = await publicInstance.post<string>('/reissue')
       const accessToken = response.headers.access
-      console.log('발급된 토큰:', accessToken)
-
-      if (accessToken) {
-        localStorage.setItem('accessToken', accessToken)
+      const memberId = response.data
+      if (accessToken && memberId) {
+        setLogin(accessToken, memberId)
       }
     } catch (error) {
-      console.error('토큰 재발급 에러:', error)
-      console.error('상세 에러:', error)
+      console.log('accesstoken 발급 실패', error)
     }
   }
 
