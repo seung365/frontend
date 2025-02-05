@@ -4,7 +4,6 @@ import useGetHubList from '../../apis/hub/useGetHubList'
 import {
   EmptyView,
   Filter,
-  FloatingButton,
   Grid,
   HubBanner,
   HubListSkeleton,
@@ -120,7 +119,6 @@ const Hub = () => {
           />
           <div ref={ref} />
         </div>
-        <FloatingButton />
       </div>
     </div>
   )
