@@ -1,58 +1,73 @@
+import useGetChatList from '../../../apis/chat/useGetChatList'
+import useGetMyChatList from '../../../apis/chat/useGetMyChatList'
+import { EmptyStateMessage, ErrorMessage, Loader } from '../../index'
 import ChatBar from '../ChatBar'
 
-interface ChatRoom {
-  id: number
-  profileImg: string
-  name: string
-  job: string
-  lastMessage?: string
-  timestamp?: string
+interface ChatListProps {
+  type: 'all' | 'my'
 }
 
-const ChatList = () => {
-  // 실제로는 API나 store에서 가져올 데이터
-  const chatRooms: ChatRoom[] = [
-    {
-      id: 1,
-      profileImg: 'https://via.placeholder.com/40',
-      name: '김개발',
-      job: 'Frontend Developer',
-      lastMessage: '안녕하세요! 프로젝트 관련해서 이야기 나누고 싶습니다.',
-      timestamp: '14:30',
-    },
-    {
-      id: 2,
-      profileImg: 'https://via.placeholder.com/40',
-      name: '이디자인',
-      job: 'UX Designer',
-      lastMessage: '디자인 시안 검토 부탁드립니다.',
-      timestamp: '12:15',
-    },
-    {
-      id: 3,
-      profileImg: 'https://via.placeholder.com/40',
-      name: '박백엔드',
-      job: 'Backend Developer',
-      lastMessage: 'API 문서 공유드립니다.',
-      timestamp: '어제',
-    },
-  ]
+interface ChatRoom {
+  roomId: string
+  name: string
+}
 
-  return (
-    <div className='flex flex-col'>
-      {chatRooms.map((chat) => (
-        <ChatBar
-          id={chat.id}
-          key={chat.id}
-          profileImg={chat.profileImg}
-          name={chat.name}
-          job={chat.job}
-          lastMessage={chat.lastMessage}
-          timestamp={chat.timestamp}
-        />
-      ))}
-    </div>
-  )
+const ChatList = ({ type }: ChatListProps) => {
+  const { data: chatRooms, status } = useGetChatList()
+  const { data: myChatRooms, status: myStatus } = useGetMyChatList()
+
+  if (type === 'all') {
+    if (status === 'pending') {
+      return (
+        <div className='flex items-center justify-center w-full h-full'>
+          <Loader />
+        </div>
+      )
+    }
+
+    if (status === 'error') {
+      return <ErrorMessage message='에러가 발생했습니다' />
+    }
+
+    if (chatRooms.length === 0) {
+      return <EmptyStateMessage message='아직 생성된 채팅방이 없습니다' />
+    }
+    return (
+      <div className='flex flex-col'>
+        {chatRooms.map((chat: ChatRoom) => (
+          <ChatBar key={chat.roomId} roomId={chat.roomId} name={chat.name} />
+        ))}
+      </div>
+    )
+  }
+
+  if (type === 'my') {
+    if (myStatus === 'pending') {
+      return (
+        <div className='flex items-center justify-center w-full h-full'>
+          <Loader />
+        </div>
+      )
+    }
+
+    if (myStatus === 'error') {
+      return <ErrorMessage message='로그인이 필요합니다' />
+    }
+
+    if (!myChatRooms || myChatRooms.length === 0) {
+      return <EmptyStateMessage message='참여중인 채팅방이 없습니다' />
+    }
+
+    return (
+      <div className='flex flex-col'>
+        {myChatRooms.map((chat: ChatRoom) => (
+          <ChatBar key={chat.roomId} roomId={chat.roomId} name={chat.name} />
+        ))}
+      </div>
+    )
+  }
+
+  return null
 }
 
 export default ChatList
