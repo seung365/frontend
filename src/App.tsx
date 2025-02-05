@@ -1,5 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import usePostToken from './apis/member/usePostToken.ts'
 import queryClient from './apis/queryClient'
 import { Routes } from './routes'
@@ -9,17 +9,15 @@ import './styles/global.css'
 const App = () => {
   const isLogin = useAuthStore((state) => state.isLogin)
   const postToken = usePostToken()
-
-  const getToken = useCallback(async () => {
-    await postToken()
-  }, [postToken])
-
   useEffect(() => {
-    if (isLogin) {
-      return
+    const checkAuth = async () => {
+      if (!isLogin) {
+        await postToken()
+      }
     }
-    getToken()
-  }, [isLogin, getToken])
+
+    checkAuth()
+  }, [isLogin, postToken])
 
   return (
     <QueryClientProvider client={queryClient}>
