@@ -50,7 +50,7 @@ const Header = () => {
   }
 
   if (profileStatus === 'success') {
-    setProfileImage(profileHeaderImage)
+    setProfileImage(profileHeaderImage.profileImage)
   }
 
   return (
