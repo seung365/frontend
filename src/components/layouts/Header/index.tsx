@@ -74,7 +74,7 @@ const Header = () => {
             <>
               <button
                 className='flex items-center justify-center w-12 h-12'
-                onClick={(prev) => setIsDropdownOpen(!prev)}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <div className='w-full h-full'>
                   <img
