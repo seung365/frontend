@@ -37,6 +37,8 @@ export interface BoardResponse {
   tag: tagType[]
   createdAt: string
   updatedAt: string
+  recommended: boolean
+  following: boolean
 }
 
 export type BoardCardType = {
@@ -49,7 +51,7 @@ export type BoardCardType = {
   memberId: string
   nickName: string
   profileImage: string
-  tag: { tagId: number; tagName: string }[]
+  tag?: { tagId: number; tagName: string }[]
   thumbnail?: string | null
   title: string
   upCnt: number
@@ -100,9 +102,9 @@ export type ProfileCardType = {
 export type ProfileRandomResponse = ProfileCardType[]
 
 export interface UserResume {
-  member_id: string
-  usefInfo: UserInfo
-  skills: Skills
+  memberId: string
+  information: information
+  skills: string[]
   experiences: Experience[]
   activities: Activity[]
   projects: Project[]
@@ -110,25 +112,54 @@ export interface UserResume {
   languages: Language[]
 }
 
-type UserInfo = {
+export interface ResumeResponse {
+  memberId: string
+  information: information
+  skills: ResponseSkills[]
+  experiences: Experience[]
+  activities: Activity[]
+  projects: Project[]
+  educations: Education[]
+  languages: Language[]
+}
+
+export type ResponseSkills = {
+  id: number
+  name: string
+}
+
+export type information = {
+  id: number
+  name: string
   position: string
   summary: string
   portfolio: string
+  employmentPeriod: TermType
 }
 
-type Skills = {
-  skills: string[]
-}
+export type SortingType = '최신순' | '인기순'
 
-type Experience = {
-  company_name: string
+export type TermType =
+  | '신입'
+  | '1~3년차'
+  | '4~6년차'
+  | '7~9년차'
+  | '10년차 이상'
+
+export type CheckTermType = TermType | '전체'
+
+export type Experience = {
+  id?: number
+  companyName: string
+  employmentType: string
   position: string
-  start_date: string
-  end_date: string
+  startDate: string
+  endDate: string
   description: string
 }
 
 export type Activity = {
+  id?: number
   activityName: string
   description: string
   organization: string
@@ -137,7 +168,8 @@ export type Activity = {
 }
 
 export type Project = {
-  name: string
+  id?: number
+  projectName: string
   description: string
   organization?: string
   startDate?: string
@@ -146,6 +178,7 @@ export type Project = {
 }
 
 export type Education = {
+  id?: number
   organization: string
   degree: string
   major: string
@@ -154,6 +187,19 @@ export type Education = {
   status: string
 }
 export type Language = {
+  id?: number
   name: string
   level: string
+}
+
+export type ProfileInfoResponse = {
+  id: string
+  nickname: string
+  memberId: string
+  about: string
+  boardCount: number
+  followerCount: number
+  followingCount: number
+  following: boolean
+  profileImage: string
 }

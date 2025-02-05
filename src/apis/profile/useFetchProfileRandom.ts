@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import { API_ROUTES } from '../../constant/api'
 import { ProfileRandomResponse } from '../../types'
 import { publicInstance } from '../fetchInstance'
 
 const fetchProfileRandom = async (): Promise<ProfileRandomResponse> => {
   const response = await publicInstance.get<ProfileRandomResponse>(
-    '/profile/random',
+    `/${API_ROUTES.PROFILE}/random`,
   )
   return response.data
 }

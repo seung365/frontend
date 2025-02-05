@@ -2,12 +2,13 @@ export const ProfileData = {
   memberId: 'memberId123',
   id: '3',
   nickname: 'min_s97',
-  profile_image: 'https://placehold.co/600x400',
+  profileImage: 'https://placehold.co/600x400',
   about:
     '안녕하세요 저는 프론트엔드 개발자 김민성 입니다. 현재 React를 통해 개발하고 있으며, 사용자에게 즐거운 경험을 제공할 수 있는 개발자로 성장하고 싶습니다.',
-  board_cnt: 12,
-  follower_cnt: 50,
-  following_cnt: 30,
+  boardCount: 12,
+  following: false,
+  followerCount: 50,
+  followingCount: 30,
   board_statistics: [
     { date: '2025-01-01', board_count: 3 },
     { date: '2025-01-02', board_count: 1 },
