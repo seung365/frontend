@@ -8,7 +8,7 @@ interface ChooseTagModalProps {
   onConfirm: () => void
 }
 
-const ChooseTagModal = ({
+const WarningModal = ({
   isOpen,
   onClose,
   setPendingCategory,
@@ -46,4 +46,4 @@ const ChooseTagModal = ({
   )
 }
 
-export default ChooseTagModal
+export default WarningModal

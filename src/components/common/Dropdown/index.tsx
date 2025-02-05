@@ -45,8 +45,11 @@ const Dropdown = ({
               value={value || ''}
               onChange={(e) => {
                 const newValue = Number(e.target.value)
-                fieldOnChange(newValue)
-                onChange?.(newValue)
+                if (onChange) {
+                  onChange(newValue)
+                } else {
+                  fieldOnChange(newValue)
+                }
               }}
               className='w-full p-2 border rounded-md'
             >
