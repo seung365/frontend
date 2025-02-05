@@ -4,7 +4,12 @@ Header 컴포넌트
 - 아직 특별한 기능은 넣지 않고 구조만 잡기위해 설계.
 */
 
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import useLogout from '../../../apis/member/useLogout'
+import useGetProfileImage from '../../../apis/profile/useGetProfileImage'
+import { useAuthStore } from '../../../store/AuthStore'
+import { useProfileImageStore } from '../../../store/ProfileImageStore'
 
 const navList = [
   { path: '/board', name: '커뮤니티' },
@@ -13,11 +18,36 @@ const navList = [
 ]
 
 const Header = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
+
   const navActiveClassName = ({ isActive }: { isActive: boolean }) => {
     if (isActive) {
       return 'text-main-color font-bold'
     }
   }
+
+  const isLogin = useAuthStore.getState().isLogin
+  const setLogout = useAuthStore.getState().setLogout
+  const profileImageData = useProfileImageStore.getState().profileImage
+  const setProfileImage = useProfileImageStore.getState().setProfileImage
+
+  const { data: profileHeaderImage } = useGetProfileImage()
+  const { mutate: postLogout, status } = useLogout()
+
+  useEffect(() => {
+    if (isLogin && profileHeaderImage) {
+      setProfileImage(profileHeaderImage)
+    }
+  }, [isLogin, profileHeaderImage, setProfileImage])
+
+  const handleLogout = () => {
+    postLogout()
+  }
+
+  if (status === 'success') {
+    setLogout()
+  }
+
   return (
     <header className='fixed top-0 left-0 z-50 bg-white w-full h-[60px] flex justify-center border-b'>
       <div className='w-full max-w-[1060px] flex justify-between items-center'>
@@ -33,13 +63,38 @@ const Header = () => {
             </li>
           ))}
         </ul>
-        <button className='flex justify-center w-8 h-8'>
-          <img
-            src='https://placehold.co/600x400/png'
-            alt='프로필이미지'
-            className='w-8 h-8 rounded-full'
-          />
-        </button>
+        <div className='relative flex items-center justify-center w-12'>
+          {isLogin ? (
+            <>
+              <button
+                className='flex items-center justify-center w-8 h-8'
+                onClick={(prev) => setIsDropdownOpen(!prev)}
+              >
+                <img
+                  src={profileImageData}
+                  alt='프로필이미지'
+                  className='object-cover w-full h-full rounded-full'
+                />
+              </button>
+              {isDropdownOpen && (
+                <div className='absolute right-0 w-48 mt-2 bg-white rounded-lg shadow-lg'>
+                  <ul className='py-2'>
+                    <li
+                      className='px-4 py-2 text-sm text-red-500 cursor-pointer hover:bg-red-100'
+                      onClick={handleLogout}
+                    >
+                      로그아웃
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </>
+          ) : (
+            <Link className='text-main-color text-semibold' to='/signin'>
+              로그인
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   )
