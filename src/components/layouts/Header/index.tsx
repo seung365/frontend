@@ -47,6 +47,7 @@ const Header = () => {
   if (status === 'success') {
     setLogout()
   }
+  console.log(profileImageData)
 
   return (
     <header className='fixed top-0 left-0 z-50 bg-white w-full h-[60px] flex justify-center border-b'>
@@ -70,11 +71,13 @@ const Header = () => {
                 className='flex items-center justify-center w-12 h-12'
                 onClick={(prev) => setIsDropdownOpen(!prev)}
               >
-                <img
-                  src={profileImageData}
-                  alt='프로필이미지'
-                  className='object-cover w-full h-full rounded-full'
-                />
+                <div className='w-full h-full'>
+                  <img
+                    src={profileImageData}
+                    alt='프로필이미지'
+                    className='object-cover w-full h-full rounded-full'
+                  />
+                </div>
               </button>
               {isDropdownOpen && (
                 <div className='absolute right-0 w-48 mt-2 bg-white rounded-lg shadow-lg'>
