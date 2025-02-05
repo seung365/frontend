@@ -1,32 +1,8 @@
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { API_ROUTES } from '../../constant/api'
+import { PageResponse, Profile } from '../../types/index'
 import { publicInstance } from '../fetchInstance'
-
-interface Profile {
-  profileId: string
-  nickname: string
-  about: string
-  profileImage: string
-  employmentPeriod: string
-  skills: string[]
-}
-
-interface PageResponse {
-  content: Profile[]
-  totalElements: number
-  totalPages: number
-  size: number
-  number: number
-  first: boolean
-  last: boolean
-  numberOfElements: number
-  empty: boolean
-  pageable: {
-    offset: number
-    pageSize: number
-    pageNumber: number
-  }
-}
 
 const userkeys = {
   all: ['users'] as const,
@@ -54,6 +30,8 @@ const getHubList = async ({
 }
 
 const useGetHubList = (queryString: string) => {
+  const queryClient = useQueryClient()
+
   const { data, hasNextPage, status, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: [...userkeys.lists(), queryString],
@@ -67,6 +45,12 @@ const useGetHubList = (queryString: string) => {
       },
       initialPageParam: 0,
     })
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: [...userkeys.lists()],
+    })
+  }, [queryString, queryClient])
 
   const contents =
     data?.pages.reduce<Profile[]>((acc, page) => {

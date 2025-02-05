@@ -18,6 +18,7 @@ import {
   TitleBar,
   WriterBar,
 } from '../../components/index'
+import { useAuthStore } from '../../store/AuthStore.ts'
 import formatDate from '../../utils/formatDate'
 
 const BoardDetailContent = ({ id }: { id: string }) => {
@@ -26,7 +27,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
   }
   const navigate = useNavigate()
   const [comment, setComment] = useState<string>('')
-  const memberId = localStorage.getItem('memberId')
+  const { memberId } = useAuthStore()
 
   const { data } = useGetBoardDetail(id)
   const { mutate, status } = useDeleteBoard()
@@ -34,7 +35,6 @@ const BoardDetailContent = ({ id }: { id: string }) => {
   const { mutate: followMutate } = useProfileFollow(data.memberId, id)
   const { mutate: unfollowMutate } = useDeleteFollow(data.memberId, id)
   const { mutate: postRecommendMutate } = usePostRecommendation()
-  console.log(data.memberId)
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -46,7 +46,6 @@ const BoardDetailContent = ({ id }: { id: string }) => {
           parentCommentId: null,
         }
         commentMutate(commentData)
-        console.log(comment)
         setComment('')
       }
     },
