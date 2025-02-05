@@ -3,15 +3,16 @@ import { useForm } from 'react-hook-form'
 import usePostBoard from '../../apis/board/usePostBoard.ts'
 import {
   Button,
+  ChooseTagModal,
   ContentInput,
   Dropdown,
   Loader,
-  Modal,
   Tag,
   TitleInput,
+  WarningModal,
 } from '../../components'
 import { contentTemplates } from '../../constant'
-import { categories, tagName } from '../../mocks/data'
+import { categories, tagName } from '../../mocks/data' // tagName 추가
 import { FormValues, tagType } from '../../types'
 
 const BoardWrite = () => {
@@ -23,9 +24,14 @@ const BoardWrite = () => {
     watch,
     formState: { errors },
   } = useForm<FormValues>()
-  const [open, setOpen] = useState(false)
+
+  const [tagModalOpen, setTagModalOpen] = useState(false)
+  const [warningModalOpen, setWarningModalOpen] = useState(false)
+  const [pendingCategory, setPendingCategory] = useState<number | null>(null)
+
   const selectedTags = watch('tags', [])
   const selectedCategory = watch('categoryId')
+  const content = watch('content')
 
   const { mutate, status } = usePostBoard()
 
@@ -34,6 +40,29 @@ const BoardWrite = () => {
       setValue('content', contentTemplates[selectedCategory])
     }
   }, [selectedCategory, setValue])
+
+  const handleCategoryChange = (newCategory: number) => {
+    if (content && content !== contentTemplates[selectedCategory]) {
+      setPendingCategory(newCategory)
+      setWarningModalOpen(true)
+    } else {
+      setValue('categoryId', newCategory)
+      if (contentTemplates[newCategory]) {
+        setValue('content', contentTemplates[newCategory])
+      }
+    }
+  }
+
+  const confirmCategoryChange = () => {
+    if (pendingCategory) {
+      setValue('categoryId', pendingCategory)
+      if (contentTemplates[pendingCategory]) {
+        setValue('content', contentTemplates[pendingCategory])
+      }
+      setWarningModalOpen(false)
+      setPendingCategory(null)
+    }
+  }
 
   const handleTagSelect = (tag: tagType) => {
     const currentTags = selectedTags || []
@@ -76,37 +105,31 @@ const BoardWrite = () => {
             control={control}
             name='categoryId'
             rules={{ required: '카테고리를 선택해주세요' }}
+            onChange={handleCategoryChange}
           />
           <Button
             children='태그 선택'
-            onClick={() => setOpen(true)}
+            onClick={() => setTagModalOpen(true)}
             type='button'
           />
         </div>
-        <Modal
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          content={
-            <div className='p-5'>
-              <h1>태그 선택</h1>
-              <div className='flex flex-wrap gap-2 mt-3'>
-                {tagName.map((tag) => (
-                  <Button
-                    children={tag.tagName}
-                    key={tag.tagId}
-                    type='button'
-                    onClick={() => handleTagSelect(tag)}
-                    theme={
-                      selectedTags.some((t) => t.tagId === tag.tagId)
-                        ? 'dark'
-                        : 'light'
-                    }
-                  />
-                ))}
-              </div>
-            </div>
-          }
+
+        <ChooseTagModal
+          isOpen={tagModalOpen}
+          onClose={() => setTagModalOpen(false)}
+          tagName={tagName}
+          selectedTags={selectedTags}
+          onTagSelect={handleTagSelect}
         />
+
+        <WarningModal
+          isOpen={warningModalOpen}
+          onClose={() => setWarningModalOpen(false)}
+          pendingCategory={pendingCategory}
+          setPendingCategory={setPendingCategory}
+          onConfirm={confirmCategoryChange}
+        />
+
         <div className='flex flex-wrap gap-2 mt-2'>
           {selectedTags.map((tag) => (
             <Tag
@@ -119,12 +142,14 @@ const BoardWrite = () => {
           ))}
         </div>
       </div>
+
       <TitleInput
         register={register}
         setValue={setValue}
         rules={{ required: '제목을 입력해주세요' }}
         error={errors.title}
       />
+
       <div className='mt-3'>
         <ContentInput
           control={control}
@@ -132,6 +157,7 @@ const BoardWrite = () => {
           rules={{ required: '본문을 입력해주세요' }}
         />
       </div>
+
       <div className='flex justify-end mt-5'>
         <Button type='submit' children='게시하기' />
       </div>
