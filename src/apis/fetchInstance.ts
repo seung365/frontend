@@ -74,4 +74,4 @@ const publicInstance = axios.create({
   withCredentials: true,
 })
 
-export { authInstance, publicInstance }
+export { authInstance, authLogoutInstance, publicInstance }
