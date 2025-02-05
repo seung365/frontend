@@ -5,6 +5,7 @@ import usePatchComment from '../../../../apis/comment/usePatchComment'
 import usePostComment from '../../../../apis/comment/usePostComment'
 import PlusSquareIcon from '../../../../assets/icons/plus-square.svg?react'
 import profile from '../../../../assets/icons/profile.svg'
+import { useAuthStore } from '../../../../store/AuthStore'
 import { Comment } from '../../../../types'
 import formatDate from '../../../../utils/formatDate'
 import Button from '../../../common/Button'
@@ -38,7 +39,7 @@ const CommentBar = ({
   const [nestedReplyContent, setNestedReplyContent] = useState('')
   const [isEditting, setIsEditting] = useState(false)
   const [editedComment, setEditedComment] = useState<string>(comment)
-  const memberId = localStorage.getItem('memberId')
+  const { memberId } = useAuthStore()
 
   const { mutate: postComment } = usePostComment(boardId, commentId)
   const { mutate: patchComment } = usePatchComment(boardId, commentId)
