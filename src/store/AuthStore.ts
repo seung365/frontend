@@ -5,6 +5,7 @@ type AuthState = {
   accessToken: string | null
   memberId: string | null
   setLogin: (token: string, memberId: string) => void
+  setLogout: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -14,4 +15,5 @@ export const useAuthStore = create<AuthState>((set) => ({
   setLogin: (accessToken, memberId) => {
     set({ isLogin: true, accessToken, memberId })
   },
+  setLogout: () => set({ isLogin: false, accessToken: null, memberId: null }),
 }))
