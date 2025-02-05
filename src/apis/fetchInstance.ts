@@ -11,6 +11,23 @@ const authInstance = axios.create({
   withCredentials: true,
 })
 
+const authLogoutInstance = axios.create({
+  baseURL: API_CONFIG.LOGOUT_URL,
+  timeout: 3000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+})
+
+authLogoutInstance.interceptors.request.use((config) => {
+  const accessToken = useAuthStore.getState().accessToken
+  if (accessToken) {
+    config.headers.access = `${accessToken}`
+  }
+  return config
+})
+
 const waitForToken = async (retries = 3, delay = 500) => {
   for (let i = 0; i < retries; i++) {
     const token = useAuthStore.getState().accessToken
