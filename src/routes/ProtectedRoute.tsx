@@ -1,17 +1,18 @@
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
+import { useAuthStore } from '../store/AuthStore'
 import { RouterPath } from './path'
 
 export const ProtectedRoute = () => {
-  const accessToken = localStorage.getItem('accessToken')
+  const isLogin = useAuthStore((state) => state.isLogin)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!isLogin) {
       navigate(`/${RouterPath.signin}`, { replace: true })
     }
-  }, [accessToken, navigate])
+  }, [isLogin, navigate])
 
-  return accessToken ? <Outlet /> : null
+  return isLogin ? <Outlet /> : null
 }
