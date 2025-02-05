@@ -15,7 +15,6 @@ export const RouterPath = {
 
 export const PROTECTED_ROUTES = [
   '/signin',
-  '/',
   '/hub',
   '/board',
   '/board/community',
