@@ -25,7 +25,7 @@ const BoardCard = ({
 }: BoardCardType) => {
   return (
     <Link to={`/${RouterPath.board}/${RouterPath.detail}/${id}`}>
-      <section className='w-auto min-h-[450px] rounded-xl border-[1px] flex flex-col'>
+      <section className='w-auto h-[480px] rounded-xl border-[1px] flex flex-col'>
         <section className='flex-grow-[7] flex-shrink-0 h-4/5 flex flex-col'>
           {thumbnail && (
             <div className='w-full h-3/5'>
@@ -42,9 +42,7 @@ const BoardCard = ({
               {categoryName}
             </span>
             <span className='text-main-black line-clamp-1'>{title}</span>
-            <p className='text-[14px] text-dark-gray line-clamp-3 min-h-16'>
-              {content}
-            </p>
+            <p className='text-[14px] text-dark-gray line-clamp-4'>{content}</p>
           </div>
         </section>
         <section className='flex-grow-[3] flex-shrink-0 p-2 flex flex-col justify-end gap-1'>
