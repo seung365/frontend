@@ -26,10 +26,10 @@ const Header = () => {
     }
   }
 
-  const isLogin = useAuthStore.getState().isLogin
-  const setLogout = useAuthStore.getState().setLogout
-  const profileImageData = useProfileImageStore.getState().profileImage
-  const setProfileImage = useProfileImageStore.getState().setProfileImage
+  const isLogin = useAuthStore((state) => state.isLogin)
+  const setLogout = useAuthStore((state) => state.setLogout)
+  const profileImageData = useProfileImageStore((state) => state.profileImage)
+  const setProfileImage = useProfileImageStore((state) => state.setProfileImage)
 
   const { data: profileHeaderImage, status: profileStatus } =
     useGetProfileImage()
