@@ -108,6 +108,7 @@ const Hub = () => {
               )}
               {isFetchingNextPage && <Loader size='s' />}
             </div>
+            <div ref={ref} />
           </Grid>
           <Filter
             skills={skills}
@@ -117,7 +118,6 @@ const Hub = () => {
             sorting={sorting}
             term={term}
           />
-          <div ref={ref} />
         </div>
       </div>
     </div>
