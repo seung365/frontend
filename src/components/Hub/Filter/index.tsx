@@ -1,14 +1,14 @@
 import useGetSkill from '../../../apis/resume/skill/useGetSkill'
 import { CAREER_TERM } from '../../../constant'
 import useSkillSearch from '../../../hooks/useSkillSearch'
-import { CheckTermType, SortingType } from '../../../types'
+import { CheckTermType } from '../../../types'
 import { Button } from '../../index'
 
 interface FilterProps {
   skills: string[]
-  sorting: SortingType
+  sorting: string
   term: CheckTermType
-  onSorting: (newSorting: SortingType) => void
+  onSorting: (newSorting: string) => void
   onSkills: (newSkill: string[]) => void
   onTerm: (newTerm: CheckTermType) => void
 }
@@ -50,7 +50,7 @@ const Filter = ({
           <span className='text-base font-semibold'>정렬</span>
           <select
             className='w-full h-10 border rounded-lg border-dark-gray'
-            onChange={(e) => onSorting(e.target.value as SortingType)}
+            onChange={(e) => onSorting(e.target.value)}
             value={sorting}
           >
             <option value='latest'>최신순</option>
