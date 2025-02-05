@@ -5,7 +5,6 @@ import queryClient from './apis/queryClient'
 import { MobileView } from './components/index.ts'
 import useCheckMobileView from './hooks/useCheckMobileView.ts'
 import { Routes } from './routes'
-import { PROTECTED_ROUTES } from './routes/path.ts'
 import { useAuthStore } from './store/AuthStore.ts'
 import './styles/global.css'
 
@@ -17,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (!isLogin && !PROTECTED_ROUTES.includes(pathname)) {
+      if (!isLogin) {
         await postToken()
       }
     }
