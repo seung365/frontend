@@ -29,14 +29,19 @@ const ChatModal = () => {
 
   const modalContent = (
     <div className='fixed z-40 flex items-center right-10 bottom-10'>
-      <div className='absolute bottom-0 mr-4 bg-gray-50 rounded-lg shadow-lg right-12 w-[400px] h-[600px]'>
-        <div className='absolute right-[-8px] bottom-3 w-4 h-4 transform rotate-45' />
-        <div className='relative z-10 flex flex-col h-full p-4 rounded-lg bg-gray-50'>
+      <div className='absolute bottom-0 mr-4 bg-slate-200 backdrop-blur-sm rounded-lg shadow-xl right-12 w-[400px] h-[600px] border border-gray-200'>
+        <div className='absolute right-[-8px] bottom-3 w-4 h-4 bg-slate-50 transform rotate-45 border-r border-b border-gray-200' />
+        <div className='relative z-10 flex flex-col h-full p-4 rounded-lg bg-slate-50/95 backdrop-blur-sm'>
           <div className='flex items-center justify-between'>
-            <h3 className='font-semibold'>Messages</h3>
-            <button onClick={() => setIsOpen(false)}>×</button>
+            <h3 className='font-semibold text-gray-800'>Messages</h3>
+            <button
+              onClick={() => setIsOpen(false)}
+              className='p-2 text-gray-500 transition-colors hover:text-gray-700'
+            >
+              ×
+            </button>
           </div>
-          <div className='flex-1 mt-4 overflow-hidden'>
+          <div className='flex-1 overflow-hidden'>
             {selectedChatId ? (
               <ChatRoom />
             ) : (

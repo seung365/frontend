@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import usePostChat from '../../../apis/chat/usePostChat'
+import PlusIcon from '../../../assets/icons/plus-button.svg?react'
 import { useChatStore } from '../../../store/ChatStore'
 
 const ChatTab = () => {
@@ -24,7 +25,7 @@ const ChatTab = () => {
           className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors duration-200
             ${
               selectedChatTab === 'all'
-                ? 'border-blue-500 text-blue-600'
+                ? 'border-main-color text-main-color'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
         >
@@ -35,19 +36,21 @@ const ChatTab = () => {
           className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors duration-200
             ${
               selectedChatTab === 'my'
-                ? 'border-blue-500 text-blue-600'
+                ? 'border-main-color text-main-color'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
         >
           나의 채팅
         </button>
         {!isCreating && (
-          <button
-            className='flex items-center justify-center w-8 h-8 ml-2 text-white transition-colors bg-blue-500 rounded-full hover:bg-blue-600'
-            onClick={() => setIsCreating(true)}
-          >
-            <span className='text-xl'>+</span>
-          </button>
+          <div className='flex items-center px-2'>
+            <button
+              className='flex items-center justify-center w-8 h-8 text-white transition-colors rounded-full bg-main-color hover:bg-blue-600'
+              onClick={() => setIsCreating(true)}
+            >
+              <PlusIcon className='w-4 h-4' />
+            </button>
+          </div>
         )}
       </div>
       {isCreating && (
@@ -63,21 +66,23 @@ const ChatTab = () => {
               onKeyDown={(e) => e.key === 'Enter' && handleCreateChat()}
               autoFocus
             />
-            <button
-              className='p-2 text-gray-500 hover:text-gray-700'
-              onClick={() => {
-                setIsCreating(false)
-                setChatName('')
-              }}
-            >
-              취소
-            </button>
-            <button
-              className='px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600'
-              onClick={handleCreateChat}
-            >
-              만들기
-            </button>
+            <div className='flex justify-end gap-2 mt-2'>
+              <button
+                className='p-2 text-gray-500 hover:text-gray-700'
+                onClick={() => {
+                  setIsCreating(false)
+                  setChatName('')
+                }}
+              >
+                취소
+              </button>
+              <button
+                className='p-2 text-white rounded bg-main-color hover:bg-[#6242d9]'
+                onClick={handleCreateChat}
+              >
+                만들기
+              </button>
+            </div>
           </div>
         </div>
       )}
