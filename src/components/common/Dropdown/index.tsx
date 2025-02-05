@@ -8,6 +8,7 @@ interface SelectDropdownProps {
   control: Control<FormValues>
   name: 'categoryId' | 'title' | 'content'
   rules?: object
+  onChange?: (value: number) => void
 }
 /**
  * 선택 드롭다운 컴포넌트
@@ -17,7 +18,8 @@ interface SelectDropdownProps {
  * - options: 드롭다운에서 선택 가능한 옵션 목록
  * - control: react-hook-form의 control 객체
  * - name: 폼 값에서 해당 드롭다운이 관리할 필드명
- *
+ * - rules: 폼 유효성 검사 규칙
+ * - onChange: 값이 변경될 때 호출되는 콜백 함수
  * */
 
 const Dropdown = ({
@@ -26,6 +28,7 @@ const Dropdown = ({
   control,
   name,
   rules,
+  onChange,
 }: SelectDropdownProps) => {
   return (
     <div className='w-full max-w-xs'>
@@ -33,11 +36,18 @@ const Dropdown = ({
         name={name}
         control={control}
         rules={rules}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
+        render={({
+          field: { onChange: fieldOnChange, value },
+          fieldState: { error },
+        }) => (
           <div>
             <select
               value={value || ''}
-              onChange={(e) => onChange(Number(e.target.value))}
+              onChange={(e) => {
+                const newValue = Number(e.target.value)
+                fieldOnChange(newValue)
+                onChange?.(newValue)
+              }}
               className='w-full p-2 border rounded-md'
             >
               <option value='' disabled>
