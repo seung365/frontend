@@ -20,7 +20,6 @@ const postBoard = async (formData: FormValues): Promise<BoardResponse> => {
   }
 
   const response = await authInstance.post(`/${API_ROUTES.BOARDS}`, requestData)
-  console.log('게시글 작성 응답:', response)
   return response.data
 }
 

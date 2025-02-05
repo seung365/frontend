@@ -8,7 +8,6 @@ const putEducation = async (educations: Education[]) => {
     `/${API_ROUTES.RESUME}/educations`,
     educations,
   )
-  console.log(response.data)
   return response.data
 }
 

@@ -13,7 +13,6 @@ import ExperienceForm from '../ExperienceForm'
 
 interface ExperienceResumeProps {
   register: UseFormRegister<UserResume>
-  //onSectionSubmit: (data: Experience[]) => void
   watchedData: Experience[]
   control: Control<UserResume>
   errors: FieldErrors<UserResume>
@@ -22,7 +21,6 @@ interface ExperienceResumeProps {
 
 const ExperienceResume = ({
   register,
-  //onSectionSubmit,
   watchedData,
   control,
   errors,
@@ -45,7 +43,6 @@ const ExperienceResume = ({
       return
     }
     putExperience(watchedData)
-    // onSectionSubmit(watchedData)
     setIsEdit(!isEdit)
   }
 
