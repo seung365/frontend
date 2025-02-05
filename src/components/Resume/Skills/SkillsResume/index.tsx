@@ -8,24 +8,15 @@ import SkillsForm from '../SkillsForm'
 interface SkillStackProps {
   register: UseFormRegister<UserResume>
   defaultValues: string[]
-  //onSectionSubmit: (data: string[]) => void
 }
 
-const SkillsResume = ({
-  register,
-  defaultValues,
-}: //onSectionSubmit,
-SkillStackProps) => {
+const SkillsResume = ({ register, defaultValues }: SkillStackProps) => {
   const [isEdit, setIsEdit] = useState(false)
   const [skills, setSkills] = useState<string[]>([])
 
-  //const { mutate: postSkill } = usePostSkill()
   const { mutate: patchSkill } = usePatchSkill()
 
-  //const isDataFilled = Boolean(skills.length > 0)
-
   useEffect(() => {
-    // console.log('defaultValues changed:', defaultValues)
     setSkills(defaultValues)
   }, [defaultValues])
 
@@ -42,8 +33,6 @@ SkillStackProps) => {
 
   const handleSubmit = () => {
     patchSkill(skills)
-
-    // onSectionSubmit(skills)
     setIsEdit(false)
   }
   return (

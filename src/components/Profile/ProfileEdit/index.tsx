@@ -33,7 +33,7 @@ const ProfileEdit = ({
   const [previewImg, setPreviewImg] = useState<string>(profileImg)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  const { mutate: patchProfile, status } = usePatchProfileInfo()
+  const { mutate: patchProfile } = usePatchProfileInfo()
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files ? e.target.files[0] : null
@@ -56,7 +56,6 @@ const ProfileEdit = ({
     patchProfile(data)
     onCloseModal()
   }
-  console.log(status)
   return (
     <form
       className='flex flex-col gap-4'

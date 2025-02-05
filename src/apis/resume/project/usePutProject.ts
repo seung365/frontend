@@ -8,7 +8,6 @@ const putProject = async (projects: Project[]) => {
     `/${API_ROUTES.RESUME}/projects`,
     projects,
   )
-  console.log(response.data)
   return response.data
 }
 

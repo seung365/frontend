@@ -23,7 +23,6 @@ import resumeTransform from '../../utils/resumeTransform'
 const Resume = () => {
   const {
     register,
-    //handleSubmit,
     watch,
     control,
     trigger,
@@ -127,22 +126,6 @@ const Resume = () => {
       </div>
     )
   }
-
-  // const onClickSubmit = (data: UserResume) => {
-  //   console.log(data)
-  // }
-
-  // const handleUserInfoSubmit = (data: information) => {
-  //   console.log(data)
-  // }
-
-  // const handleSkillsSubmit = (data: string[]) => {
-  //   console.log(data)
-  // }
-
-  // const handleExperienceSubmit = (data: Experience[]) => {
-  //   console.log(data)
-  // }
 
   const handleProjectsSubmit = (data: Project[]) => {
     putProjects(data)

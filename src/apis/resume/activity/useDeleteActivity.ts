@@ -3,10 +3,7 @@ import { API_ROUTES } from '../../../constant/api'
 import { authInstance } from '../../fetchInstance'
 
 const deleteActivity = async ({ id }: { id: number }) => {
-  const response = await authInstance.delete(
-    `/${API_ROUTES.RESUME}/activities/${id}`,
-  )
-  console.log(response)
+  await authInstance.delete(`/${API_ROUTES.RESUME}/activities/${id}`)
 }
 
 const useDeleteActivity = () => {

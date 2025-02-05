@@ -3,10 +3,7 @@ import { API_ROUTES } from '../../../constant/api'
 import { authInstance } from '../../fetchInstance'
 
 const deleteProject = async ({ id }: { id: number }) => {
-  const response = await authInstance.delete(
-    `/${API_ROUTES.RESUME}/projects/${id}`,
-  )
-  console.log(response)
+  await authInstance.delete(`/${API_ROUTES.RESUME}/projects/${id}`)
 }
 
 const useDeleteProject = () => {

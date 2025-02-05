@@ -49,7 +49,6 @@ const ContentInput = ({
       const input = document.createElement('input')
       input.type = 'file'
       input.accept = 'image/*'
-      console.log('input:', input)
 
       input.onchange = async (e) => {
         const file = (e.target as HTMLInputElement).files?.[0]
