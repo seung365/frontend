@@ -41,7 +41,7 @@ const patchProfileInfo = async (
 
 const usePatchProfileInfo = () => {
   const queryClient = useQueryClient()
-  const setProfileImage = useProfileImageStore.getState().setProfileImage
+  const setProfileImage = useProfileImageStore((state) => state.setProfileImage)
 
   const { mutate, status } = useMutation({
     mutationFn: patchProfileInfo,
@@ -49,6 +49,7 @@ const usePatchProfileInfo = () => {
       queryClient.invalidateQueries({
         queryKey: ['MyProfileInfo'],
       })
+      console.log(data)
       setProfileImage(data.profileImage)
     },
     onError: (error) => {
