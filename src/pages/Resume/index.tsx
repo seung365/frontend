@@ -146,10 +146,7 @@ const Resume = () => {
   return (
     <section>
       <h1 className='mt-10 text-size-title text-main-black'>💁🏻‍♂️ 이력서 작성</h1>
-      <form
-        //onSubmit={handleSubmit(onClickSubmit)}
-        className='flex flex-col w-full h-full gap-12 py-10'
-      >
+      <form className='flex flex-col w-full h-full gap-12 py-10'>
         {/*인적사항 */}
         <ResumeContainer
           title='인적 사항'
@@ -157,7 +154,6 @@ const Resume = () => {
         >
           <UserInfoResume
             register={register}
-            // onSectionSubmit={handleUserInfoSubmit}
             watchedData={userInfoData}
             errors={errors}
           />
@@ -168,18 +164,13 @@ const Resume = () => {
           title='기술 스택'
           description='✏️ 기술스택을 설정해주세요!'
         >
-          <SkillsResume
-            register={register}
-            defaultValues={watch('skills')}
-            // onSectionSubmit={handleSkillsSubmit}
-          />
+          <SkillsResume register={register} defaultValues={watch('skills')} />
         </ResumeContainer>
 
         {/*경력 */}
         <ResumeContainer title='경력' description='✏️ 경력사항을 입력해주세요!'>
           <ExperienceResume
             register={register}
-            //  onSectionSubmit={handleExperienceSubmit}
             watchedData={exprienceData}
             control={control}
             errors={errors}

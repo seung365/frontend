@@ -12,7 +12,7 @@ const deleteComment = async ({
 }) => {
   await authInstance.delete(`/${API_ROUTES.COMMENTS}/${commentId}`, {
     data: {
-      boardId: Number(boardId), // 명시적으로 숫자로 변환
+      boardId: Number(boardId),
     },
   })
 }

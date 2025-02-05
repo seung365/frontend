@@ -12,7 +12,6 @@ const useDeleteProject = () => {
   const { mutate } = useMutation({
     mutationFn: ({ id }: { id: number }) => deleteProject({ id }),
     onSuccess: () => {
-      // 프로젝트 삭제 후 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ['resume'] })
     },
     onError: (error) => {
