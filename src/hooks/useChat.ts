@@ -19,8 +19,6 @@ const useChat = (roomId: string) => {
   const token = localStorage.getItem('accessToken')
 
   useEffect(() => {
-    console.log('token:', token)
-
     if (!token || !roomId) {
       console.log('token 또는 roomId가 없습니다')
       setError(true)
@@ -35,7 +33,6 @@ const useChat = (roomId: string) => {
     const client = new Client({
       brokerURL: 'ws://34.64.72.48:8080/ws-stomp',
       connectHeaders: { access: token },
-      debug: (str) => console.log(str),
       reconnectDelay: 5000,
       onConnect: () => {
         console.log('✅ STOMP 연결 완료')
