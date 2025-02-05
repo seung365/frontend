@@ -41,6 +41,20 @@ const Header = () => {
     }
   }, [isLogin, profileHeaderImage, setProfileImage])
 
+  useEffect(() => {
+    const closeDropdown = (e: MouseEvent) => {
+      if (
+        isDropdownOpen &&
+        !(e.target as Element).closest('.dropdown-container')
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', closeDropdown)
+    return () => document.removeEventListener('mousedown', closeDropdown)
+  }, [isDropdownOpen])
+
   const handleLogout = () => {
     postLogout()
   }
@@ -69,7 +83,7 @@ const Header = () => {
             </li>
           ))}
         </ul>
-        <div className='relative flex items-center justify-center w-12'>
+        <div className='relative flex items-center justify-center w-12 dropdown-container'>
           {isLogin ? (
             <>
               <button
