@@ -17,7 +17,7 @@ const usePostRecommendation = () => {
     mutationFn: postRecommendation,
     onSuccess: (_, boardId) => {
       queryClient.setQueryData(
-        ['board', boardId],
+        ['board', String(boardId)],
         (oldData: BoardResponse) => ({
           ...oldData,
           upCnt: oldData.recommended ? oldData.upCnt - 1 : oldData.upCnt + 1,
