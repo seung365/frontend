@@ -48,7 +48,6 @@ const usePatchProfileInfo = () => {
       queryClient.invalidateQueries({
         queryKey: ['MyProfileInfo'],
       })
-      console.log(data)
       setProfileImage(data.profileImage)
     },
     onError: (error) => {

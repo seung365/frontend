@@ -31,8 +31,7 @@ const Header = () => {
   const profileImageData = useProfileImageStore((state) => state.profileImage)
   const setProfileImage = useProfileImageStore((state) => state.setProfileImage)
 
-  const { data: profileHeaderImage, status: profileStatus } =
-    useGetProfileImage()
+  const { data: profileHeaderImage } = useGetProfileImage()
   const { mutate: postLogout, status } = useLogout()
 
   useEffect(() => {
@@ -66,8 +65,7 @@ const Header = () => {
   // if (profileStatus === 'success') {
   //   setProfileImage(profileHeaderImage.profileImage)
   // }
-  console.log(profileStatus)
-  console.log(profileImageData)
+
   return (
     <header className='fixed top-0 left-0 z-50 bg-white w-full h-[60px] flex justify-center border-b'>
       <div className='w-full max-w-[1060px] flex justify-between items-center'>
