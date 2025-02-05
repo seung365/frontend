@@ -12,6 +12,23 @@ const authInstance = axios.create({
   withCredentials: true,
 })
 
+const authLogoutInstance = axios.create({
+  baseURL: API_CONFIG.LOGOUT_URL,
+  timeout: 3000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+})
+
+authLogoutInstance.interceptors.request.use((config) => {
+  const accessToken = useAuthStore.getState().accessToken
+  if (accessToken) {
+    config.headers.access = `${accessToken}`
+  }
+  return config
+})
+
 authInstance.interceptors.request.use((config) => {
   const accessToken = useAuthStore.getState().accessToken
   if (accessToken) {
@@ -44,4 +61,4 @@ const publicInstance = axios.create({
   withCredentials: true,
 })
 
-export { authInstance, publicInstance }
+export { authInstance, authLogoutInstance, publicInstance }
