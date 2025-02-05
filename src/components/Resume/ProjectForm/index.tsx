@@ -14,14 +14,14 @@ const ProjectForm = ({ register, index, onRemove }: ProjectFormProps) => {
       {/* 프로젝트명 */}
       <div>
         <label
-          htmlFor={`projects.${index}.name`}
+          htmlFor={`projects.${index}.projectName`}
           className='block text-sm font-medium'
         >
           프로젝트명 <span className='text-red-500'>*</span>
         </label>
         <input
-          id={`projects.${index}.name`}
-          {...register(`projects.${index}.name`, { required: true })}
+          id={`projects.${index}.projectName`}
+          {...register(`projects.${index}.projectName`, { required: true })}
           className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
           placeholder='프로젝트명을 입력하세요'
         />
@@ -74,12 +74,14 @@ const ProjectForm = ({ register, index, onRemove }: ProjectFormProps) => {
           <input
             id={`projects.${index}.startDate`}
             type='date'
-            {...register(`projects.${index}.startDate`)}
+            {...register(`projects.${index}.startDate`, {
+              setValueAs: (value) =>
+                value ? new Date(value).toISOString() : undefined,
+            })}
             className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color'
           />
         </div>
 
-        {/* 종료일 */}
         <div className='w-1/2'>
           <label
             htmlFor={`projects.${index}.endDate`}
@@ -90,7 +92,10 @@ const ProjectForm = ({ register, index, onRemove }: ProjectFormProps) => {
           <input
             id={`projects.${index}.endDate`}
             type='date'
-            {...register(`projects.${index}.endDate`)}
+            {...register(`projects.${index}.endDate`, {
+              setValueAs: (value) =>
+                value ? new Date(value).toISOString() : undefined,
+            })}
             className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color'
           />
         </div>

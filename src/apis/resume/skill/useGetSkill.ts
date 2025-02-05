@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { API_ROUTES } from '../../../constant/api'
+import { ResponseSkills } from '../../../types'
 import { authInstance } from '../../fetchInstance'
 
 const getSkill = async () => {
@@ -9,8 +10,9 @@ const getSkill = async () => {
 
 const useGetSkill = () => {
   const { data } = useQuery({
-    queryKey: ['skill'],
+    queryKey: ['skills'],
     queryFn: getSkill,
+    select: (data) => data.map((skill: ResponseSkills) => skill.name) || [],
   })
   return { data }
 }

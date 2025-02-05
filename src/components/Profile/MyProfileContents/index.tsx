@@ -7,7 +7,6 @@ import {
   ProfileInfo,
   ResumeDetail,
 } from '../../../components'
-import { ProfileData } from '../../../mocks/profileData'
 const MyProfileContents = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
@@ -44,7 +43,6 @@ const MyProfileContents = () => {
               followerCnt={data.followerCount}
               followingCnt={data.followingCount}
               following={data.following}
-              boardStatistics={ProfileData.board_statistics}
             />
           )}
         </>

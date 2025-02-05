@@ -9,7 +9,7 @@ const getResume = async (memberId: string) => {
 
 const useGetResume = (memberId: string) => {
   const { data, status } = useQuery({
-    queryKey: ['resume'],
+    queryKey: ['resume', memberId],
     queryFn: () => getResume(memberId),
   })
   return { data, status }

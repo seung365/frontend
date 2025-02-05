@@ -1,5 +1,9 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import usePutActivity from '../../apis/resume/activity/usePutActivity'
+import usePutEducation from '../../apis/resume/education/usePutEducation'
+import usePutLanguage from '../../apis/resume/language/usePutLanguage'
+import usePutProject from '../../apis/resume/project/usePutProject'
 import useGetResume from '../../apis/resume/useGetResume'
 import {
   ActivityResume,
@@ -12,21 +16,13 @@ import {
   SkillsResume,
   UserInfoResume,
 } from '../../components/index'
-import {
-  Activity,
-  Education,
-  Experience,
-  information,
-  Language,
-  Project,
-  UserResume,
-} from '../../types'
+import { Activity, Education, Language, Project, UserResume } from '../../types'
 import resumeTransform from '../../utils/resumeTransform'
 
 const Resume = () => {
   const {
     register,
-    handleSubmit,
+    //handleSubmit,
     watch,
     control,
     trigger,
@@ -55,7 +51,7 @@ const Resume = () => {
       ],
       projects: [
         {
-          name: '',
+          projectName: '',
           description: '',
           organization: '',
           startDate: '',
@@ -96,8 +92,17 @@ const Resume = () => {
     memberId?.toString() || '',
   )
 
+  const { mutate: putProjects } = usePutProject()
+  const { mutate: putActivities } = usePutActivity()
+  const { mutate: putEducations } = usePutEducation()
+  const { mutate: putLanguages } = usePutLanguage()
+
   const userInfoData = watch('information')
   const exprienceData = watch('experiences')
+  const projectData = watch('projects')
+  const activityData = watch('activities')
+  const educationData = watch('educations')
+  const languageData = watch('languages')
 
   useEffect(() => {
     if (resumeStatus === 'success' && resumeData) {
@@ -121,47 +126,44 @@ const Resume = () => {
       </div>
     )
   }
-  const onClickSubmit = (data: UserResume) => {
-    console.log(data)
-  }
 
-  const handleUserInfoSubmit = (data: information) => {
-    console.log(data)
-  }
+  // const onClickSubmit = (data: UserResume) => {
+  //   console.log(data)
+  // }
 
-  const handleSkillsSubmit = (data: string[]) => {
-    console.log(data)
-  }
+  // const handleUserInfoSubmit = (data: information) => {
+  //   console.log(data)
+  // }
 
-  const handleExperienceSubmit = (data: Experience[]) => {
-    console.log(data)
-  }
+  // const handleSkillsSubmit = (data: string[]) => {
+  //   console.log(data)
+  // }
+
+  // const handleExperienceSubmit = (data: Experience[]) => {
+  //   console.log(data)
+  // }
 
   const handleProjectsSubmit = (data: Project[]) => {
-    // 프로젝트에 해당되는 데이터
-    console.log(data)
+    putProjects(data)
   }
 
   const handleActivitySubmit = (data: Activity[]) => {
-    // 대외활동에 해당되는 데이터
-    console.log(data)
+    putActivities(data)
   }
 
   const handleEducationSubmit = (data: Education[]) => {
-    // 교육에 해당되는 데이터
-    console.log(data)
+    putEducations(data)
   }
 
   const handleLaguageSubmit = (data: Language[]) => {
-    // 외국어에 해당되는 데이터
-    console.log(data)
+    putLanguages(data)
   }
 
   return (
     <section>
       <h1 className='mt-10 text-size-title text-main-black'>💁🏻‍♂️ 이력서 작성</h1>
       <form
-        onSubmit={handleSubmit(onClickSubmit)}
+        //onSubmit={handleSubmit(onClickSubmit)}
         className='flex flex-col w-full h-full gap-12 py-10'
       >
         {/*인적사항 */}
@@ -171,7 +173,7 @@ const Resume = () => {
         >
           <UserInfoResume
             register={register}
-            onSectionSubmit={handleUserInfoSubmit}
+            // onSectionSubmit={handleUserInfoSubmit}
             watchedData={userInfoData}
             errors={errors}
           />
@@ -185,7 +187,7 @@ const Resume = () => {
           <SkillsResume
             register={register}
             defaultValues={watch('skills')}
-            onSectionSubmit={handleSkillsSubmit}
+            // onSectionSubmit={handleSkillsSubmit}
           />
         </ResumeContainer>
 
@@ -193,7 +195,7 @@ const Resume = () => {
         <ResumeContainer title='경력' description='✏️ 경력사항을 입력해주세요!'>
           <ExperienceResume
             register={register}
-            onSectionSubmit={handleExperienceSubmit}
+            //  onSectionSubmit={handleExperienceSubmit}
             watchedData={exprienceData}
             control={control}
             errors={errors}
@@ -208,6 +210,7 @@ const Resume = () => {
         >
           <ProjectResume
             control={control}
+            watchedData={projectData}
             register={register}
             getValues={getValues}
             onProjectsSubmit={handleProjectsSubmit}
@@ -221,6 +224,7 @@ const Resume = () => {
         >
           <ActivityResume
             control={control}
+            watchedData={activityData}
             register={register}
             getValues={getValues}
             onActivitySubmit={handleActivitySubmit}
@@ -234,6 +238,7 @@ const Resume = () => {
         >
           <EducationResume
             control={control}
+            watchedData={educationData}
             register={register}
             getValues={getValues}
             onEducationSubmit={handleEducationSubmit}
@@ -247,6 +252,7 @@ const Resume = () => {
         >
           <LanguageResume
             control={control}
+            watchedData={languageData}
             register={register}
             getValues={getValues}
             onLanguageSubmit={handleLaguageSubmit}

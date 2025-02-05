@@ -8,14 +8,14 @@ import UserInfoForm from '../UserInfoForm'
 
 interface UserInfoResumeProps {
   register: UseFormRegister<UserResume>
-  onSectionSubmit: (data: information) => void
+  // onSectionSubmit: (data: information) => void
   watchedData: information
   errors: FieldErrors<UserResume>
 }
 
 const UserInfoResume = ({
   register,
-  onSectionSubmit,
+  //onSectionSubmit,
   watchedData,
   errors,
 }: UserInfoResumeProps) => {
@@ -28,27 +28,18 @@ const UserInfoResume = ({
     if (!watchedData.position || !watchedData.summary) {
       return
     }
-
-    if (isDataFilled) {
+    if (watchedData.id) {
       patchUserInfo(watchedData)
     } else {
       postUserInfo(watchedData)
     }
 
-    onSectionSubmit(watchedData)
+    //onSectionSubmit(watchedData)
     setIsEdit(false)
   }
-
-  const isDataFilled = Boolean(
-    watchedData.name &&
-      watchedData.position &&
-      watchedData.summary &&
-      watchedData.employmentPeriod,
-  )
-
   return (
-    <div className='flex flex-col items-end p-8 bg-white rounded-lg shadow-md'>
-      <div className='flex flex-col w-full space-y-6'>
+    <>
+      <div className='flex flex-col p-4 border rounded-lg shadow-sm'>
         <UserInfoForm
           register={register}
           errors={errors}
@@ -56,21 +47,30 @@ const UserInfoResume = ({
           isEdit={isEdit}
         />
       </div>
-      {isEdit ? (
-        <Button className='mt-4' onClick={handleSectionSubmit}>
-          저장하기
-        </Button>
-      ) : (
-        <Button
-          theme='dark'
-          type='button'
-          className='mt-4'
-          onClick={() => setIsEdit(true)}
-        >
-          수정하기
-        </Button>
-      )}
-    </div>
+      <div className='flex justify-center'>
+        {isEdit ? (
+          <Button className='mt-4' type='button' onClick={handleSectionSubmit}>
+            저장하기
+          </Button>
+        ) : (
+          <>
+            {watchedData.name === '' ? (
+              <Button type='button' onClick={() => setIsEdit(true)}>
+                인적사항 작성하기
+              </Button>
+            ) : (
+              <Button
+                theme='dark'
+                type='button'
+                onClick={() => setIsEdit(true)}
+              >
+                수정하기
+              </Button>
+            )}
+          </>
+        )}
+      </div>
+    </>
   )
 }
 
