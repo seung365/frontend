@@ -13,8 +13,9 @@ const App = () => {
   const isLogin = useAuthStore((state) => state.isLogin)
   const pathname = window.location.pathname
   const postToken = usePostToken()
-  const isMobile = useCheckMobileView()
 
+  const isMobile = useCheckMobileView()
+  
   useEffect(() => {
     const checkAuth = async () => {
       if (!isLogin && !PROTECTED_ROUTES.includes(pathname)) {
