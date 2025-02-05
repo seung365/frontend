@@ -82,6 +82,7 @@ export const CAREER_TERM = [
   '4~6년차',
   '7~9년차',
   '10년차 이상',
+  '전체',
 ] as const
 
 export const contentTemplates: Record<number, string> = {
@@ -149,3 +150,26 @@ export const contentTemplates: Record<number, string> = {
 <!-- 관련된 참고 자료가 있다면 공유해주세요 -->
 `,
 }
+
+export const SKILL_STACKS: string[] = [
+  'JavaScript',
+  'Git',
+  'MySQL',
+  'Java',
+  'Spring Framework',
+  'AWS',
+  'HTML',
+  'Github',
+  'TypeScript',
+  'React',
+  'Spring Boot',
+  'Docker',
+  'JPA',
+  'Python',
+  'Linux',
+  'SQL',
+  'CSS',
+  'Node.js',
+  'Oracle',
+  'jQuery',
+]

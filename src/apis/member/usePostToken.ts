@@ -6,7 +6,7 @@ const usePostToken = () => {
 
   const postToken = async (): Promise<void> => {
     try {
-      const response = await publicInstance.post<string>('/reissue')
+      const response = await publicInstance.post<string>('/reissue') dev
       const accessToken = response.headers.access
       const memberId = response.data
       if (accessToken && memberId) {

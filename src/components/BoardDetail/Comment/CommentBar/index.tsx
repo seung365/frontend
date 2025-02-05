@@ -86,7 +86,10 @@ const CommentBar = ({
   return (
     <div className='flex flex-col w-full max-w-4xl gap-3 p-1 px-4 '>
       <div className='flex items-center gap-3 align-center'>
-        <img src={imageUrl || profile} className='w-8 h-8 rounded-full' />
+        <img
+          src={imageUrl || profile}
+          className='object-cover w-8 h-8 rounded-full'
+        />
         <span className='font-bold'>{userName}</span>
         <span className='text-dark-gray'>{date}</span>
         <div className='flex gap-2 text-gray-800'>

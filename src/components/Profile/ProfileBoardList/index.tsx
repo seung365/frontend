@@ -1,5 +1,14 @@
-import { BoardCard, Grid } from '../../../components'
-import { boardPageBoardLit } from '../../../mocks/boardList'
+import React from 'react'
+import useFetchProfileBoardList from '../../../apis/profile/useFetchProfileBoardList'
+import {
+  BoardCard,
+  BoardListSkeleton,
+  ErrorComponent,
+  Grid,
+  Loader,
+  NoResult,
+} from '../../../components'
+import { BoardCardType, BoardListResponse } from '../../../types'
 
 interface ProfileBoardListProps {
   memberId: string
@@ -12,32 +21,34 @@ interface ProfileBoardListProps {
  */
 
 const ProfileBoardList = ({ memberId }: ProfileBoardListProps) => {
-  console.log(memberId)
+  const { data, hasNextPage, isFetchingNextPage, status, ref } =
+    useFetchProfileBoardList(memberId)
   return (
     <section>
       <h1 className='mb-3 text-main-black text-size-title text-semibold'>
         ✏️ 작성한 게시글
       </h1>
-      <Grid type='main'>
-        {boardPageBoardLit.map((item) => (
-          <BoardCard
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            content={item.content}
-            thumbnail={item.thumbnail}
-            categoryId={item.categoryId}
-            categoryName={item.categoryName}
-            date={item.createdAt}
-            upCnt={item.upCnt}
-            commentCnt={item.commentCnt}
-            viewCnt={item.viewCnt}
-            tags={item.tags}
-            profileImg={item.profileImg}
-            nickName={item.nickName}
-          />
-        ))}
-      </Grid>
+      {status === 'pending' && <BoardListSkeleton type='main' />}
+      {status === 'error' && <ErrorComponent />}
+      {status === 'success' && (
+        <Grid type='main'>
+          {data?.pages.map((page: BoardListResponse, pageIndex) => (
+            <React.Fragment key={pageIndex}>
+              {page.content.map((board: BoardCardType) => (
+                <BoardCard key={board.id} {...board} />
+              ))}
+            </React.Fragment>
+          ))}
+        </Grid>
+      )}
+      {data?.pages[0].empty && <NoResult />}
+      {hasNextPage && (
+        <div ref={ref}>
+          <section className='flex items-center justify-center w-full mt-3'>
+            {isFetchingNextPage ? <Loader /> : null}
+          </section>
+        </div>
+      )}
     </section>
   )
 }

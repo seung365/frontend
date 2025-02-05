@@ -70,8 +70,11 @@ const EducationForm = ({ register, index, onRemove }: EducationFormProps) => {
           <input
             id={`educations.${index}.startDate`}
             type='date'
-            {...register(`educations.${index}.startDate`, { required: true })}
-            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
+            {...register(`educations.${index}.startDate`, {
+              setValueAs: (value) =>
+                value ? new Date(value).toISOString() : undefined,
+            })}
+            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color'
           />
         </div>
 
@@ -86,8 +89,11 @@ const EducationForm = ({ register, index, onRemove }: EducationFormProps) => {
           <input
             id={`educations.${index}.endDate`}
             type='date'
-            {...register(`educations.${index}.endDate`)}
-            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-1 focus:ring-main-color focus:border-main-color'
+            {...register(`educations.${index}.endDate`, {
+              setValueAs: (value) =>
+                value ? new Date(value).toISOString() : undefined,
+            })}
+            className='w-full p-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-main-color focus:border-main-color'
           />
         </div>
       </div>

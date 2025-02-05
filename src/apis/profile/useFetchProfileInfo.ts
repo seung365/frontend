@@ -1,14 +1,6 @@
-import { authInstance, publicInstance } from '../fetchInstance'
-
-type ProfileInfoResponse = {
-  profileId: string
-  nickname: string
-  about: string
-  boardCount: number
-  folllowerCount: number
-  followingCount: number
-  following: boolean
-}
+import { useQuery } from '@tanstack/react-query'
+import { ProfileInfoResponse } from '../../types'
+import { publicInstance } from '../fetchInstance'
 
 export const fetchProfileInfo = async (
   profileId?: string,
@@ -16,12 +8,13 @@ export const fetchProfileInfo = async (
   const response = await publicInstance.get<ProfileInfoResponse>(
     `/profile/${profileId}`,
   )
-  console.log(response.data)
   return response.data
 }
 
-export const fetchMyProfileInfo = async (): Promise<ProfileInfoResponse> => {
-  const response = await authInstance.get<ProfileInfoResponse>('/profile/me')
-  console.log(response.data)
-  return response.data
+export const useFetchProfileInfo = (profileId?: string) => {
+  const { data, isPending, isError } = useQuery({
+    queryKey: ['profileInfo', profileId],
+    queryFn: () => fetchProfileInfo(profileId),
+  })
+  return { data, isPending, isError }
 }

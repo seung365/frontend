@@ -17,6 +17,9 @@ const SignIn = () => {
       <button type='button' onClick={() => handleSocialLogin('GITHUB')}>
         <GithubLogin />
       </button>
+      <p className='text-dark-gray'>
+        개발자 모드에 등록되어 있지 않으면 Github로 시작해주세요.
+      </p>
     </div>
   )
 }
