@@ -36,6 +36,10 @@ const usePostComment = (id: string, commentId?: number) => {
 
       if (commentId) {
         queryClient.invalidateQueries({ queryKey: ['replyComment', commentId] })
+        queryClient.setQueryData(['board', id], (oldData: BoardResponse) => ({
+          ...oldData,
+          commentCnt: oldData.commentCnt + 1,
+        }))
       }
     },
   })
