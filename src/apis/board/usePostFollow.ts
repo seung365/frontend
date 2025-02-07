@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
-import redirectToLogin from '../../hooks/useLoginRedirect'
+import useLoginRedirect from '../../hooks/useLoginRedirect'
 import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
@@ -10,6 +10,8 @@ const postFollow = async (memberId: string) => {
 
 const useProfileFollow = (profileId: string, id: string) => {
   const queryClient = useQueryClient()
+  const redirectToLogin = useLoginRedirect()
+
   const { mutate } = useMutation({
     mutationFn: () => postFollow(profileId),
     onSuccess: () => {

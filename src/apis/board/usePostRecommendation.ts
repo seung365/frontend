@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
-import redirectToLogin from '../../hooks/useLoginRedirect'
+import useLoginRedirect from '../../hooks/useLoginRedirect'
 import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
@@ -13,6 +13,7 @@ const postRecommendation = async (boardId: number) => {
 
 const usePostRecommendation = () => {
   const queryClient = useQueryClient()
+  const redirectToLogin = useLoginRedirect()
 
   const { mutate, status } = useMutation<BoardResponse, Error, number>({
     mutationFn: postRecommendation,
