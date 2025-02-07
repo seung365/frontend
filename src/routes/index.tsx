@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { Layout } from '../components'
 import Board from '../pages/Board'
+import BoardDetail from '../pages/BoardDetail'
 import BoardEdit from '../pages/BoardEdit'
 import BoardWrite from '../pages/BoardWrite'
 import Home from '../pages/Home'
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Board /> },
           { path: `:${RouterPath.categoryName}`, element: <Board /> },
+          {
+            path: `${RouterPath.detail}/:${RouterPath.id}`,
+            element: <BoardDetail />,
+          },
           {
             element: <ProtectedRoute />,
             children: [
