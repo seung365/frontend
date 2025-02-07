@@ -28,13 +28,12 @@ authLogoutInstance.interceptors.request.use((config) => {
   return config
 })
 
-const waitForToken = async (retries = 3, delay = 500) => {
-  for (let i = 0; i < retries; i++) {
-    const token = useAuthStore.getState().accessToken
-    if (token) return token
-    await new Promise((resolve) => setTimeout(resolve, delay))
-  }
-  return null
+const waitForToken = async (delay = 500) => {
+  const token = useAuthStore.getState().accessToken
+  if (token) return token
+
+  await new Promise((resolve) => setTimeout(resolve, delay))
+  return useAuthStore.getState().accessToken
 }
 
 authInstance.interceptors.request.use(
