@@ -1,3 +1,4 @@
+import { MutationStatus } from '@tanstack/react-query'
 import { useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { twMerge } from 'tailwind-merge'
@@ -7,8 +8,8 @@ interface FloatingPostProps {
   count: number
   initialIsRecommend: boolean
   onheartClick: () => void
+  status: MutationStatus
 }
-
 /**
  * 플로팅 좋아요/공유 버튼 컴포넌트
  * @description
@@ -24,14 +25,17 @@ const FloatingPost = ({
   count: initialCount,
   initialIsRecommend,
   onheartClick,
+  status,
 }: FloatingPostProps) => {
   const [isRecommend, setIsRecommend] = useState(initialIsRecommend)
   const [count, setCount] = useState(initialCount)
 
   const handleHeartClick = () => {
     onheartClick()
-    setIsRecommend(!isRecommend)
-    setCount(isRecommend ? count - 1 : count + 1)
+    if (status === 'success') {
+      setIsRecommend(!isRecommend)
+      setCount(isRecommend ? count - 1 : count + 1)
+    }
   }
 
   return (

@@ -31,10 +31,11 @@ const BoardDetailContent = ({ id }: { id: string }) => {
 
   const { data } = useGetBoardDetail(id)
   const { mutate, status } = useDeleteBoard()
-  const { mutate: commentMutate } = usePostComment(id)
-  const { mutate: followMutate } = useProfileFollow(data.memberId, id)
-  const { mutate: unfollowMutate } = useDeleteFollow(data.memberId, id)
-  const { mutate: postRecommendMutate } = usePostRecommendation()
+  const { mutate: postComment } = usePostComment(id)
+  const { mutate: postFollow } = useProfileFollow(data.memberId, id)
+  const { mutate: deleteFollow } = useDeleteFollow(data.memberId, id)
+  const { mutate: postRecommendMutate, status: recommendStatus } =
+    usePostRecommendation()
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -45,11 +46,11 @@ const BoardDetailContent = ({ id }: { id: string }) => {
           boardId: id,
           parentCommentId: null,
         }
-        commentMutate(commentData)
+        postComment(commentData)
         setComment('')
       }
     },
-    [comment, commentMutate, id],
+    [comment, postComment, id],
   )
 
   const handleClickRecommend = () => {
@@ -71,6 +72,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
         count={data.upCnt}
         initialIsRecommend={data.recommended}
         onheartClick={handleClickRecommend}
+        status={recommendStatus}
       />
       <TitleBar title={data.title} />
       <div className='flex items-center justify-between gap-4'>
@@ -89,7 +91,7 @@ const BoardDetailContent = ({ id }: { id: string }) => {
           </div>
         ) : (
           <Button
-            onClick={() => (data.following ? unfollowMutate() : followMutate())}
+            onClick={() => (data.following ? deleteFollow() : postFollow())}
           >
             {data.following ? '팔로우 취소' : '팔로우'}
           </Button>

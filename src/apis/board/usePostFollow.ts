@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '../../constant/api'
+import redirectToLogin from '../../hooks/useLoginRedirect'
 import { BoardResponse } from '../../types'
 import { authInstance } from '../fetchInstance'
 
@@ -18,7 +19,8 @@ const useProfileFollow = (profileId: string, id: string) => {
       }))
     },
     onError: (error) => {
-      console.error('팔로우 요청 실패', error)
+      console.error('추천 에러:', error)
+      redirectToLogin()
     },
   })
   return { mutate }
