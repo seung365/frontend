@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useLoginRedirect from '../../hooks/useLoginRedirect'
 import { authInstance } from '../fetchInstance'
 
 interface FollowCallbacks {
@@ -13,6 +14,7 @@ const postFollow = async (memberId: string) => {
 
 const useProfileFollow = (profileId?: string) => {
   const queryClient = useQueryClient()
+  const redirectToLogin = useLoginRedirect()
 
   const { mutate, isPending } = useMutation({
     mutationFn: (params: { memberId: string; callbacks?: FollowCallbacks }) =>
@@ -25,6 +27,7 @@ const useProfileFollow = (profileId?: string) => {
     },
     onError: (error: Error, variables) => {
       variables.callbacks?.onError?.(error)
+      redirectToLogin()
     },
   })
 

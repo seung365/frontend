@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import useLoginRedirect from '../../../../hooks/useLoginRedirect'
+import { useAuthStore } from '../../../../store/AuthStore'
 
 interface CommentInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -20,6 +22,8 @@ const CommentInput = ({
   onCommentChange,
 }: CommentInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const redirectToLogin = useLoginRedirect()
+  const { isLogin } = useAuthStore()
 
   const handleAutoResize = () => {
     const textarea = textareaRef.current
@@ -27,6 +31,12 @@ const CommentInput = ({
 
     textarea.style.height = 'auto'
     textarea.style.height = `${textarea.scrollHeight}px`
+  }
+
+  const handleFocus = () => {
+    if (!isLogin) {
+      redirectToLogin()
+    }
   }
 
   useEffect(() => {
@@ -42,6 +52,7 @@ const CommentInput = ({
         value={comment}
         className='w-full p-4 text-base font-normal border border-solid rounded-md resize-none min-h-[60px] cursor-text focus:outline-none focus:border-main-color border-sub-color transition-colors'
         placeholder={placeholder}
+        onFocus={handleFocus}
         onChange={(e) => {
           onCommentChange(e.target.value)
           handleAutoResize()
