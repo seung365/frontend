@@ -35,6 +35,7 @@ const CommentInput = ({
 
   const handleFocus = () => {
     if (!isLogin) {
+      textareaRef.current?.blur()
       redirectToLogin()
     }
   }
