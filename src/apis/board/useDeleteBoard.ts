@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { API_ROUTES } from '../../constant/api'
+import { RouterPath } from '../../routes/path'
 import { authInstance } from '../fetchInstance'
 
 const deleteBoard = async (id: number) => {
@@ -21,7 +22,7 @@ const useDeleteBoard = () => {
       queryClient.invalidateQueries({
         queryKey: ['AllBoardsList'],
       })
-      navigate(-1)
+      navigate(`${RouterPath.board}`)
     },
   })
   return { mutate, status }

@@ -1,7 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { Layout } from '../components'
 import Board from '../pages/Board'
-import BoardDetail from '../pages/BoardDetail'
 import BoardEdit from '../pages/BoardEdit'
 import BoardWrite from '../pages/BoardWrite'
 import Home from '../pages/Home'
@@ -29,13 +28,14 @@ const router = createBrowserRouter([
           { index: true, element: <Board /> },
           { path: `:${RouterPath.categoryName}`, element: <Board /> },
           {
-            path: `${RouterPath.detail}/:${RouterPath.id}`,
-            element: <BoardDetail />,
-          },
-          { path: RouterPath.write, element: <BoardWrite /> },
-          {
-            path: `${RouterPath.write}/:${RouterPath.id}`,
-            element: <BoardEdit />,
+            element: <ProtectedRoute />,
+            children: [
+              { path: RouterPath.write, element: <BoardWrite /> },
+              {
+                path: `${RouterPath.write}/:${RouterPath.id}`,
+                element: <BoardEdit />,
+              },
+            ],
           },
         ],
       },
