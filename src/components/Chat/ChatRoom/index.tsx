@@ -27,7 +27,10 @@ const ChatRoom = () => {
   }
 
   useEffect(() => {
-    scrollToBottom()
+    const timer = requestAnimationFrame(() => {
+      scrollToBottom()
+    })
+    return () => cancelAnimationFrame(timer)
   }, [messages])
 
   const handleSend = (e: React.KeyboardEvent<HTMLInputElement>) => {
