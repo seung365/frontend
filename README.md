@@ -130,7 +130,6 @@ Floating Button을 통해 어디서든 채팅이 가능하게 하였습니다.
 
 </div>
 
-
 ### DevOps & Tools
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
