@@ -70,6 +70,13 @@ DevInit이란 이름에는 개발자(Developer)의 시작(Init)이라는 의미�
 - 채팅방 생성/조회/삭제
 - 실시간 메시지 처리 시스템
 
+## 💪 주요 구현 기능
+
+![게시글 작성 페이지](/src/assets/docs_images/image1.svg)
+![게시글 페이지](/src/assets/docs_images//image2.svg)
+![허브 페이지](/src/assets/docs_images/image3.svg)
+![채팅 기능](/src/assets/docs_images/image4.svg)
+
 ## 🛠 기술 스택
 
 ### Frontend
