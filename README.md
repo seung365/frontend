@@ -74,7 +74,6 @@ DevInit이란 이름에는 개발자(Developer)의 시작(Init)이라는 의미�
 
 ### 게시글 작성 페이지
 ![게시글 작성 페이지](/src/assets/docs_images/image1.svg)
-
 해당 페이지에서는 React Hook Form과 React MD Editor을 이용해 유저에게 제목, 
 카테고리, 태그, 본문 내용을 받아 옵니다.
 
@@ -97,7 +96,6 @@ DevInit이란 이름에는 개발자(Developer)의 시작(Init)이라는 의미�
 
 ### 허브 페이지
 ![허브 페이지](/src/assets/docs_images/image3.svg)
-
 해당페이지에서 무한스크롤을 통해 사용자들의 정보를 보여줍니다.
 
 무한 스크롤의 경우 Tanstack Query의useInfinitequery와 intersection을 사용해 구현하였습니다. 
@@ -107,7 +105,6 @@ DevInit이란 이름에는 개발자(Developer)의 시작(Init)이라는 의미�
 
 ### 채팅 기능
 ![채팅 기능](/src/assets/docs_images/image4.svg)
-
 실시간 그룹 채팅을 가능케 합니다.
 STOMPJS를 사용하여 구현하였습니다.
 기본적인 채팅방 생성, 조회, 삭제가 가능합니다.
